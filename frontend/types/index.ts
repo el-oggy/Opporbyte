@@ -205,3 +205,31 @@ export interface ApplicationMetrics {
   total: number;
 }
 
+// Phase 4: Analytics & Telemetry
+export interface TaskRunItem {
+  id: string;
+  task_type: string;
+  status: string;
+  parameters?: Record<string, any>;
+  result?: Record<string, any>;
+  error_message?: string;
+  started_at: string;
+  completed_at?: string;
+}
+
+export interface AnalyticsSummary {
+  total_jobs: number;
+  source_distribution: Record<string, number>;
+  profile_type: string;
+  total_matches: number;
+  strong_matches: number;
+  potential_matches: number;
+  low_matches: number;
+  average_match_score: number;
+  total_resumes: number;
+  average_ats_score: number;
+  application_pipeline: Record<string, number>;
+  recent_tasks: TaskRunItem[];
+}
+
+

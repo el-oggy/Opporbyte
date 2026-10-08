@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter
 
+from app.api.v1.analytics import router as analytics_router
 from app.api.v1.applications import router as applications_router
 from app.api.v1.auth import router as auth_router
 from app.api.v1.facts import router as facts_router
@@ -21,4 +22,6 @@ api_router.include_router(matches_router, prefix="/matches", tags=["AI Matching"
 api_router.include_router(facts_router, prefix="/facts", tags=["Candidate Facts & Provenance"])
 api_router.include_router(resumes_router, prefix="/resumes", tags=["ATS Resume Engine"])
 api_router.include_router(applications_router, prefix="/applications", tags=["Application Pipeline"])
+api_router.include_router(analytics_router, prefix="/analytics", tags=["Career Analytics & Telemetry"])
+
 
