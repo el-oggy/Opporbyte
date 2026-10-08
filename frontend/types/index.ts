@@ -48,15 +48,63 @@ export interface AuthResponse {
   user: User;
 }
 
-export interface JobRecommendationSample {
+export interface Job {
   id: string;
+  source_id?: string;
+  external_id?: string;
+  canonical_hash: string;
   title: string;
   company: string;
   location: string;
-  work_mode: "remote" | "hybrid" | "on-site";
-  source: string;
+  employment_type: string;
+  work_mode: string;
+  description: string;
+  url: string;
+  created_at: string;
+}
+
+export interface MatchScoreBreakdown {
+  required_skills_score: number;
+  experience_score: number;
+  alignment_score: number;
+  preferences_score: number;
   overall_score: number;
   classification: "strong" | "potential" | "low";
+}
+
+export interface MatchEvidence {
+  eligibility: {
+    eligible: boolean;
+    requires_human_review: boolean;
+    review_reasons: string[];
+  };
   matched_skills: string[];
-  posted_time: string;
+  missing_critical_skills: string[];
+  explanation: string;
+  score_breakdown: MatchScoreBreakdown;
+}
+
+export interface JobMatch {
+  id: string;
+  job_id: string;
+  profile_id: string;
+  overall_score: number;
+  required_skills_score: number;
+  experience_score: number;
+  alignment_score: number;
+  preferences_score: number;
+  classification: "strong" | "potential" | "low";
+  match_evidence: MatchEvidence;
+  reviewed_at?: string;
+  created_at: string;
+  job?: Job;
+}
+
+export interface JobDiscoveryResponse {
+  success: boolean;
+  new_jobs_count: number;
+  duplicates_skipped_count: number;
+  provider: string;
+  board_token: string;
+  message: string;
 }

@@ -392,7 +392,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
 ## Testing & Verification
 
 ### Running Backend Tests
-Opporbyte includes 13 comprehensive unit and integration tests verifying authentication, session security, health checks, profile persistence, and database deduplication constraints:
+Opporbyte includes 20 comprehensive unit and integration tests verifying authentication, session security, health checks, profile persistence, canonical deduplication, HTML extraction, and AI matching heuristics:
 
 ```bash
 cd backend
@@ -410,6 +410,13 @@ cd backend
 - `test_get_software_profile_defaults`: Validates software interest defaults without qualification hallucinations.
 - `test_profile_isolation_and_independent_persistence`: Verifies that updating Semiconductor profile does NOT mutate Software profile.
 - `test_prevent_duplicate_application_across_profiles`: Validates database-level uniqueness constraint preventing duplicate applications to the same canonical job across both profiles.
+- `test_html_cleaner`: Validates robust extraction of plain text from HTML job descriptions.
+- `test_canonical_hash_normalization`: Validates case-insensitivity, company suffix normalization (Inc, LLC, Corp), and cryptographic deduplication hashing.
+- `test_seed_initial_dataset_and_deduplication`: Verifies zero duplicate insertions on repeated ingestion cycles.
+- `test_list_jobs_endpoint`: Validates query filtering by keyword and work mode (remote, hybrid, on-site).
+- `test_matching_heuristic_weights_calculation`: Validates the 40/25/20/15 heuristic weights formula and classification thresholds.
+- `test_blacklisted_company_eligibility`: Validates that excluded companies trigger human review flags and penalty deductions.
+- `test_evaluate_and_get_matches_api`: Validates end-to-end evaluation and domain-based ranking for Semiconductor and Software profiles.
 
 ### Running Frontend Typecheck & Build
 ```bash
@@ -419,7 +426,7 @@ npm run build
 
 ---
 
-## Development Roadmap & Future Milestones
+## Development Roadmap & Milestones
 
 - [x] **Phase 1: Build the Foundation**
   - [x] Clean modular monorepo layout.
@@ -430,11 +437,12 @@ npm run build
   - [x] Alembic migration pipeline.
   - [x] Complete test suite and Docker Compose orchestration.
   - [x] Professional architecture, database, and engine specifications.
-- [ ] **Phase 2: Permitted Job Discovery & AI Matching**
-  - [ ] Implement Greenhouse, Ashby, and Lever API adapters.
-  - [ ] Canonical job hashing and deduplication ingestion pipeline.
-  - [ ] Implement 40/25/20/15 AI matching engine with OpenAI / Gemini structured outputs.
-  - [ ] Background worker with Redis/Celery for scheduled job polling.
+- [x] **Phase 2: Permitted Job Discovery & AI Matching Engine**
+  - [x] Implement Greenhouse, Ashby, and Lever public API adapters.
+  - [x] Canonical job hashing and SHA-256 deduplication ingestion pipeline.
+  - [x] Implement 40/25/20/15 heuristic matching engine with full evidence preservation.
+  - [x] Interactive ATS board ingestion and real-time candidate search in dashboard.
+  - [x] Comprehensive test suite expanded to 20/20 passing tests.
 - [ ] **Phase 3: Verified ATS Resume Engine & Human-in-the-Loop Applications**
   - [ ] Master resume ingestion and entity extraction.
   - [ ] Candidate fact verification dashboard.
