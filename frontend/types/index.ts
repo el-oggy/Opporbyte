@@ -108,3 +108,100 @@ export interface JobDiscoveryResponse {
   board_token: string;
   message: string;
 }
+
+// Phase 3: Facts & Verification
+export interface CandidateFact {
+  id: string;
+  user_id: string;
+  category: "skill" | "experience" | "education" | "project" | "certification" | "achievement";
+  title: string;
+  description: string;
+  verified: boolean;
+  source: string;
+  created_at: string;
+}
+
+export interface FactCreateInput {
+  category: string;
+  title: string;
+  description: string;
+  verified?: boolean;
+  source?: string;
+}
+
+// Phase 3: ATS Resume Engine
+export interface ResumeFactItem {
+  section: string;
+  fact_id: string;
+  title: string;
+  category: string;
+  bullet_text: string;
+  source_fact_ids: string[];
+  relevance_score: number;
+}
+
+export interface ResumeVersion {
+  id: string;
+  profile_id: string;
+  job_id?: string;
+  version_name: string;
+  summary: string;
+  selected_facts: ResumeFactItem[];
+  ats_score?: number;
+  pdf_storage_path?: string;
+  is_master: boolean;
+  created_at: string;
+  job_title?: string;
+  job_company?: string;
+}
+
+export interface ResumeExport {
+  resume_id: string;
+  version_name: string;
+  ats_score?: number;
+  plain_text: string;
+  html_content: string;
+}
+
+// Phase 3: Applications Pipeline
+export type ApplicationStatus =
+  | "draft"
+  | "ready_for_review"
+  | "approved"
+  | "submitted"
+  | "interviewing"
+  | "offer"
+  | "rejected";
+
+export interface Application {
+  id: string;
+  user_id: string;
+  job_id: string;
+  profile_id: string;
+  resume_version_id?: string;
+  status: ApplicationStatus;
+  submission_method: string;
+  submitted_at?: string;
+  notes?: string;
+  created_at: string;
+  updated_at: string;
+  job_title?: string;
+  job_company?: string;
+  job_location?: string;
+  job_source?: string;
+  profile_type?: ProfileType;
+  resume_name?: string;
+  ats_score?: number;
+}
+
+export interface ApplicationMetrics {
+  draft: number;
+  ready_for_review: number;
+  approved: number;
+  submitted: number;
+  interviewing: number;
+  offer: number;
+  rejected: number;
+  total: number;
+}
+

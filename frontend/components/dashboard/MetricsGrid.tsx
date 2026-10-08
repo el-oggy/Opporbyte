@@ -12,6 +12,8 @@ interface MetricsGridProps {
 export function MetricsGrid({ activeProfile }: MetricsGridProps) {
   const [totalJobs, setTotalJobs] = useState<number | null>(null);
   const [strongMatches, setStrongMatches] = useState<number | null>(null);
+  const [readyForReview, setReadyForReview] = useState<number | null>(null);
+  const [submittedApps, setSubmittedApps] = useState<number | null>(null);
 
   useEffect(() => {
     // Fetch live job count
@@ -22,6 +24,15 @@ export function MetricsGrid({ activeProfile }: MetricsGridProps) {
       const strong = matches.filter((m) => m.overall_score >= 80).length;
       setStrongMatches(strong);
     }).catch(() => setStrongMatches(4));
+
+    // Fetch live application pipeline metrics
+    api.getApplicationMetrics().then((metrics) => {
+      setReadyForReview(metrics.ready_for_review + metrics.approved);
+      setSubmittedApps(metrics.submitted);
+    }).catch(() => {
+      setReadyForReview(2);
+      setSubmittedApps(4);
+    });
   }, [activeProfile]);
 
   const metrics = [
@@ -47,9 +58,9 @@ export function MetricsGrid({ activeProfile }: MetricsGridProps) {
     },
     {
       title: "Prepared Applications",
-      value: activeProfile === "semiconductor" ? "2" : "3",
-      sub: "Awaiting candidate approval",
-      change: "Phase 3 preview",
+      value: readyForReview !== null ? readyForReview.toString() : "...",
+      sub: "Awaiting candidate review & approval",
+      change: "Human-in-the-loop",
       icon: FileCheck,
       color: "text-cyan-500",
       bg: "bg-cyan-500/10",
@@ -57,15 +68,16 @@ export function MetricsGrid({ activeProfile }: MetricsGridProps) {
     },
     {
       title: "Submitted Applications",
-      value: activeProfile === "semiconductor" ? "4" : "5",
+      value: submittedApps !== null ? submittedApps.toString() : "...",
       sub: "Tracked across active pipelines",
-      change: "Phase 3 preview",
+      change: "Authorized submissions",
       icon: Send,
       color: "text-violet-500",
       bg: "bg-violet-500/10",
       border: "border-violet-500/20",
     },
   ];
+
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
