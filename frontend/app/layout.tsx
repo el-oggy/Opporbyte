@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { AuthProvider } from "@/hooks/useAuth";
-import { ThemeProvider } from "@/hooks/useTheme";
+import "@fontsource/space-grotesk/400.css";
+import "@fontsource/space-grotesk/500.css";
+import "@fontsource/space-grotesk/600.css";
+import "@fontsource/space-grotesk/700.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Opporbyte — Your opportunities. One intelligent engine.",
-  description: "Private single-user career intelligence and application management platform.",
+  title: "Opporbyte — Your job hunt. Finally in one place.",
+  description:
+    "Find opportunities that fit, prepare tailored resumes, and keep every application organized. Explore the Opporbyte frontend preview.",
 };
 
 export default function RootLayout({
@@ -14,12 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark h-full antialiased">
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 dark:bg-[#080d19] dark:text-slate-100 transition-colors duration-200">
-        <ThemeProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </ThemeProvider>
-      </body>
+    <html lang="en" data-scroll-behavior="smooth">
+      <body>{children}</body>
     </html>
   );
 }

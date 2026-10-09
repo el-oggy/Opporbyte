@@ -1,0 +1,87 @@
+async (page) => {
+  const results = [];
+  const errors = [];
+  const external = [];
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+  page.on('request', request => {
+    const url = request.url();
+    if (url.startsWith('http') && !url.startsWith('http://127.0.0.1:3000')) external.push(url);
+  });
+  const check = (name, passed, detail = '') => {
+    results.push({ name, passed, detail });
+    if (!passed) throw new Error(name + ': ' + detail);
+  };
+  await page.goto('http://127.0.0.1:3000/onboarding');
+  await page.getByRole('button', { name: 'Design', exact: true }).click();
+  check('Design examples filter', await page.locator('article').count() === 2);
+  await page.getByRole('button', { name: 'Save Product Designer example', exact: true }).click();
+  check('Save example stays local', await page.getByRole('button', { name: 'Unsave Product Designer example' }).getAttribute('aria-pressed') === 'true');
+  await page.getByRole('textbox', { name: 'Another field or role?' }).fill('architecture');
+  check('Unrepresented field has honest empty state', await page.locator('article').count() === 0 && (await page.locator('.result-note').innerText()).includes('No fictional examples'));
+  await page.reload();
+  check('Selections reset on reload', (await page.locator('.result-note').innerText()).includes('0 saved'));
+  for (const route of ['/', '/onboarding']) {
+    await page.goto('http://127.0.0.1:3000' + route);
+    for (const width of [320, 390, 768, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
+      check(`No horizontal overflow ${route} at ${width}px`, !overflow);
+    }
+  }
+  await page.goto('http://127.0.0.1:3000/');
+  await page.waitForFunction(() => document.querySelector('.scene-host')?.dataset.renderer === 'webgl');
+  check('Real WebGL renderer on desktop', true);
+  check('Desktop has a short pinned sequence', await page.locator('.pin-spacer').count() === 1);
+  await page.evaluate(() => window.scrollTo({ top: 790, behavior: 'instant' }));
+  await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '2');
+  check('Scroll reaches organization stage', true);
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '0');
+  check('Reverse scroll returns discovery stage', true);
+  await page.getByRole('link', { name: 'See how it works', exact: true }).click();
+  await page.waitForFunction(() => location.hash === '#how-it-works');
+  check('Secondary CTA targets next section', true);
+  await page.goto('http://127.0.0.1:3000/');
+  await page.setViewportSize({ width: 390, height: 844 });
+  check('Mobile is not pinned', await page.locator('.pin-spacer').count() === 0);
+  await page.getByRole('button', { name: 'Open navigation', exact: true }).click();
+  check('Menu moves focus to first link', await page.getByRole('link', { name: 'How It Works', exact: true }).evaluate(element => element === document.activeElement));
+  await page.keyboard.press('Escape');
+  check('Escape restores focus', await page.getByRole('button', { name: 'Open navigation', exact: true }).evaluate(element => element === document.activeElement));
+  await page.getByRole('link', { name: 'Find my next role', exact: true }).click();
+  await page.waitForURL('**/onboarding');
+  check('Primary CTA reaches frontend preview', await page.locator('.preview-label').innerText() === 'FRONTEND PREVIEW · NO ACCOUNT REQUIRED');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('http://127.0.0.1:3000/');
+  await page.waitForFunction(() => document.querySelector('.scene-host')?.dataset.renderer === 'webgl');
+  check('Reduced motion removes pinning', await page.locator('.pin-spacer').count() === 0);
+  const frozenA = await page.locator('.scene-host').screenshot();
+  await page.waitForTimeout(700);
+  const frozenB = await page.locator('.scene-host').screenshot();
+  check('Reduced motion scene remains static', frozenA.equals(frozenB));
+  await page.screenshot({ path: 'output/playwright/reduced-motion.png' });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.evaluate(() => {
+    const gl = document.querySelector('.webgl-scene canvas').getContext('webgl2');
+    gl.getExtension('WEBGL_lose_context').loseContext();
+  });
+  await page.waitForFunction(() => document.querySelector('.scene-host')?.dataset.capability === 'fallback');
+  check('Context loss restores static visual', await page.locator('.static-scene').isVisible());
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+      if (type === 'webgl' || type === 'webgl2' || type === 'experimental-webgl') return null;
+      return original.call(this, type, ...args);
+    };
+  });
+  await page.goto('http://127.0.0.1:3000/');
+  await page.waitForFunction(() => document.querySelector('.scene-host')?.dataset.capability === 'fallback');
+  check('Unavailable WebGL keeps static scene', await page.locator('.static-scene').isVisible());
+  check('Fallback keeps primary CTA', await page.getByRole('link', { name: 'Find my next role' }).isVisible());
+  await page.screenshot({ path: 'output/playwright/fallback.png' });
+  check('No browser errors', errors.length === 0, errors.join('; '));
+  check('No backend or external API requests', external.length === 0, external.join('; '));
+  return { checks: results.length, results, errors, external };
+}
