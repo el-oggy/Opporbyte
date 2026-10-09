@@ -68,11 +68,10 @@ main:focus {
   z-index: 30;
 }
 .navigation {
-  height: 108px;
+  height: 96px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #20242017;
 }
 .brand {
   display: inline-flex;
@@ -164,7 +163,7 @@ main:focus {
   transform: none;
 }
 .hero {
-  min-height: calc(100svh - 108px);
+  min-height: max(740px, calc(100svh - 96px));
   position: relative;
   background: var(--cream);
   overflow: clip;
@@ -172,18 +171,21 @@ main:focus {
   flex-direction: column;
 }
 .hero-grid {
-  display: grid;
-  grid-template-columns: 51% 49%;
+  display: flex;
   flex: 1;
-  align-items: center;
-  padding-top: 25px;
-  padding-bottom: 16px;
-  min-height: 620px;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 34px;
+  padding-bottom: 0;
+  min-height: 0;
+  width: 100%;
 }
 .hero-copy {
   z-index: 4;
   position: relative;
-  padding-bottom: 24px;
+  width: min(100% - 80px, 1080px);
+  text-align: center;
+  padding-bottom: 0;
 }
 .eyebrow {
   display: inline-flex;
@@ -193,11 +195,7 @@ main:focus {
   font-weight: 500;
   letter-spacing: 0.04em;
 }
-.tiny-star {
-  font-size: 23px;
-  color: var(--orange-text);
-  line-height: 1;
-}
+
 h1,
 h2,
 h3,
@@ -210,27 +208,28 @@ h3 {
   font-family: "Space Grotesk", sans-serif;
 }
 h1 {
-  font-size: clamp(58px, 5.95vw, 98px);
+  font-size: clamp(58px, 6.25vw, 100px);
   font-weight: 500;
   line-height: 1.05;
-  letter-spacing: -0.068em;
-  margin-top: 30px;
+  letter-spacing: -0.065em;
+  margin-top: 0;
 }
 h1 > span {
   color: var(--orange-text);
 }
 .hero-description {
-  font-size: 15px;
-  line-height: 1.85;
-  max-width: 385px;
-  margin-top: 28px;
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 490px;
+  margin: 20px auto 0;
   color: #555b50;
 }
 .hero-actions {
   display: flex;
   align-items: center;
   gap: 21px;
-  margin-top: 31px;
+  margin-top: 22px;
+  justify-content: center;
 }
 .button {
   display: inline-flex;
@@ -266,55 +265,22 @@ h1 > span {
 .button-text:hover {
   color: #96340e;
 }
-.hero-reassurance {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 9px;
-  color: #686b61;
-  margin-top: 25px;
-}
-.hero-reassurance > span:first-child {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.reassurance-dot {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: #84867a;
-}
+
 .hero-visual {
-  height: min(650px, 74vh);
-  min-height: 510px;
-  position: relative;
-  margin-left: -8px;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 .hero-visual::before {
   content: "";
   position: absolute;
-  inset: 12% -4% 10% 0;
-  background: radial-gradient(ellipse, #ffcc9d35, transparent 66%);
+  inset: 32% 10% 8%;
+  background: radial-gradient(ellipse, #ffc58f2b, transparent 65%);
   pointer-events: none;
 }
-.scene-index {
-  position: absolute;
-  top: 5px;
-  left: 16px;
-  right: 12px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 8px;
-  letter-spacing: 0.14em;
-  z-index: 2;
-  color: #64685b;
-}
-.scene-index > span:last-child {
-  margin-left: auto;
-  color: #787b70;
-}
+
 .live-dot {
   width: 5px;
   height: 5px;
@@ -325,7 +291,7 @@ h1 > span {
 }
 .scene-host {
   position: absolute;
-  inset: 25px -52px 30px -42px;
+  inset: 0;
 }
 .scene-host::after {
   content: "";
@@ -350,10 +316,6 @@ h1 > span {
   display: none;
 }
 .scene-perspective {
-  position: absolute;
-  z-index: 3;
-  right: 9px;
-  bottom: 45px;
   display: none;
   align-items: center;
   gap: 7px;
@@ -365,9 +327,9 @@ h1 > span {
   min-height: 40px;
   font-size: 10px;
   cursor: pointer;
-  backdrop-filter: blur(8px);
+  flex-shrink: 0;
 }
-.hero-visual:has(.scene-host[data-renderer="webgl"]) .scene-perspective {
+.hero:has(.scene-host[data-renderer="webgl"]) .scene-perspective {
   display: inline-flex;
 }
 .scene-perspective:hover,
@@ -376,52 +338,46 @@ h1 > span {
   border-color: #20242055;
 }
 .scene-caption {
-  position: absolute;
-  bottom: 17px;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 9px;
+  font-size: 11px;
   color: #64685b;
   letter-spacing: 0.02em;
 }
 .scene-caption svg {
   color: #47746d;
+  flex-shrink: 0;
+}
+.caption-connect,
+.caption-organize {
+  display: none;
+}
+.hero[data-stage="1"] .caption-discover,
+.hero[data-stage="2"] .caption-discover {
+  display: none;
+}
+.hero[data-stage="1"] .caption-connect,
+.hero[data-stage="2"] .caption-organize {
+  display: inline;
 }
 .hero-bottom {
-  min-height: 79px;
+  position: relative;
+  z-index: 6;
+  min-height: 74px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid #20242017;
   gap: 14px;
 }
-.scroll-cue {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 8px;
-  letter-spacing: 0.13em;
-  font-weight: 500;
-}
-.scroll-circle {
-  width: 29px;
-  height: 29px;
-  border: 1px solid #20242035;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-}
-.scroll-cue:hover .scroll-circle {
-  background: var(--white);
-}
+
 .scene-stages {
   display: flex;
   gap: 10px;
   align-items: center;
-  font-size: 8px;
+  font-size: 10px;
   color: #73776b;
 }
 .scene-stages > span {
@@ -442,7 +398,7 @@ h1 > span {
   color: #a8370b;
 }
 .demo-caption {
-  font-size: 8px;
+  font-size: 10px;
   color: #73766a;
 }
 .workspace-section {
@@ -637,7 +593,11 @@ h2 span {
 /* Dimensional HTML fallback is immediately present before WebGL initializes. */
 .static-scene {
   position: absolute;
-  inset: 0;
+  width: min(600px, 60%);
+  height: 420px;
+  bottom: 55px;
+  left: 50%;
+  transform: translateX(-50%);
   perspective: 800px;
 }
 .static-orbit {
@@ -893,11 +853,42 @@ h2 span {
 }
 
 @media (min-width: 1650px) {
-  .hero-grid {
-    min-height: 730px;
+  .hero-copy {
+    padding-top: 15px;
   }
-  .hero-visual {
-    height: 690px;
+}
+@media (min-width: 1024px) and (max-height: 820px) {
+  .hero {
+    min-height: max(680px, calc(100svh - 96px));
+  }
+  .hero-grid {
+    padding-top: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(54px, 5vw, 88px);
+  }
+  .hero-description {
+    font-size: 13px;
+    margin-top: 16px;
+  }
+  .hero-actions {
+    margin-top: 18px;
+  }
+  .static-scene {
+    width: min(500px, 55%);
+    height: 320px;
+    bottom: 85px;
+  }
+  .static-job {
+    top: 18%;
+  }
+  .static-resume {
+    left: auto;
+    right: 2%;
+    bottom: 0;
+  }
+  .static-match {
+    top: 15%;
   }
 }
 @media (max-width: 1150px) {
@@ -915,18 +906,10 @@ h2 span {
   .hero-actions .button-text {
     padding-inline: 0;
   }
-  .hero-visual {
-    min-height: 480px;
-  }
-  .scene-host {
-    inset-inline: -30px;
-  }
   .hero-description {
-    max-width: 345px;
+    max-width: 440px;
   }
-  .hero-reassurance {
-    font-size: 8px;
-  }
+
   .demo-caption {
     display: none;
   }
@@ -942,29 +925,37 @@ h2 span {
 }
 @media (min-width: 761px) and (max-width: 1023px) {
   .hero-grid {
-    grid-template-columns: 52% 48%;
-    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 32px;
+    width: calc(100% - 72px);
   }
   .hero {
-    min-height: 760px;
+    min-height: 0;
   }
   .hero-visual {
-    min-height: 450px;
-    height: 510px;
+    position: relative;
+    margin-top: 25px;
+    height: 480px;
+    min-height: 0;
+    width: 80%;
   }
   .scene-host {
-    inset-inline: -40px;
+    inset: 0;
+  }
+  .static-scene {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
   }
   h1 {
     font-size: clamp(51px, 6.5vw, 65px);
   }
   .hero-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-  .hero-reassurance {
-    flex-wrap: wrap;
+    justify-content: center;
+    gap: 22px;
   }
   .hero-bottom {
     min-height: 70px;
@@ -1052,39 +1043,37 @@ h2 span {
   .hero-grid {
     display: flex;
     flex-direction: column;
-    padding-top: 39px;
+    padding-top: 27px;
     padding-bottom: 0;
     min-height: 0;
   }
   .hero-copy {
     width: 100%;
     padding-bottom: 0;
+    text-align: left;
   }
   .eyebrow {
     font-size: 9px;
     gap: 8px;
   }
-  .tiny-star {
-    font-size: 18px;
-  }
+
   h1 {
     font-size: clamp(43px, 11.55vw, 80px);
     line-height: 1.07;
     letter-spacing: -0.067em;
-    margin-top: 24px;
+    margin-top: 0;
   }
-  .desktop-break {
-    display: none;
-  }
+
   .hero-description {
     font-size: 13px;
     line-height: 1.8;
-    margin-top: 21px;
+    margin: 21px 0 0;
     max-width: 360px;
   }
   .hero-actions {
     gap: 19px;
     margin-top: 23px;
+    justify-content: flex-start;
   }
   .hero-actions .button {
     min-height: 48px;
@@ -1099,12 +1088,10 @@ h2 span {
   .hero-actions .button-text svg {
     width: 14px;
   }
-  .hero-reassurance {
-    font-size: 8px;
-    margin-top: 18px;
-    gap: 8px;
-  }
+
   .hero-visual {
+    position: relative;
+    inset: auto;
     margin: 30px 0 0;
     height: 410px;
     min-height: 0;
@@ -1113,19 +1100,13 @@ h2 span {
   .scene-host {
     inset: 18px -5px 22px;
   }
-  .scene-index {
-    top: 0;
-    left: 0;
-    right: 0;
-    font-size: 7px;
-  }
+
   .scene-caption {
-    bottom: 3px;
     font-size: 8px;
+    max-width: 175px;
+    justify-content: flex-start;
   }
   .scene-perspective {
-    bottom: 31px;
-    right: 0;
     font-size: 9px;
     padding: 9px 12px;
   }
@@ -1133,14 +1114,17 @@ h2 span {
     bottom: 12%;
     height: 20px;
   }
+  .static-scene {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
   .hero-bottom {
-    margin-top: 28px;
+    margin-top: 16px;
     min-height: 67px;
   }
-  .scroll-cue {
-    font-size: 7px;
-    gap: 8px;
-  }
+
   .scene-stages {
     display: none;
   }
@@ -1251,10 +1235,6 @@ h2 span {
   }
   .hero-visual {
     height: 350px;
-  }
-  .hero-reassurance {
-    gap: 5px;
-    font-size: 7px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

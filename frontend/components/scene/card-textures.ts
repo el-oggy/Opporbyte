@@ -176,3 +176,19 @@ export function studioTexture(): THREE.CanvasTexture {
   texture.colorSpace = THREE.SRGBColorSpace;
   return texture;
 }
+
+export function createWorkspaceTexture(): THREE.CanvasTexture {
+  const canvas = document.createElement("canvas");
+  canvas.width = 1280;
+  canvas.height = 256;
+  const ctx = canvas.getContext("2d")!;
+  ctx.fillStyle = "#f7f1e6";
+  ctx.fillRect(0, 0, 1280, 256);
+  label(ctx, "opporbyte.", 32, 88, 64, INK, 600);
+  label(ctx, "Your workspace", 650, 88, 32, MUTED);
+  label(ctx, "Discover   /   Resume   /   Applications", 32, 194, 30, INK);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 4;
+  return texture;
+}

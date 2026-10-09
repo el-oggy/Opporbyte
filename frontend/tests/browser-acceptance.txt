@@ -48,11 +48,32 @@ async (page) => {
       await page.setViewportSize({ width, height: 900 });
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
       check(`No horizontal overflow ${route} at ${width}px`, !overflow);
+      if (route === '/') {
+        await page.waitForFunction(() => document.querySelectorAll('.pin-spacer').length === (innerWidth >= 1024 ? 1 : 0));
+        if (width >= 1024) {
+          // ScrollTrigger refreshes a pinned element asynchronously after resize.
+          await page.waitForFunction(() => Math.abs(document.querySelector('.scene-host').getBoundingClientRect().width - innerWidth) < 2);
+          const scene = await page.locator('.scene-host').boundingBox();
+          check(`Scene spans the desktop hero at ${width}px`, Math.abs(scene.width - width) < 2 && Math.abs(scene.x) < 2, JSON.stringify(scene));
+        }
+        if (width <= 390) {
+          const actions = await page.locator('.hero-actions').boundingBox();
+          const copy = await page.locator('.hero-copy').boundingBox();
+          check(`Mobile copy and actions precede the scene at ${width}px`, copy.y >= 0 && actions.y + actions.height < 900);
+        }
+      }
     }
   }
   await page.goto('http://127.0.0.1:3000/');
   await page.waitForFunction(() => document.querySelector('.scene-host')?.dataset.renderer === 'webgl');
   check('Real WebGL renderer on desktop', true);
+  await page.setViewportSize({ width: 1440, height: 768 });
+  await page.waitForFunction(() => document.querySelector('.scene-host').getBoundingClientRect().height < 700);
+  const laptopActions = await page.locator('.hero-actions').boundingBox();
+  check('Short laptop keeps the actions within the initial viewport', laptopActions.y + laptopActions.height < 768);
+  check('Short laptop uses a tighter hero composition', (await page.locator('.scene-host').boundingBox()).height < 700);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.waitForFunction(() => document.querySelector('.scene-host').getBoundingClientRect().height > 800);
   check('Desktop has a short pinned sequence', await page.locator('.pin-spacer').count() === 1);
   await page.evaluate(() => window.scrollTo({ top: 790, behavior: 'instant' }));
   await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '2');
@@ -60,6 +81,25 @@ async (page) => {
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '0');
   check('Reverse scroll returns discovery stage', true);
+  await page.evaluate(() => window.scrollTo({ top: 485, behavior: 'instant' }));
+  await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '1');
+  await page.setViewportSize({ width: 768, height: 900 });
+  await page.waitForFunction(() => document.querySelectorAll('.pin-spacer').length === 0);
+  const copyReset = await page.locator('.hero-copy').evaluate(element => {
+    const transform = getComputedStyle(element).transform;
+    return transform === 'none' || new DOMMatrixReadOnly(transform).isIdentity;
+  });
+  check('Resizing during the story restores the compact copy and scene', copyReset && await page.locator('.hero').getAttribute('data-stage') === '0');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.waitForFunction(() => document.querySelectorAll('.pin-spacer').length === 1);
+  await page.evaluate(() => window.scrollTo({ top: 485, behavior: 'instant' }));
+  await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '1');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.waitForFunction(() => document.querySelectorAll('.pin-spacer').length === 0);
+  check('Enabling reduced motion during the story removes the pin and resets the caption', await page.locator('.hero').getAttribute('data-stage') === '0');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '0');
   await page.getByRole('link', { name: 'See how it works', exact: true }).click();
   await page.waitForFunction(() => location.hash === '#how-it-works');
   check('Secondary CTA targets next section', true);

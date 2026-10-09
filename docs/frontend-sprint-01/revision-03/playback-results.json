@@ -1,0 +1,21 @@
+{
+  "duration": 48.48,
+  "width": 1440,
+  "height": 900,
+  "seeks": [
+    {
+      "target": 12.12,
+      "actual": 12.12,
+      "readyState": 4
+    },
+    {
+      "target": 36.36,
+      "actual": 36.36,
+      "readyState": 4
+    }
+  ],
+  "playbackRate": 4,
+  "ended": true,
+  "error": null,
+  "time": 48.48
+}

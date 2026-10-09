@@ -1,7 +1,8 @@
 # Your global skills
 
 Installed 190 unique skills from your existing Gemini/Antigravity and
-Claude/gstack libraries, plus the new `immersive-3d-web` skill. Existing same-name
+Claude/gstack libraries, the new `immersive-3d-web` skill, and 37 additional skills
+from the discovery pass below. Existing same-name
 skills were preserved; 126 duplicate or already available entries were skipped.
 
 Global destination: `C:\Users\adars\.agents\skills`.
@@ -51,3 +52,68 @@ Detailed records: [installation report](installation-report.json),
 [verification results](verification-results.json),
 [3D skill](immersive-3d-web/SKILL.md),
 [scenario review](skill-test-scenarios.md).
+
+## Discovery pass: 37 additional skills
+
+Ran your exact command and read its complete generated instructions:
+
+```powershell
+npx skills use "https://github.com/vercel-labs/skills" --skill "find-skills"
+```
+
+The output embedded the skill instructions directly; it did not supply a separate
+supporting-files directory. Followed its discovery workflow: inspected the
+skills.sh leaderboard, searched relevant categories, reviewed primary GitHub
+sources and installed selected skills from local copies of reviewed commits.
+All existing same-name skill folders were preserved.
+
+| Collection                                               | Added | Ordinary task triggers                                                                     |
+| -------------------------------------------------------- | ----: | ------------------------------------------------------------------------------------------ |
+| [Find Skills](https://github.com/vercel-labs/skills)     |     1 | Discover an appropriate skill                                                              |
+| [Ponytail](https://github.com/DietrichGebert/ponytail)   |     6 | Engineering quality, review, audits and technical debt                                     |
+| [Three.js](https://github.com/cloudai-x/threejs-skills)  |    10 | Geometry, materials, light, textures, animation, loading, shaders, effects and interaction |
+| [Emil Kowalski](https://github.com/emilkowalski/skills)  |     5 | Frontend craft and deliberate animation                                                    |
+| [Taste](https://github.com/leonxlnx/taste-skill)         |     2 | Visual quality and refinement of existing websites                                         |
+| [Remotion](https://github.com/remotion-dev/skills)       |     1 | Editable code-written videos; includes nested supporting skills                            |
+| [Hyperframes](https://github.com/heygen-com/hyperframes) |    12 | Motion graphics, video composition, media, timing and audio                                |
+
+Verified 37 skill folders, all 615 source/supporting files and 56 local supporting
+links. Each new skill explicitly enables implicit invocation. Referenced paths
+remain relative to that skill's original directory structure. The verification
+records source commits, skill hashes and repository popularity at review time;
+popularity is a selection signal, not a security guarantee. No repository hooks,
+plugin installers, service integrations or video runtimes were executed.
+
+The app has already discovered the new skill catalog. You can describe the task
+normally; relevant skills are selected automatically. Their instructions guide
+the work, while dependencies and API compatibility still need verification for
+each project. Opporbyte keeps its approved palette, fonts and frontend-only scope
+when a general-purpose skill suggests a different default.
+
+Records: [complete generated instructions](find-skills-generated.txt),
+[selected skills](discovery-selection.json),
+[verified installation](discovery-verification.json).
+
+### Reproducing the installation audit
+
+`scripts/verify-discovered-skills.py` is a local source-comparison audit, not a
+standalone network installer. This session's source clones and manifest are in
+ignored `output/playwright/skill-discovery/`; they are not included in a fresh
+checkout. Its Python dependency is declared in
+`scripts/skill-verification-requirements.txt`.
+
+To repeat elsewhere, clone the repositories at the commits recorded in the
+verification report. Supply a JSON manifest array with one record per repository:
+`{"source":"owner/repository","sha":"commit","stars":0,"path":"checkout-directory"}`.
+Paths can be absolute or relative to `--source-root`. The script accepts
+`--source-manifest`, `--source-root` and `--destination`; it requires the original
+`skills/` supporting directories. Install PyYAML using the requirements file, or
+pass `--python-support-dir` for an existing installation. It is read-only for
+installed skills unless `--enable-implicit` is explicitly passed. The audit
+updates the tracked JSON verification report.
+
+For this session's retained cache:
+
+```powershell
+python scripts/verify-discovered-skills.py --python-support-dir output/skill-validation
+```

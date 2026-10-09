@@ -62,3 +62,15 @@ test("progress clamps without overshooting or producing NaN", () => {
       assert.ok(scene.cardPose(i, p).position.every(Number.isFinite));
     }
 });
+
+test("compact layout keeps its own useful pose through scroll and breakpoint changes", () => {
+  for (let index = 0; index < scene.COMPACT_SCATTERED.length; index++) {
+    const initial = scene.cardPose(index, 0, true);
+    assert.deepEqual(initial.position, scene.COMPACT_SCATTERED[index]);
+    for (const progress of [0.42, 0.8, 1])
+      assert.deepEqual(scene.cardPose(index, progress, true), initial);
+    // A desktop scroll position must not leak into an unpinned compact scene.
+    scene.cardPose(index, 0.8, false);
+    assert.deepEqual(scene.cardPose(index, 0.8, true), initial);
+  }
+});

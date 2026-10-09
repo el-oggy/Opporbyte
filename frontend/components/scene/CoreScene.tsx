@@ -4,12 +4,17 @@ import { useEffect, useMemo, useRef, type RefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { cameraPose, cardPose } from "@/lib/scene-layout";
-import { createCardTexture, studioTexture } from "./card-textures";
+import {
+  createCardTexture,
+  createWorkspaceTexture,
+  studioTexture,
+} from "./card-textures";
 
 interface SceneProps {
   progress: RefObject<number>;
   reduced: boolean;
   mobile: boolean;
+  compact: boolean;
   inspection: boolean;
   visible: boolean;
   onReady: () => void;
@@ -71,6 +76,7 @@ function CareerCard({
   progress,
   reduced,
   mobile,
+  compact,
 }: SceneProps & { index: number }) {
   const group = useRef<THREE.Group>(null);
   const width = index === 2 ? 2.03 : index === 4 ? 2.18 : 2.65;
@@ -97,8 +103,8 @@ function CareerCard({
   useFrame((state, delta) => {
     if (!group.current) return;
     if (!reduced) elapsed.current += Math.min(delta, 0.04);
-    const p = reduced || mobile ? 0 : progress.current;
-    const pose = cardPose(index, p);
+    const p = reduced || compact ? 0 : progress.current;
+    const pose = cardPose(index, p, compact);
     const intro = reduced
       ? 1
       : THREE.MathUtils.smoothstep(elapsed.current, 0, 1.35);
@@ -143,10 +149,9 @@ function CareerCard({
       </mesh>
       <mesh position={[0, 0, 0.215]} receiveShadow>
         <planeGeometry args={[width - 0.16, height - 0.16]} />
-        <meshStandardMaterial
+        <meshBasicMaterial
           map={texture}
-          roughness={0.76}
-          metalness={0}
+          toneMapped={false}
           transparent
           alphaTest={0.1}
         />
@@ -165,7 +170,7 @@ function CareerCard({
   );
 }
 
-function Core({ progress, reduced, mobile }: SceneProps) {
+function Core({ progress, reduced, mobile, compact }: SceneProps) {
   const core = useRef<THREE.Group>(null);
   const geometry = useMemo(() => coreGeometry(), []);
   const elapsed = useRef(0);
@@ -174,7 +179,7 @@ function Core({ progress, reduced, mobile }: SceneProps) {
   useFrame((state, delta) => {
     if (!core.current) return;
     if (!reduced) elapsed.current += Math.min(delta, 0.04);
-    const p = reduced || mobile ? 0 : progress.current;
+    const p = reduced || compact ? 0 : progress.current;
     const merge = THREE.MathUtils.smoothstep(p, 0.43, 1);
     const intro = reduced
       ? 1
@@ -275,7 +280,7 @@ function Core({ progress, reduced, mobile }: SceneProps) {
   );
 }
 
-function Connections({ progress, reduced, mobile }: SceneProps) {
+function Connections({ progress, reduced, mobile, compact }: SceneProps) {
   const lines = useRef<THREE.Group>(null);
   const elapsed = useRef(0);
   const geometries = useMemo(
@@ -284,7 +289,7 @@ function Connections({ progress, reduced, mobile }: SceneProps) {
         const points = Array.from({ length: 101 }, (_, n) => {
           const angle = (n / 100) * Math.PI * 2;
           return new THREE.Vector3(
-            Math.cos(angle) * (3.45 - i * 0.25),
+            Math.cos(angle) * (4.3 - i * 0.25),
             Math.sin(angle) * 2.33,
             Math.sin(angle + i) * 1.35 - 0.9,
           );
@@ -306,7 +311,7 @@ function Connections({ progress, reduced, mobile }: SceneProps) {
   useFrame((_state, delta) => {
     if (!lines.current) return;
     if (!reduced) elapsed.current += Math.min(delta, 0.04);
-    const p = reduced || mobile ? 0 : progress.current;
+    const p = reduced || compact ? 0 : progress.current;
     lines.current.visible = p < 0.8;
     lines.current.rotation.set(
       0.35,
@@ -314,6 +319,22 @@ function Connections({ progress, reduced, mobile }: SceneProps) {
       -0.27,
     );
     lines.current.scale.setScalar(mobile ? 0.74 : 1);
+    const strength =
+      (0.08 + THREE.MathUtils.smoothstep(p, 0.08, 0.42) * 0.6) *
+      (1 - THREE.MathUtils.smoothstep(p, 0.52, 0.8));
+    for (let i = 0; i < 2; i++) {
+      const material = (lines.current.children[i] as THREE.Mesh)
+        .material as THREE.MeshStandardMaterial;
+      material.opacity = (i ? 0.55 : 1) * (compact ? 0.18 : strength);
+    }
+    for (let i = 0; i < 4; i++) {
+      const angle = (i * Math.PI) / 2 + (reduced ? 0 : elapsed.current * 0.16);
+      lines.current.children[i + 2].position.set(
+        Math.cos(angle) * 4.3,
+        Math.sin(angle) * 2.33,
+        Math.sin(angle) * 1.35 - 0.9,
+      );
+    }
   });
   return (
     <group ref={lines} rotation={[0.35, -0.14, -0.27]}>
@@ -351,13 +372,20 @@ function Connections({ progress, reduced, mobile }: SceneProps) {
   );
 }
 
-function WorkspaceFrame({ progress, reduced, mobile }: SceneProps) {
+function WorkspaceFrame({ progress, reduced, compact }: SceneProps) {
   const frame = useRef<THREE.Group>(null);
-  const geometry = useMemo(() => roundedGeometry(8.2, 5.62, 0.28, 0.25), []);
-  useEffect(() => () => geometry.dispose(), [geometry]);
+  const geometry = useMemo(() => roundedGeometry(8.2, 4.95, 0.28, 0.25), []);
+  const texture = useMemo(() => createWorkspaceTexture(), []);
+  useEffect(
+    () => () => {
+      geometry.dispose();
+      texture.dispose();
+    },
+    [geometry, texture],
+  );
   useFrame(() => {
     if (!frame.current) return;
-    const p = reduced || mobile ? 0 : progress.current;
+    const p = reduced || compact ? 0 : progress.current;
     const enter = THREE.MathUtils.smoothstep(p, 0.44, 0.9);
     frame.current.visible = p > 0.44;
     frame.current.scale.setScalar(0.72 + enter * 0.28);
@@ -366,7 +394,7 @@ function WorkspaceFrame({ progress, reduced, mobile }: SceneProps) {
   return (
     <group
       ref={frame}
-      position={[0, 0.1, -2]}
+      position={[0, 0.25, -2]}
       rotation={[-0.07, -0.2, 0]}
       visible={false}
     >
@@ -382,18 +410,22 @@ function WorkspaceFrame({ progress, reduced, mobile }: SceneProps) {
         <boxGeometry args={[7.65, 0.018, 0.014]} />
         <meshStandardMaterial color="#d7cbb6" />
       </mesh>
-      {[-2.5, -2.29, -2.08].map((x, i) => (
-        <mesh key={x} position={[x, 2.3, 0.21]}>
-          <sphereGeometry args={[0.05, 12, 8]} />
-          <meshStandardMaterial color={i === 0 ? "#FF6B2B" : "#c1b9a5"} />
-        </mesh>
-      ))}
+      <mesh position={[-0.4, 1.95, 0.22]}>
+        <planeGeometry args={[4.4, 0.9]} />
+        <meshBasicMaterial map={texture} toneMapped={false} />
+      </mesh>
     </group>
   );
 }
 
-function CameraRig({ progress, reduced, mobile, inspection }: SceneProps) {
-  const { camera } = useThree();
+function CameraRig({
+  progress,
+  reduced,
+  mobile,
+  compact,
+  inspection,
+}: SceneProps) {
+  const { camera, size } = useThree();
   const inspect = useRef(inspection ? 1 : 0);
   const pointer = useRef(new THREE.Vector2());
   useFrame((state, delta) => {
@@ -403,12 +435,16 @@ function CameraRig({ progress, reduced, mobile, inspection }: SceneProps) {
       : THREE.MathUtils.lerp(inspect.current, Number(inspection), damp);
     if (reduced || mobile) pointer.current.set(0, 0);
     else pointer.current.lerp(state.pointer, damp);
-    const p = reduced || mobile ? 0 : progress.current;
+    const p = reduced || compact ? 0 : progress.current;
     const pose = cameraPose(p, inspect.current);
     camera.position.set(
       pose.position[0] + pointer.current.x * 0.35,
       pose.position[1] + pointer.current.y * 0.23,
-      mobile ? 11.65 : pose.position[2],
+      mobile
+        ? 9.65
+        : compact
+          ? 10.2
+          : pose.position[2] + (size.width < 1150 ? 0.5 : 0),
     );
     camera.lookAt(...pose.target);
   });
@@ -468,15 +504,17 @@ function World(props: SceneProps) {
       <directionalLight position={[4, 1, 4]} intensity={0.65} color="#fffdf8" />
       <directionalLight position={[3, 4, -4]} intensity={1.4} color="#effff7" />
       <CameraRig {...props} />
-      <Core {...props} />
-      <Connections {...props} />
-      <WorkspaceFrame {...props} />
-      {(mobile ? [0, 2, 4] : [0, 1, 2, 3, 4]).map((index) => (
-        <CareerCard key={index} index={index} {...props} />
-      ))}
+      <group position={[0, props.compact ? 0 : -1.6, 0]}>
+        <Core {...props} />
+        <Connections {...props} />
+        <WorkspaceFrame {...props} />
+        {(mobile ? [0, 2, 4] : [0, 1, 2, 3, 4]).map((index) => (
+          <CareerCard key={index} index={index} {...props} />
+        ))}
+      </group>
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, -3.4, 0]}
+        position={[0, props.compact ? -3.4 : -4, 0]}
         receiveShadow
       >
         <planeGeometry args={[30, 30]} />
@@ -490,7 +528,7 @@ export default function CoreScene(props: SceneProps) {
   return (
     <Canvas
       className="webgl-scene"
-      camera={{ position: [0.65, 0.8, props.mobile ? 11.65 : 10.9], fov: 42 }}
+      camera={{ position: [0.65, 0.8, props.mobile ? 9.65 : 12.1], fov: 42 }}
       dpr={[1, props.mobile ? 1.25 : 1.6]}
       shadows="variance"
       frameloop={
@@ -501,6 +539,7 @@ export default function CoreScene(props: SceneProps) {
         antialias: true,
         powerPreference: "low-power",
         toneMappingExposure: 0.9,
+        toneMapping: THREE.NeutralToneMapping,
       }}
       fallback={null}
     >
