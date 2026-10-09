@@ -325,7 +325,7 @@ h1 > span {
 }
 .scene-host {
   position: absolute;
-  inset: 25px -38px 24px -25px;
+  inset: 25px -52px 30px -42px;
 }
 .scene-host::after {
   content: "";
@@ -345,6 +345,35 @@ h1 > span {
 }
 .webgl-scene canvas {
   touch-action: pan-y;
+}
+.scene-host[data-renderer="webgl"]::after {
+  display: none;
+}
+.scene-perspective {
+  position: absolute;
+  z-index: 3;
+  right: 9px;
+  bottom: 45px;
+  display: none;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #20242024;
+  border-radius: 30px;
+  background: #fffdf899;
+  color: var(--ink);
+  padding: 10px 13px;
+  min-height: 40px;
+  font-size: 10px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+.hero-visual:has(.scene-host[data-renderer="webgl"]) .scene-perspective {
+  display: inline-flex;
+}
+.scene-perspective:hover,
+.scene-perspective[aria-pressed="true"] {
+  background: var(--white);
+  border-color: #20242055;
 }
 .scene-caption {
   position: absolute;
@@ -1093,6 +1122,12 @@ h2 span {
   .scene-caption {
     bottom: 3px;
     font-size: 8px;
+  }
+  .scene-perspective {
+    bottom: 31px;
+    right: 0;
+    font-size: 9px;
+    padding: 9px 12px;
   }
   .scene-host::after {
     bottom: 12%;

@@ -36,10 +36,12 @@ export function SceneHost({
   progress,
   reduced,
   mobile,
+  inspection,
 }: {
   progress: RefObject<number>;
   reduced: boolean;
   mobile: boolean;
+  inspection: boolean;
 }) {
   const [mode, setMode] = useState<"checking" | "webgl" | "fallback">(
     "checking",
@@ -99,6 +101,7 @@ export function SceneHost({
             progress={progress}
             reduced={reduced}
             mobile={mobile}
+            inspection={inspection}
             visible={visible}
             onReady={onReady}
             onFailure={onFailure}

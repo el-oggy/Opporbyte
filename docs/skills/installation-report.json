@@ -1,0 +1,1965 @@
+{
+  "destination": "C:\\Users\\adars\\.agents\\skills",
+  "records": [
+    {
+      "name": "academy-guide",
+      "original_name": "academy-guide",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\academy-guide",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\academy-guide",
+      "status": "installed"
+    },
+    {
+      "name": "accidental-data-loss-prevention",
+      "original_name": "accidental-data-loss-prevention",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\accidental-data-loss-prevention",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\accidental-data-loss-prevention",
+      "status": "installed"
+    },
+    {
+      "name": "acquire-codebase-knowledge",
+      "original_name": "acquire-codebase-knowledge",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\acquire-codebase-knowledge",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\acquire-codebase-knowledge",
+      "status": "installed"
+    },
+    {
+      "name": "agent-skill-stack",
+      "original_name": "agent-skill-stack",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\agent-skill-stack",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\agent-skill-stack",
+      "status": "installed"
+    },
+    {
+      "name": "agent-supply-chain",
+      "original_name": "agent-supply-chain",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\agent-supply-chain",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\agent-supply-chain",
+      "status": "installed"
+    },
+    {
+      "name": "ai-prompt-engineering-safety-review",
+      "original_name": "ai-prompt-engineering-safety-review",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\ai-prompt-engineering-safety-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\ai-prompt-engineering-safety-review",
+      "status": "installed"
+    },
+    {
+      "name": "ai-ready",
+      "original_name": "ai-ready",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\ai-ready",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\ai-ready",
+      "status": "installed"
+    },
+    {
+      "name": "algorithmic-art",
+      "original_name": "algorithmic-art",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\algorithmic-art",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\algorithmic-art",
+      "status": "installed"
+    },
+    {
+      "name": "bigquery-ai-ml",
+      "original_name": "bigquery-ai-ml",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\bigquery-ai-ml",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\bigquery-ai-ml",
+      "status": "installed"
+    },
+    {
+      "name": "bigquery-bigframes",
+      "original_name": "bigquery-bigframes",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\bigquery-bigframes",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\bigquery-bigframes",
+      "status": "installed"
+    },
+    {
+      "name": "bigquery-data-transfer-service",
+      "original_name": "bigquery-data-transfer-service",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\bigquery-data-transfer-service",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\bigquery-data-transfer-service",
+      "status": "installed"
+    },
+    {
+      "name": "bigquery-graph",
+      "original_name": "bigquery-graph",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\bigquery-graph",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\bigquery-graph",
+      "status": "installed"
+    },
+    {
+      "name": "bigquery-sql",
+      "original_name": "bigquery-sql",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\bigquery-sql",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\bigquery-sql",
+      "status": "installed"
+    },
+    {
+      "name": "bigtable-basics",
+      "original_name": "bigtable-basics",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\bigtable-basics",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\bigtable-basics",
+      "status": "installed"
+    },
+    {
+      "name": "brag",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\brag",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "brag-slim",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\brag-slim",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "brand-guidelines",
+      "original_name": "brand-guidelines",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\brand-guidelines",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\brand-guidelines",
+      "status": "installed"
+    },
+    {
+      "name": "brand-identity",
+      "original_name": "brand-identity",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\brand-identity",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\brand-identity",
+      "status": "installed"
+    },
+    {
+      "name": "building-data-apps",
+      "original_name": "building-data-apps",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\building-data-apps",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\building-data-apps",
+      "status": "installed"
+    },
+    {
+      "name": "caveman",
+      "original_name": "caveman",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\caveman",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\caveman",
+      "status": "installed"
+    },
+    {
+      "name": "colab-operator",
+      "original_name": "colab-operator",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\colab-operator",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\colab-operator",
+      "status": "installed"
+    },
+    {
+      "name": "data-autocleaning",
+      "original_name": "data-autocleaning",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\data-autocleaning",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\data-autocleaning",
+      "status": "installed"
+    },
+    {
+      "name": "dataform-bigquery",
+      "original_name": "dataform-bigquery",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\dataform-bigquery",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\dataform-bigquery",
+      "status": "installed"
+    },
+    {
+      "name": "dbt-bigquery",
+      "original_name": "dbt-bigquery",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\dbt-bigquery",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\dbt-bigquery",
+      "status": "installed"
+    },
+    {
+      "name": "discovering-gcp-data-assets",
+      "original_name": "discovering-gcp-data-assets",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\discovering-gcp-data-assets",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\discovering-gcp-data-assets",
+      "status": "installed"
+    },
+    {
+      "name": "docx",
+      "original_name": "docx",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\docx",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\docx",
+      "status": "installed"
+    },
+    {
+      "name": "enforcing-resource-attribution",
+      "original_name": "enforcing-resource-attribution",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\enforcing-resource-attribution",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\enforcing-resource-attribution",
+      "status": "installed"
+    },
+    {
+      "name": "engineering-researcher",
+      "original_name": "engineering-researcher",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\engineering-researcher",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\engineering-researcher",
+      "status": "installed"
+    },
+    {
+      "name": "federate-lakehouse-catalog",
+      "original_name": "federate-lakehouse-catalog",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\federate-lakehouse-catalog",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\federate-lakehouse-catalog",
+      "status": "installed"
+    },
+    {
+      "name": "frontend-design",
+      "original_name": "frontend-design",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\frontend-design",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\frontend-design",
+      "status": "installed"
+    },
+    {
+      "name": "gcp-composer-troubleshooting",
+      "original_name": "gcp-composer-troubleshooting",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gcp-composer-troubleshooting",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gcp-composer-troubleshooting",
+      "status": "installed"
+    },
+    {
+      "name": "gcp-data-pipelines",
+      "original_name": "gcp-data-pipelines",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gcp-data-pipelines",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gcp-data-pipelines",
+      "status": "installed"
+    },
+    {
+      "name": "gcp-dataflow",
+      "original_name": "gcp-dataflow",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gcp-dataflow",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gcp-dataflow",
+      "status": "installed"
+    },
+    {
+      "name": "gcp-managed-airflow-dag-authoring",
+      "original_name": "gcp-managed-airflow-dag-authoring",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gcp-managed-airflow-dag-authoring",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gcp-managed-airflow-dag-authoring",
+      "status": "installed"
+    },
+    {
+      "name": "gcp-managed-airflow-migrations",
+      "original_name": "gcp-managed-airflow-migrations",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gcp-managed-airflow-migrations",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gcp-managed-airflow-migrations",
+      "status": "installed"
+    },
+    {
+      "name": "gcp-managed-airflow-recommendations",
+      "original_name": "gcp-managed-airflow-recommendations",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gcp-managed-airflow-recommendations",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gcp-managed-airflow-recommendations",
+      "status": "installed"
+    },
+    {
+      "name": "gcp-pipeline-orchestration",
+      "original_name": "gcp-pipeline-orchestration",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gcp-pipeline-orchestration",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gcp-pipeline-orchestration",
+      "status": "installed"
+    },
+    {
+      "name": "gcp-pipeline-resource-provisioning",
+      "original_name": "gcp-pipeline-resource-provisioning",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gcp-pipeline-resource-provisioning",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gcp-pipeline-resource-provisioning",
+      "status": "installed"
+    },
+    {
+      "name": "gcp-spark",
+      "original_name": "gcp-spark",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gcp-spark",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gcp-spark",
+      "status": "installed"
+    },
+    {
+      "name": "gcs-security-assessment",
+      "original_name": "gcs-security-assessment",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gcs-security-assessment",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gcs-security-assessment",
+      "status": "installed"
+    },
+    {
+      "name": "google-cloud-auth-verification",
+      "original_name": "google-cloud-auth-verification",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\google-cloud-auth-verification",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\google-cloud-auth-verification",
+      "status": "installed"
+    },
+    {
+      "name": "google-cloud-storage-basics",
+      "original_name": "google-cloud-storage-basics",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\google-cloud-storage-basics",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\google-cloud-storage-basics",
+      "status": "installed"
+    },
+    {
+      "name": "google-cloud-storage-bucket-architect",
+      "original_name": "google-cloud-storage-bucket-architect",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\google-cloud-storage-bucket-architect",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\google-cloud-storage-bucket-architect",
+      "status": "installed"
+    },
+    {
+      "name": "google-cloud-storage-fuse",
+      "original_name": "google-cloud-storage-fuse",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\google-cloud-storage-fuse",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\google-cloud-storage-fuse",
+      "status": "installed"
+    },
+    {
+      "name": "grill-me",
+      "original_name": "grill-me",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\grill-me",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\grill-me",
+      "status": "installed"
+    },
+    {
+      "name": "gstack",
+      "original_name": "gstack",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-autoplan",
+      "original_name": "autoplan",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\autoplan",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-autoplan",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-benchmark",
+      "original_name": "benchmark",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\benchmark",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-benchmark",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-benchmark-models",
+      "original_name": "benchmark-models",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\benchmark-models",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-benchmark-models",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-browse",
+      "original_name": "browse",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\browse",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-browse",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-canary",
+      "original_name": "canary",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\canary",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-canary",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-careful",
+      "original_name": "careful",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\careful",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-careful",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-codex",
+      "original_name": "codex",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\codex",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-codex",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-context-restore",
+      "original_name": "context-restore",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\context-restore",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-context-restore",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-context-save",
+      "original_name": "context-save",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\context-save",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-context-save",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-cso",
+      "original_name": "cso",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\cso",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-cso",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-design-consultation",
+      "original_name": "design-consultation",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\design-consultation",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-design-consultation",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-design-html",
+      "original_name": "design-html",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\design-html",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-design-html",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-design-review",
+      "original_name": "design-review",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\design-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-design-review",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-design-shotgun",
+      "original_name": "design-shotgun",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\design-shotgun",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-design-shotgun",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-devex-review",
+      "original_name": "devex-review",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\devex-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-devex-review",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-diagram",
+      "original_name": "diagram",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\diagram",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-diagram",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-document-generate",
+      "original_name": "document-generate",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\document-generate",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-document-generate",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-document-release",
+      "original_name": "document-release",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\document-release",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-document-release",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-freeze",
+      "original_name": "freeze",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\freeze",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-freeze",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-gstack-upgrade",
+      "original_name": "gstack-upgrade",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\gstack-upgrade",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-gstack-upgrade",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-guard",
+      "original_name": "guard",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\guard",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-guard",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-health",
+      "original_name": "health",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\health",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-health",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-investigate",
+      "original_name": "investigate",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\investigate",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-investigate",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-ios-clean",
+      "original_name": "ios-clean",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\ios-clean",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-ios-clean",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-ios-design-review",
+      "original_name": "ios-design-review",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\ios-design-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-ios-design-review",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-ios-fix",
+      "original_name": "ios-fix",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\ios-fix",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-ios-fix",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-ios-qa",
+      "original_name": "ios-qa",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\ios-qa",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-ios-qa",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-ios-sync",
+      "original_name": "ios-sync",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\ios-sync",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-ios-sync",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-land-and-deploy",
+      "original_name": "land-and-deploy",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\land-and-deploy",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-land-and-deploy",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-landing-report",
+      "original_name": "landing-report",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\landing-report",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-landing-report",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-learn",
+      "original_name": "learn",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\learn",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-learn",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-make-pdf",
+      "original_name": "make-pdf",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\make-pdf",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-make-pdf",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-office-hours",
+      "original_name": "office-hours",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\office-hours",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-office-hours",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-open-gstack-browser",
+      "original_name": "open-gstack-browser",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\open-gstack-browser",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-open-gstack-browser",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-pair-agent",
+      "original_name": "pair-agent",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\pair-agent",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-pair-agent",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-plan-ceo-review",
+      "original_name": "plan-ceo-review",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\plan-ceo-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-plan-ceo-review",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-plan-design-review",
+      "original_name": "plan-design-review",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\plan-design-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-plan-design-review",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-plan-devex-review",
+      "original_name": "plan-devex-review",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\plan-devex-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-plan-devex-review",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-plan-eng-review",
+      "original_name": "plan-eng-review",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\plan-eng-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-plan-eng-review",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-plan-tune",
+      "original_name": "plan-tune",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\plan-tune",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-plan-tune",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-qa",
+      "original_name": "qa",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\qa",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-qa",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-qa-only",
+      "original_name": "qa-only",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\qa-only",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-qa-only",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-retro",
+      "original_name": "retro",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\retro",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-retro",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-review",
+      "original_name": "review",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-review",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-scrape",
+      "original_name": "scrape",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\scrape",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-scrape",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-setup-browser-cookies",
+      "original_name": "setup-browser-cookies",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\setup-browser-cookies",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-setup-browser-cookies",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-setup-deploy",
+      "original_name": "setup-deploy",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\setup-deploy",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-setup-deploy",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-setup-gbrain",
+      "original_name": "setup-gbrain",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\setup-gbrain",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-setup-gbrain",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-ship",
+      "original_name": "ship",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\ship",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-ship",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-skillify",
+      "original_name": "skillify",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\skillify",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-skillify",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-spec",
+      "original_name": "spec",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\spec",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-spec",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-sync-gbrain",
+      "original_name": "sync-gbrain",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\sync-gbrain",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-sync-gbrain",
+      "status": "installed"
+    },
+    {
+      "name": "gstack-unfreeze",
+      "original_name": "unfreeze",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\gstack\\unfreeze",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gstack-unfreeze",
+      "status": "installed"
+    },
+    {
+      "name": "humanize-everything",
+      "original_name": "humanize-everything",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\humanize-everything",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\humanize-everything",
+      "status": "installed"
+    },
+    {
+      "name": "internal-comms",
+      "original_name": "internal-comms",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\internal-comms",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\internal-comms",
+      "status": "installed"
+    },
+    {
+      "name": "managing-python-dependencies",
+      "original_name": "managing-python-dependencies",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\managing-python-dependencies",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\managing-python-dependencies",
+      "status": "installed"
+    },
+    {
+      "name": "mcp-builder",
+      "original_name": "mcp-builder",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\mcp-builder",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\mcp-builder",
+      "status": "installed"
+    },
+    {
+      "name": "ml-best-practices",
+      "original_name": "ml-best-practices",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\ml-best-practices",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\ml-best-practices",
+      "status": "installed"
+    },
+    {
+      "name": "notebook-guidance",
+      "original_name": "notebook-guidance",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\notebook-guidance",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\notebook-guidance",
+      "status": "installed"
+    },
+    {
+      "name": "pptx",
+      "original_name": "pptx",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\pptx",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\pptx",
+      "status": "installed"
+    },
+    {
+      "name": "prd",
+      "original_name": "prd",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\prd",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\prd",
+      "status": "installed"
+    },
+    {
+      "name": "research-communication-designer",
+      "original_name": "research-communication-designer",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\research-communication-designer",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\research-communication-designer",
+      "status": "installed"
+    },
+    {
+      "name": "rtl-code-reviewer",
+      "original_name": "rtl-code-reviewer",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\rtl-code-reviewer",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\rtl-code-reviewer",
+      "status": "installed"
+    },
+    {
+      "name": "rtl-verification",
+      "original_name": "rtl-verification",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\rtl-verification",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\rtl-verification",
+      "status": "installed"
+    },
+    {
+      "name": "schema-mapping",
+      "original_name": "schema-mapping",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\schema-mapping",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\schema-mapping",
+      "status": "installed"
+    },
+    {
+      "name": "scraping-reddit",
+      "original_name": "scraping-reddit",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\scraping-reddit",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\scraping-reddit",
+      "status": "installed"
+    },
+    {
+      "name": "skill-creator",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\skill-creator",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "skill-repair",
+      "original_name": "skill-repair",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\skill-repair",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\skill-repair",
+      "status": "installed"
+    },
+    {
+      "name": "superpowers",
+      "original_name": "superpowers",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\superpowers",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\superpowers",
+      "status": "installed"
+    },
+    {
+      "name": "technical-documentation",
+      "original_name": "technical-documentation",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\technical-documentation",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\technical-documentation",
+      "status": "installed"
+    },
+    {
+      "name": "theme-factory",
+      "original_name": "theme-factory",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\theme-factory",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\theme-factory",
+      "status": "installed"
+    },
+    {
+      "name": "vercel-react-best-practices",
+      "original_name": "vercel-react-best-practices",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\vercel-react-best-practices",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\vercel-react-best-practices",
+      "status": "installed"
+    },
+    {
+      "name": "vlsi-rtl-engineer",
+      "original_name": "vlsi-rtl-engineer",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\vlsi-rtl-engineer",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\vlsi-rtl-engineer",
+      "status": "installed"
+    },
+    {
+      "name": "web-artifacts-builder",
+      "original_name": "web-artifacts-builder",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\web-artifacts-builder",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\web-artifacts-builder",
+      "status": "installed"
+    },
+    {
+      "name": "webapp-testing",
+      "original_name": "webapp-testing",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\webapp-testing",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\webapp-testing",
+      "status": "installed"
+    },
+    {
+      "name": "xlsx",
+      "original_name": "xlsx",
+      "source": "C:\\Users\\adars\\.gemini\\config\\skills\\xlsx",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\xlsx",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-add-tests",
+      "original_name": "gsd-add-tests",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-add-tests",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-add-tests",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ai-integration-phase",
+      "original_name": "gsd-ai-integration-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ai-integration-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ai-integration-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-audit-fix",
+      "original_name": "gsd-audit-fix",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-audit-fix",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-audit-fix",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-audit-milestone",
+      "original_name": "gsd-audit-milestone",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-audit-milestone",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-audit-milestone",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-audit-uat",
+      "original_name": "gsd-audit-uat",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-audit-uat",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-audit-uat",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-autonomous",
+      "original_name": "gsd-autonomous",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-autonomous",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-autonomous",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-capture",
+      "original_name": "gsd-capture",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-capture",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-capture",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-cleanup",
+      "original_name": "gsd-cleanup",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-cleanup",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-cleanup",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-code-review",
+      "original_name": "gsd-code-review",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-code-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-code-review",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-complete-milestone",
+      "original_name": "gsd-complete-milestone",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-complete-milestone",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-complete-milestone",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-config",
+      "original_name": "gsd-config",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-config",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-config",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-debug",
+      "original_name": "gsd-debug",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-debug",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-debug",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-discuss-phase",
+      "original_name": "gsd-discuss-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-discuss-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-discuss-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-docs-update",
+      "original_name": "gsd-docs-update",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-docs-update",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-docs-update",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-eval-review",
+      "original_name": "gsd-eval-review",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-eval-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-eval-review",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-execute-phase",
+      "original_name": "gsd-execute-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-execute-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-execute-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-explore",
+      "original_name": "gsd-explore",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-explore",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-explore",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-extract-learnings",
+      "original_name": "gsd-extract-learnings",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-extract-learnings",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-extract-learnings",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-fast",
+      "original_name": "gsd-fast",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-fast",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-fast",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-forensics",
+      "original_name": "gsd-forensics",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-forensics",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-forensics",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-graphify",
+      "original_name": "gsd-graphify",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-graphify",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-graphify",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-health",
+      "original_name": "gsd-health",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-health",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-health",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-help",
+      "original_name": "gsd-help",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-help",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-help",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-import",
+      "original_name": "gsd-import",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-import",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-import",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-inbox",
+      "original_name": "gsd-inbox",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-inbox",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-inbox",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ingest-docs",
+      "original_name": "gsd-ingest-docs",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ingest-docs",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ingest-docs",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-manager",
+      "original_name": "gsd-manager",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-manager",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-manager",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-map-codebase",
+      "original_name": "gsd-map-codebase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-map-codebase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-map-codebase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-milestone-summary",
+      "original_name": "gsd-milestone-summary",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-milestone-summary",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-milestone-summary",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-mvp-phase",
+      "original_name": "gsd-mvp-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-mvp-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-mvp-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-new-milestone",
+      "original_name": "gsd-new-milestone",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-new-milestone",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-new-milestone",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-new-project",
+      "original_name": "gsd-new-project",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-new-project",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-new-project",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ns-context",
+      "original_name": "gsd-ns-context",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ns-context",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ns-context",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ns-ideate",
+      "original_name": "gsd-ns-ideate",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ns-ideate",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ns-ideate",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ns-manage",
+      "original_name": "gsd-ns-manage",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ns-manage",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ns-manage",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ns-project",
+      "original_name": "gsd-ns-project",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ns-project",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ns-project",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ns-review",
+      "original_name": "gsd-ns-review",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ns-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ns-review",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ns-workflow",
+      "original_name": "gsd-ns-workflow",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ns-workflow",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ns-workflow",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-pause-work",
+      "original_name": "gsd-pause-work",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-pause-work",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-pause-work",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-phase",
+      "original_name": "gsd-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-plan-phase",
+      "original_name": "gsd-plan-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-plan-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-plan-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-plan-review-convergence",
+      "original_name": "gsd-plan-review-convergence",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-plan-review-convergence",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-plan-review-convergence",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-pr-branch",
+      "original_name": "gsd-pr-branch",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-pr-branch",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-pr-branch",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-profile-user",
+      "original_name": "gsd-profile-user",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-profile-user",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-profile-user",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-progress",
+      "original_name": "gsd-progress",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-progress",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-progress",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-quick",
+      "original_name": "gsd-quick",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-quick",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-quick",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-resume-work",
+      "original_name": "gsd-resume-work",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-resume-work",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-resume-work",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-review",
+      "original_name": "gsd-review",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-review",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-review-backlog",
+      "original_name": "gsd-review-backlog",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-review-backlog",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-review-backlog",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-secure-phase",
+      "original_name": "gsd-secure-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-secure-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-secure-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-settings",
+      "original_name": "gsd-settings",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-settings",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-settings",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ship",
+      "original_name": "gsd-ship",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ship",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ship",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-sketch",
+      "original_name": "gsd-sketch",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-sketch",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-sketch",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-spec-phase",
+      "original_name": "gsd-spec-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-spec-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-spec-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-spike",
+      "original_name": "gsd-spike",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-spike",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-spike",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-stats",
+      "original_name": "gsd-stats",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-stats",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-stats",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-surface",
+      "original_name": "gsd-surface",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-surface",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-surface",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-thread",
+      "original_name": "gsd-thread",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-thread",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-thread",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ui-phase",
+      "original_name": "gsd-ui-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ui-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ui-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ui-review",
+      "original_name": "gsd-ui-review",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ui-review",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ui-review",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ultraplan-phase",
+      "original_name": "gsd-ultraplan-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-ultraplan-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-ultraplan-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-undo",
+      "original_name": "gsd-undo",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-undo",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-undo",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-update",
+      "original_name": "gsd-update",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-update",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-update",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-validate-phase",
+      "original_name": "gsd-validate-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-validate-phase",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-validate-phase",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-verify-work",
+      "original_name": "gsd-verify-work",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-verify-work",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-verify-work",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-workspace",
+      "original_name": "gsd-workspace",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-workspace",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-workspace",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-workstreams",
+      "original_name": "gsd-workstreams",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity\\skills\\gsd-workstreams",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-workstreams",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-add-tests",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-add-tests",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ai-integration-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ai-integration-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-audit-fix",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-audit-fix",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-audit-milestone",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-audit-milestone",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-audit-uat",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-audit-uat",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-autonomous",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-autonomous",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-capture",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-capture",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-cleanup",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-cleanup",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-code-review",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-code-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-complete-milestone",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-complete-milestone",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-config",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-config",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-debug",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-debug",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-discuss-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-discuss-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-docs-update",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-docs-update",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-eval-review",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-eval-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-execute-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-execute-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-explore",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-explore",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-extract-learnings",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-extract-learnings",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-fast",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-fast",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-forensics",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-forensics",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-graphify",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-graphify",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-health",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-health",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-help",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-help",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-import",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-import",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-inbox",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-inbox",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ingest-docs",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ingest-docs",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-manager",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-manager",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-map-codebase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-map-codebase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-mempalace-capture",
+      "original_name": "gsd-mempalace-capture",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-mempalace-capture",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-mempalace-capture",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-mempalace-recall",
+      "original_name": "gsd-mempalace-recall",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-mempalace-recall",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-mempalace-recall",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-milestone-summary",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-milestone-summary",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-mvp-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-mvp-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-new-milestone",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-new-milestone",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-new-project",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-new-project",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-next",
+      "original_name": "gsd-next",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-next",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-next",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-ns-context",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ns-context",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ns-ideate",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ns-ideate",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ns-manage",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ns-manage",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ns-project",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ns-project",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ns-review",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ns-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ns-workflow",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ns-workflow",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-onboard",
+      "original_name": "gsd-onboard",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-onboard",
+      "destination": "C:\\Users\\adars\\.agents\\skills\\gsd-onboard",
+      "status": "installed"
+    },
+    {
+      "name": "gsd-pause-work",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-pause-work",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-plan-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-plan-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-plan-review-convergence",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-plan-review-convergence",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-pr-branch",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-pr-branch",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-profile-user",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-profile-user",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-progress",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-progress",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-quick",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-quick",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-resume-work",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-resume-work",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-review",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-review-backlog",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-review-backlog",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-secure-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-secure-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-settings",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-settings",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ship",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ship",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-sketch",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-sketch",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-spec-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-spec-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-spike",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-spike",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-stats",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-stats",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-surface",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-surface",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-thread",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-thread",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ui-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ui-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ui-review",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ui-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-ultraplan-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-ultraplan-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-undo",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-undo",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-update",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-update",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-validate-phase",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-validate-phase",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-verify-work",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-verify-work",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-workspace",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-workspace",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gsd-workstreams",
+      "source": "C:\\Users\\adars\\.gemini\\antigravity-ide\\skills\\gsd-workstreams",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "brag",
+      "source": "C:\\Users\\adars\\.claude\\skills\\brag",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "brag-slim",
+      "source": "C:\\Users\\adars\\.claude\\skills\\brag-slim",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-autoplan",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\autoplan",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-benchmark",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\benchmark",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-benchmark-models",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\benchmark-models",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-browse",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\browse",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-canary",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\canary",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-careful",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\careful",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-codex",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\codex",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-context-restore",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\context-restore",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-context-save",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\context-save",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-cso",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\cso",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-design-consultation",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\design-consultation",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-design-html",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\design-html",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-design-review",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\design-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-design-shotgun",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\design-shotgun",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-devex-review",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\devex-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-diagram",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\diagram",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-document-generate",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\document-generate",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-document-release",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\document-release",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-freeze",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\freeze",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-gstack-upgrade",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\gstack-upgrade",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-guard",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\guard",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-health",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\health",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-investigate",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\investigate",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-ios-clean",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\ios-clean",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-ios-design-review",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\ios-design-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-ios-fix",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\ios-fix",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-ios-qa",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\ios-qa",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-ios-sync",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\ios-sync",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-land-and-deploy",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\land-and-deploy",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-landing-report",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\landing-report",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-learn",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\learn",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-make-pdf",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\make-pdf",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-office-hours",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\office-hours",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-open-gstack-browser",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\open-gstack-browser",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-pair-agent",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\pair-agent",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-plan-ceo-review",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\plan-ceo-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-plan-design-review",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\plan-design-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-plan-devex-review",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\plan-devex-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-plan-eng-review",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\plan-eng-review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-plan-tune",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\plan-tune",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-qa",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\qa",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-qa-only",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\qa-only",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-retro",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\retro",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-review",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\review",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-scrape",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\scrape",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-setup-browser-cookies",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\setup-browser-cookies",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-setup-deploy",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\setup-deploy",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-setup-gbrain",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\setup-gbrain",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-ship",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\ship",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-skillify",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\skillify",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-spec",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\spec",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-sync-gbrain",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\sync-gbrain",
+      "status": "already-available-or-duplicate"
+    },
+    {
+      "name": "gstack-unfreeze",
+      "source": "C:\\Users\\adars\\.claude\\skills\\gstack\\unfreeze",
+      "status": "already-available-or-duplicate"
+    }
+  ]
+}

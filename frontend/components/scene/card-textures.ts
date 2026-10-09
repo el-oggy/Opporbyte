@@ -44,10 +44,18 @@ function pill(
 
 export function createCardTexture(index: number): THREE.CanvasTexture {
   const canvas = document.createElement("canvas");
-  canvas.width = 1024;
-  canvas.height = 512;
+  canvas.width = index === 2 ? 768 : 1024;
+  canvas.height = index === 2 ? 1024 : 512;
   const ctx = canvas.getContext("2d")!;
-  rounded(ctx, 0, 0, 1024, 512, 38, index === 4 ? "#B9F0EC" : "#FFFDF8");
+  rounded(
+    ctx,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+    38,
+    index === 4 ? "#B9F0EC" : "#FFFDF8",
+  );
   if (index < 2) {
     const orange = index === 0;
     rounded(ctx, 48, 42, 100, 100, 25, orange ? "#f4d6c7" : "#d4ece6");
@@ -67,7 +75,7 @@ export function createCardTexture(index: number): THREE.CanvasTexture {
       orange ? "Product Designer" : "Care Coordinator",
       48,
       230,
-      50,
+      64,
       INK,
       600,
     );
@@ -103,30 +111,37 @@ export function createCardTexture(index: number): THREE.CanvasTexture {
     label(ctx, "DEMO OPPORTUNITY", 48, 470, 22, MUTED);
     label(ctx, "↗", 917, 475, 45, INK);
   } else if (index === 2) {
-    rounded(ctx, 45, 43, 74, 86, 8, "#F4E7D2");
-    label(ctx, "CV", 56, 96, 31, "#9c5730", 600);
-    label(ctx, "Your next chapter", 149, 89, 35, INK, 600);
-    label(ctx, "RESUME · DEMONSTRATION", 149, 125, 19, MUTED);
-    label(ctx, "Experience, with purpose.", 48, 216, 32, INK, 500);
-    [760, 660, 820, 540].forEach((width, i) =>
+    rounded(ctx, 51, 54, 87, 94, 14, "#F4E7D2");
+    label(ctx, "CV", 65, 114, 37, "#9c5730", 600);
+    label(ctx, "Your next", 51, 239, 62, INK, 600);
+    label(ctx, "chapter.", 51, 310, 62, INK, 600);
+    label(ctx, "RESUME · DEMONSTRATION", 51, 366, 23, MUTED);
+    ctx.fillStyle = "#e2dbcc";
+    ctx.fillRect(51, 409, 666, 2);
+    label(ctx, "Experience", 51, 475, 31, INK, 600);
+    [600, 548, 628, 426].forEach((width, i) =>
       rounded(
         ctx,
-        48,
-        256 + i * 34,
+        51,
+        515 + i * 34,
         width,
         12,
         6,
         i === 0 ? "#d8d2c5" : "#e7e1d6",
       ),
     );
-    rounded(ctx, 48, 418, 290, 49, 24, "#def1e6");
-    label(ctx, "✓ Ready to prepare", 67, 451, 23, "#37654e");
+    label(ctx, "A little more you.", 51, 735, 29, INK, 500);
+    [568, 423, 595].forEach((width, i) =>
+      rounded(ctx, 51, 775 + i * 32, width, 11, 6, "#e7e1d6"),
+    );
+    rounded(ctx, 51, 919, 334, 52, 26, "#def1e6");
+    label(ctx, "✓ Ready to prepare", 72, 953, 26, "#37654e");
   } else if (index === 3) {
     rounded(ctx, 48, 46, 71, 71, 22, "#F4E7D2");
     label(ctx, "↗", 64, 94, 39, INK);
     label(ctx, "A little progress, every day.", 145, 92, 29, INK, 600);
     label(ctx, "APPLICATION TRACKER · DEMO", 48, 176, 22, MUTED);
-    label(ctx, "Software Engineer", 48, 258, 44, INK, 600);
+    label(ctx, "Software Engineer", 48, 258, 59, INK, 600);
     label(ctx, "Forma Systems · Fictional company", 48, 309, 25, MUTED);
     pill(ctx, "Interview", 48, 359, "#def1e6", 205);
     label(ctx, "Next conversation", 288, 395, 27, INK);

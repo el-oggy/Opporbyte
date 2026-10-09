@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
   Check,
+  Rotate3D,
   Sparkles,
 } from "lucide-react";
 import { gsap } from "gsap";
@@ -18,6 +19,7 @@ export function Hero() {
   const hero = useRef<HTMLElement>(null);
   const progress = useRef(0);
   const stage = useRef<HTMLDivElement>(null);
+  const [inspection, setInspection] = useState(false);
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
   const mobile = useMediaQuery("(max-width: 760px)");
   useEffect(() => {
@@ -92,17 +94,31 @@ export function Hero() {
         </div>
         <div
           className="hero-visual"
-          role="img"
+          role="group"
           aria-label="An orange Opporbyte core surrounded by dimensional fictional job opportunities, a resume, a match indicator and an interview status. Scrolling gathers them into a workspace."
         >
           <div className="scene-index">
             <span className="live-dot" /> THE OPPORTUNITY ENGINE{" "}
             <span>01 / 03</span>
           </div>
-          <SceneHost progress={progress} reduced={reduced} mobile={mobile} />
+          <SceneHost
+            progress={progress}
+            reduced={reduced}
+            mobile={mobile}
+            inspection={inspection}
+          />
+          <button
+            type="button"
+            className="scene-perspective"
+            aria-pressed={inspection}
+            onClick={() => setInspection(!inspection)}
+          >
+            <Rotate3D size={16} aria-hidden="true" />
+            {inspection ? "Original view" : "Turn the view"}
+          </button>
           <div className="scene-caption">
             <Sparkles size={13} aria-hidden="true" />
-            <span>A world of possibilities. One clear path.</span>
+            <span>Move to explore. Scroll to bring it together.</span>
           </div>
         </div>
       </div>

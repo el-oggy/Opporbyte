@@ -1,0 +1,6 @@
+interface:
+  display_name: "Immersive 3D Web"
+  short_description: "Build visibly dimensional websites and cinematic heroes"
+  default_prompt: "Use $immersive-3d-web to build or improve this website's interactive 3D experience."
+policy:
+  allow_implicit_invocation: true

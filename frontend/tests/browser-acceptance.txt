@@ -1,4 +1,5 @@
 async (page) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   const results = [];
   const errors = [];
   const external = [];
@@ -12,6 +13,26 @@ async (page) => {
     results.push({ name, passed, detail });
     if (!passed) throw new Error(name + ': ' + detail);
   };
+  // GPU antialiasing may vary by one color level at a single edge pixel.
+  // Compare decoded pixels with a one-level tolerance, rather than PNG bytes.
+  const frameDifference = async (before, after) => page.evaluate(async ({ a, b }) => {
+    const load = async data => {
+      const image = new Image();
+      image.src = 'data:image/png;base64,' + data;
+      await image.decode();
+      const canvas = document.createElement('canvas');
+      canvas.width = image.width; canvas.height = image.height;
+      const context = canvas.getContext('2d');
+      context.drawImage(image, 0, 0);
+      return context.getImageData(0, 0, canvas.width, canvas.height).data;
+    };
+    const [first, second] = await Promise.all([load(a), load(b)]);
+    if (first.length !== second.length) return -1;
+    let changed = 0;
+    for (let i = 0; i < first.length; i += 4)
+      if (Math.max(...[0, 1, 2].map(channel => Math.abs(first[i + channel] - second[i + channel]))) > 1) changed++;
+    return changed;
+  }, { a: before.toString('base64'), b: after.toString('base64') });
   await page.goto('http://127.0.0.1:3000/onboarding');
   await page.getByRole('button', { name: 'Design', exact: true }).click();
   check('Design examples filter', await page.locator('article').count() === 2);
@@ -57,10 +78,26 @@ async (page) => {
   await page.goto('http://127.0.0.1:3000/');
   await page.waitForFunction(() => document.querySelector('.scene-host')?.dataset.renderer === 'webgl');
   check('Reduced motion removes pinning', await page.locator('.pin-spacer').count() === 0);
-  const frozenA = await page.locator('.scene-host').screenshot();
+  // Finish initial GPU readback before comparing the long-lived frozen pose.
+  // Startup differed by one antialiased edge pixel in the production renderer.
+  await page.locator('.scene-host').screenshot();
+  await page.waitForTimeout(200);
+  const frozenA = await page.locator('.scene-host').screenshot({ path: 'output/playwright/reduced-before.png' });
   await page.waitForTimeout(700);
-  const frozenB = await page.locator('.scene-host').screenshot();
-  check('Reduced motion scene remains static', frozenA.equals(frozenB));
+  const frozenB = await page.locator('.scene-host').screenshot({ path: 'output/playwright/reduced-after.png' });
+  const frozenDifference = await frameDifference(frozenA, frozenB);
+  check('Reduced motion scene remains static', frozenDifference === 0, frozenDifference + ' changed pixels beyond one color level');
+  await page.getByRole('button', { name: /^(Turn the view|Original view)$/ }).focus();
+  await page.keyboard.press('Space');
+  check('Perspective control works with the keyboard', await page.getByRole('button', { name: /^(Turn the view|Original view)$/ }).getAttribute('aria-pressed') === 'true');
+  const inspected = await page.locator('.scene-host').screenshot();
+  check('Reduced-motion perspective changes the rendered scene', await frameDifference(frozenB, inspected) > 0);
+  await page.waitForTimeout(700);
+  const inspectedAgain = await page.locator('.scene-host').screenshot();
+  const inspectedDifference = await frameDifference(inspected, inspectedAgain);
+  check('Inspected reduced-motion pose stays frozen', inspectedDifference === 0, inspectedDifference + ' changed pixels beyond one color level');
+  await page.getByRole('button', { name: /^(Turn the view|Original view)$/ }).click();
+  check('Perspective can return to the original view', await page.getByRole('button', { name: /^(Turn the view|Original view)$/ }).getAttribute('aria-pressed') === 'false');
   await page.screenshot({ path: 'output/playwright/reduced-motion.png' });
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.evaluate(() => {

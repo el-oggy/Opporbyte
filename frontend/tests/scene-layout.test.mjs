@@ -15,7 +15,37 @@ test("scattered cards reach the organized grid", () => {
   assert.ok(scene, "The scroll pose implementation is missing");
   assert.deepEqual(scene.cardPose(0, 0).position, scene.SCATTERED[0]);
   assert.deepEqual(scene.cardPose(0, 1).position, scene.ORGANIZED[0]);
-  assert.deepEqual(scene.cardPose(0, 1).rotation, [0, 0, 0]);
+  assert.deepEqual(scene.cardPose(0, 1).rotation, scene.ORGANIZED_ROTATIONS[0]);
+});
+
+test("assembled workspace retains dimensional poses", () => {
+  assert.ok(scene, "The scroll pose implementation is missing");
+  assert.ok(
+    scene.ORGANIZED_ROTATIONS,
+    "The organized state needs a three-quarter pose",
+  );
+  assert.ok(
+    scene.ORGANIZED_ROTATIONS.every((rotation) => Math.abs(rotation[1]) > 0.12),
+  );
+  assert.ok(new Set(scene.SCATTERED.map((position) => position[2])).size >= 3);
+});
+
+test("camera changes perspective through connection, returns exactly, and supports an inspection view", () => {
+  assert.equal(typeof scene?.cameraPose, "function");
+  const initial = scene.cameraPose(0, 0);
+  assert.notDeepEqual(scene.cameraPose(0.45, 0).position, initial.position);
+  assert.notDeepEqual(scene.cameraPose(0, 1).position, initial.position);
+  scene.cameraPose(1, 1);
+  assert.deepEqual(scene.cameraPose(0, 0), initial);
+  assert.deepEqual(scene.cameraPose(-1, 0), initial);
+  for (const progress of [0, 0.4, 0.8, 1]) {
+    const camera = scene.cameraPose(progress, 0);
+    assert.ok(camera.position.every(Number.isFinite));
+    assert.ok(
+      camera.position[2] >= 9.5,
+      "Keep the scene inside a useful framing",
+    );
+  }
 });
 test("scrolling backward returns exactly to the initial pose", () => {
   assert.ok(scene, "The scroll pose implementation is missing");
