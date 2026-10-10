@@ -143,8 +143,9 @@ export function createCardTexture(index: number): THREE.CanvasTexture {
     label(ctx, "APPLICATION TRACKER · DEMO", 48, 176, 22, MUTED);
     label(ctx, "Software Engineer", 48, 258, 59, INK, 600);
     label(ctx, "Forma Systems · Fictional company", 48, 309, 25, MUTED);
-    pill(ctx, "Interview", 48, 359, "#def1e6", 205);
-    label(ctx, "Next conversation", 288, 395, 27, INK);
+    pill(ctx, "Saved", 48, 359, "#f0ebdf", 170);
+    pill(ctx, "Preparing", 239, 359, "#f4d6c7", 220);
+    pill(ctx, "Interview", 480, 359, "#def1e6", 205);
     label(ctx, "ALL IN ONE PLACE", 48, 472, 21, MUTED);
   } else {
     label(ctx, "✳", 63, 278, 108, "#2c6861", 600);

@@ -1,0 +1,26 @@
+{
+  "file": "opporbyte-landscape.mp4",
+  "bytes": 4994960,
+  "sha256": "8e735b54312d16703306bd63de3e1a9f455b467e02cd5b316df72c5dd6c9a9bb",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "frames": 1050,
+  "duration": 35,
+  "audio": "AAC, 48 kHz, stereo",
+  "fullDecode": "passed",
+  "fastStart": true,
+  "measuredAudio": {
+    "input_i": "-17.29",
+    "input_tp": "-1.37",
+    "input_lra": "7.40",
+    "input_thresh": "-27.89",
+    "output_i": "-16.65",
+    "output_tp": "-1.50",
+    "output_lra": "4.60",
+    "output_thresh": "-27.05",
+    "normalization_type": "dynamic",
+    "target_offset": "0.65"
+  },
+  "passed": true
+}

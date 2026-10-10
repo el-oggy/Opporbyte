@@ -1,0 +1,57 @@
+{
+  "duration": 35,
+  "rate": 48000,
+  "peak_dbfs": -4.708326666997171,
+  "clips": [
+    {
+      "clip": 1,
+      "original_seconds": 6.398541666666667,
+      "tempo": 1.114728513356562,
+      "placed_start": 0.12,
+      "placed_end": 5.865333333333333
+    },
+    {
+      "clip": 2,
+      "original_seconds": 4.568833333333333,
+      "tempo": 1.0,
+      "placed_start": 6.08,
+      "placed_end": 10.647020833333332
+    },
+    {
+      "clip": 3,
+      "original_seconds": 4.8939375,
+      "tempo": 1.0238362970711299,
+      "placed_start": 11.08,
+      "placed_end": 15.860416666666666
+    },
+    {
+      "clip": 4,
+      "original_seconds": 2.827541666666667,
+      "tempo": 1.0,
+      "placed_start": 16.08,
+      "placed_end": 18.902291666666663
+    },
+    {
+      "clip": 5,
+      "original_seconds": 4.248625,
+      "tempo": 1.0,
+      "placed_start": 21.08,
+      "placed_end": 25.3236875
+    },
+    {
+      "clip": 6,
+      "original_seconds": 5.487645833333334,
+      "tempo": 1.148043061366806,
+      "placed_start": 26.08,
+      "placed_end": 30.86764583333333
+    },
+    {
+      "clip": 7,
+      "original_seconds": 2.7544791666666666,
+      "tempo": 1.0,
+      "placed_start": 31.08,
+      "placed_end": 33.828375
+    }
+  ],
+  "original_music": true
+}

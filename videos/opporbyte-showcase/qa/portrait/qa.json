@@ -1,0 +1,66 @@
+{
+  "format": "vertical",
+  "fps": 30,
+  "duration": 35,
+  "width": 1080,
+  "height": 1920,
+  "errors": [],
+  "frames": [
+    {
+      "time": 0,
+      "sha256": "a8b043de3c3f57053b5ff70cdf520040aa07ed6cf021090d800b052e6e28bdf3",
+      "seekMatches": true,
+      "mean": 223.60992155349922,
+      "variance": 521.8976716402758
+    },
+    {
+      "time": 3,
+      "sha256": "a89e75a07e7e1595ba0c9962a303f72de04f1588fc9cf0c630e70b1307123b33",
+      "seekMatches": true,
+      "mean": 222.25334362139796,
+      "variance": 719.810399073307
+    },
+    {
+      "time": 7,
+      "sha256": "a7e53a62d3eae4a31b1ee670846d55e4b34ae53eb61bb17bcbcaf709e27c5fb9",
+      "seekMatches": true,
+      "mean": 221.6956500771668,
+      "variance": 606.0596613038651
+    },
+    {
+      "time": 12,
+      "sha256": "8863cd96dfa2b806f9abb66a0b0fabfa511e96e7e6cdd14adae3badf2a3f71b0",
+      "seekMatches": true,
+      "mean": 227.23267103909706,
+      "variance": 262.8191709608436
+    },
+    {
+      "time": 17,
+      "sha256": "4d9a98ca1a82c866bbd642bfa599739c37b7fa7873364cc24c3d1a2ca5f28322",
+      "seekMatches": true,
+      "mean": 227.46719071501798,
+      "variance": 351.61154573984095
+    },
+    {
+      "time": 22,
+      "sha256": "9ea45a1d50619d26395e017de31d9f0b455fda386828bed18370debf0a5bf2cd",
+      "seekMatches": true,
+      "mean": 227.88765110596805,
+      "variance": 368.44631657294667
+    },
+    {
+      "time": 28,
+      "sha256": "94c7c2f0be26d2db632c922617a93761f636dae23b9fc93c5c4fea03f1ebde01",
+      "seekMatches": true,
+      "mean": 227.31703317897606,
+      "variance": 432.66156775542186
+    },
+    {
+      "time": 34,
+      "sha256": "42229168336f23ec0a9b7b3d7543cd298948b5b2a00e9672a66f79c0d5c3bb3e",
+      "seekMatches": true,
+      "mean": 217.94409079221293,
+      "variance": 860.3907570537558
+    }
+  ]
+}

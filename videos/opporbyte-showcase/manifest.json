@@ -1,0 +1,95 @@
+{
+  "voice": {
+    "provider": "Fish Audio",
+    "name": "Sarah",
+    "id": "933563129e564b19a115bedd57b7406a",
+    "authorized": true
+  },
+  "clips": [
+    {
+      "task_id": "e70e96690de34c4dac0f59a287267a34",
+      "audio_url": "https://platform.r2.fish.audio/tasks/2026-10-10/e70e96690de34c4dac0f59a287267a34.mp3",
+      "voice": {
+        "id": "933563129e564b19a115bedd57b7406a",
+        "title": "Sarah"
+      },
+      "credits_charged": 99,
+      "text": "Job sites. Resume tools. Spreadsheets. Your next role shouldn't mean endless switching.",
+      "file": "assets/voice-1.mp3"
+    },
+    {
+      "task_id": "0d35b6dbffd24aa380e6201029c2dfd2",
+      "audio_url": "https://platform.r2.fish.audio/tasks/2026-10-10/0d35b6dbffd24aa380e6201029c2dfd2.mp3",
+      "voice": {
+        "id": "933563129e564b19a115bedd57b7406a",
+        "title": "Sarah"
+      },
+      "credits_charged": 75,
+      "text": "Meet Opporbyte. Bring your job search into one clear workspace.",
+      "file": "assets/voice-2.mp3"
+    },
+    {
+      "task_id": "0e88f0220c3d4ba89842201c35dacc4a",
+      "audio_url": "https://platform.r2.fish.audio/tasks/2026-10-10/0e88f0220c3d4ba89842201c35dacc4a.mp3",
+      "voice": {
+        "id": "933563129e564b19a115bedd57b7406a",
+        "title": "Sarah"
+      },
+      "credits_charged": 80,
+      "text": "Find opportunities that fit your field, your skills, your direction.",
+      "file": "assets/voice-3.mp3"
+    },
+    {
+      "task_id": "4477c3b89216466a8fed506d836c7040",
+      "audio_url": "https://platform.r2.fish.audio/tasks/2026-10-10/4477c3b89216466a8fed506d836c7040.mp3",
+      "voice": {
+        "id": "933563129e564b19a115bedd57b7406a",
+        "title": "Sarah"
+      },
+      "credits_charged": 64,
+      "text": "Prepare a resume that puts your experience in focus.",
+      "file": "assets/voice-4.mp3"
+    },
+    {
+      "task_id": "c657be3e2a2044609c023de3bad453fe",
+      "audio_url": "https://platform.r2.fish.audio/tasks/2026-10-10/c657be3e2a2044609c023de3bad453fe.mp3",
+      "voice": {
+        "id": "933563129e564b19a115bedd57b7406a",
+        "title": "Sarah"
+      },
+      "credits_charged": 70,
+      "text": "Keep applications, follow-ups, and next steps in one view.",
+      "file": "assets/voice-5.mp3"
+    },
+    {
+      "task_id": "f605f06eba4b44e6b38a7eedac2961a8",
+      "audio_url": "https://platform.r2.fish.audio/tasks/2026-10-10/f605f06eba4b44e6b38a7eedac2961a8.mp3",
+      "voice": {
+        "id": "933563129e564b19a115bedd57b7406a",
+        "title": "Sarah"
+      },
+      "credits_charged": 79,
+      "text": "Less switching. More progress. Your job hunt. Finally in one place.",
+      "file": "assets/voice-6.mp3"
+    },
+    {
+      "task_id": "9d2e995620ca42cba7076af843be955d",
+      "audio_url": "https://platform.r2.fish.audio/tasks/2026-10-10/9d2e995620ca42cba7076af843be955d.mp3",
+      "voice": {
+        "id": "933563129e564b19a115bedd57b7406a",
+        "title": "Sarah"
+      },
+      "credits_charged": 57,
+      "text": "Welcome to Opporbyte. Let's find what's next.",
+      "file": "assets/voice-7.mp3"
+    }
+  ],
+  "sourceCaptures": [
+    "discover-all.png",
+    "discover-design.png",
+    "discover-saved.png"
+  ],
+  "score": "Original synthesized score and transition sounds",
+  "duration": 35,
+  "fps": 30
+}

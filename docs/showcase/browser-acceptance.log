@@ -1,0 +1,415 @@
+### Result
+{"base":"http://127.0.0.1:3001","checkedAt":"2026-10-10T11:26:02.439Z","results":[{"name":"Encoded landscape autoplays muted","passed":true,"detail":{"time":0.252931,"duration":35,"paused":false,"muted":true,"width":1920,"height":1080,"volume":0.9,"src":"http://127.0.0.1:3001/films/opporbyte-landscape.mp4","ended":false,"audioBytes":16720}},{"name":"Film opens at the top of the first viewport","passed":true,"detail":""},{"name":"Slide transport and chapter strip removed","passed":true,"detail":""},{"name":"User pause holds the decoded film","passed":true,"detail":""},{"name":"First sound activation restarts with audible volume","passed":true,"detail":{"time":0.265776,"duration":35,"paused":false,"muted":false,"width":1920,"height":1080,"volume":0.9,"src":"http://127.0.0.1:3001/films/opporbyte-landscape.mp4","ended":false,"audioBytes":268379}},{"name":"Browser decodes and routes a nonzero soundtrack","passed":true,"detail":{"maxRms":0.20428736717024454,"context":"running","decodedBytes":304108}},{"name":"Mute control mutes the native soundtrack","passed":true,"detail":""},{"name":"All seven English narration cues can be shown","passed":true,"detail":""},{"name":"Captions can be hidden","passed":true,"detail":""},{"name":"Portrait switch preserves user pause and timestamp","passed":true,"detail":{"time":17,"duration":35,"paused":true,"muted":true,"width":1080,"height":1920,"volume":0.9,"src":"http://127.0.0.1:3001/films/opporbyte-portrait.mp4","ended":false,"audioBytes":21107}},{"name":"Landscape switch preserves user pause and timestamp","passed":true,"detail":{"time":17,"duration":35,"paused":true,"muted":true,"width":1920,"height":1080,"volume":0.9,"src":"http://127.0.0.1:3001/films/opporbyte-landscape.mp4","ended":false,"audioBytes":21107}},{"name":"Playing continues through a format switch","passed":true,"detail":""},{"name":"Ending holds without looping and offers entry","passed":true,"detail":""},{"name":"Completed film stays completed across formats","passed":true,"detail":{"time":35,"duration":35,"paused":true,"muted":true,"width":1920,"height":1080,"volume":0.9,"src":"http://127.0.0.1:3001/films/opporbyte-landscape.mp4","ended":true,"audioBytes":54151}},{"name":"Replay restarts the film","passed":true,"detail":""},{"name":"Offscreen playback pauses","passed":true,"detail":""},{"name":"Visible playback resumes when user intent was playing","passed":true,"detail":""},{"name":"Whole-frame layout and top controls at 320x900","passed":true,"detail":{"overflow":false,"controls":{"x":105.203125,"right":307,"y":74,"bottom":118},"entry":{"x":189.140625,"right":307,"y":16,"bottom":62},"stageHeight":900,"fit":"contain","format":"portrait"}},{"name":"Whole-frame layout and top controls at 390x844","passed":true,"detail":{"overflow":false,"controls":{"x":170.203125,"right":372,"y":74,"bottom":118},"entry":{"x":242.15625,"right":372,"y":16,"bottom":62},"stageHeight":844,"fit":"contain","format":"portrait"}},{"name":"Whole-frame layout and top controls at 768x900","passed":true,"detail":{"overflow":false,"controls":{"x":336.140625,"right":539.9375,"y":26,"bottom":70},"entry":{"x":563.9375,"right":735.75,"y":22,"bottom":74},"stageHeight":900,"fit":"contain","format":"portrait"}},{"name":"Whole-frame layout and top controls at 1024x900","passed":true,"detail":{"overflow":false,"controls":{"x":581.390625,"right":785.1875,"y":26,"bottom":70},"entry":{"x":809.1875,"right":981,"y":22,"bottom":74},"stageHeight":900,"fit":"contain","format":"landscape"}},{"name":"Whole-frame layout and top controls at 1440x768","passed":true,"detail":{"overflow":false,"controls":{"x":979.921875,"right":1183.71875,"y":26,"bottom":70},"entry":{"x":1207.71875,"right":1379.53125,"y":22,"bottom":74},"stageHeight":768,"fit":"contain","format":"landscape"}},{"name":"Whole-frame layout and top controls at 700x390","passed":true,"detail":{"overflow":false,"controls":{"x":342.359375,"right":544.15625,"y":11,"bottom":55},"entry":{"x":552.15625,"right":682,"y":10,"bottom":56},"stageHeight":390,"fit":"contain","format":"landscape"}},{"name":"Entry opens the existing frontend preview","passed":true,"detail":""},{"name":"Existing design filter works","passed":true,"detail":""},{"name":"Existing save stays in the local preview","passed":true,"detail":""},{"name":"Existing empty state is honest","passed":true,"detail":""},{"name":"Existing preview selections reset on reload","passed":true,"detail":""},{"name":"Reduced motion starts paused with immediate product entry","passed":true,"detail":{"time":0,"duration":35,"paused":true,"muted":true,"width":1920,"height":1080,"volume":0.9,"src":"http://127.0.0.1:3001/films/opporbyte-landscape.mp4","ended":false,"audioBytes":7328}},{"name":"Reduced motion still permits explicit playback","passed":true,"detail":""},{"name":"Media failure leaves the entry usable","passed":true,"detail":""},{"name":"Entry works after a failed movie load","passed":true,"detail":""},{"name":"No unexpected browser runtime or resource errors","passed":true,"detail":[]},{"name":"No external service requests in the frontend","passed":true,"detail":[]}],"errors":[],"external":[],"audioVerification":{"maxRms":0.20428736717024454,"context":"running","decodedBytes":304108},"perceptualListening":"not claimed"}
+### Ran Playwright code
+```js
+await (async (page) => {
+  // Run with playwright-cli run-code --filename against the local production page.
+  // Actual encoded playback checks; intentionally separate from unit tests.
+  const base = new URL(page.url()).origin;
+  // Remove only this harness's previous fault route if an interrupted run
+  // stopped before cleanup.
+  await page.unroute('**/films/*.mp4');
+  const results = [],
+    errors = [],
+    external = [];
+  const check = (name, passed, detail = "") => {
+    results.push({ name, passed, detail });
+    if (!passed) throw new Error(name + ": " + JSON.stringify(detail));
+  };
+  let faultInjection = false;
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error" && !faultInjection)
+      errors.push(message.text());
+  });
+  page.on("request", (request) => {
+    const url = request.url();
+    if (url.startsWith("http") && new URL(url).origin !== base)
+      external.push(url);
+  });
+  const ready = () =>
+    page.waitForFunction(() => {
+      const video = document.querySelector("video");
+      const portrait = innerWidth <= innerHeight;
+      return video?.readyState >= 2 && video.duration === 35
+        && video.currentSrc.includes(portrait ? 'portrait' : 'landscape')
+        && video.videoWidth === (portrait ? 1080 : 1920);
+    });
+  const state = () =>
+    page.locator("video").evaluate((v) => ({
+      time: v.currentTime,
+      duration: v.duration,
+      paused: v.paused,
+      muted: v.muted,
+      width: v.videoWidth,
+      height: v.videoHeight,
+      volume: v.volume,
+      src: v.currentSrc,
+      ended: v.ended,
+      audioBytes: v.webkitAudioDecodedByteCount,
+    }));
+  const seek = async (time) => {
+    await page.locator("video").evaluate((v, time) => {
+      v.pause();
+      v.currentTime = time;
+    }, time);
+    await page.waitForFunction((time) => {
+      const v = document.querySelector("video");
+      return !v.seeking && Math.abs(v.currentTime - time) < 0.05;
+    }, time);
+  };
+
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(base + "/");
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await ready();
+  await page.waitForFunction(
+    () => document.querySelector("video").currentTime > 0.2,
+  );
+  let value = await state();
+  check(
+    "Encoded landscape autoplays muted",
+    value.width === 1920 &&
+      value.height === 1080 &&
+      value.muted &&
+      !value.paused,
+    value,
+  );
+  check(
+    "Film opens at the top of the first viewport",
+    (await page.locator(".film-intro").boundingBox()).y === 0,
+  );
+  check(
+    "Slide transport and chapter strip removed",
+    (await page
+      .locator(".showcase-chapters, .showcase-transport, .pin-spacer")
+      .count()) === 0,
+  );
+  await page.getByRole("button", { name: "Pause film", exact: true }).click();
+  value = await state();
+  await page.waitForTimeout(250);
+  check(
+    "User pause holds the decoded film",
+    (await state()).paused &&
+      Math.abs((await state()).time - value.time) < 0.05,
+  );
+  await seek(7);
+  await page
+    .getByRole("button", { name: "Sound off: watch with sound", exact: true })
+    .click();
+  await page.waitForFunction(
+    () => document.querySelector("video").currentTime > 0.25,
+  );
+  value = await state();
+  check(
+    "First sound activation restarts with audible volume",
+    !value.muted && !value.paused && value.volume === 0.9 && value.time < 3,
+    value,
+  );
+  const signal = await page.evaluate(async () => {
+    const video = document.querySelector("video");
+    const context = new AudioContext();
+    const source = context.createMediaElementSource(video);
+    const analyser = context.createAnalyser();
+    analyser.fftSize = 2048;
+    source.connect(analyser);
+    analyser.connect(context.destination);
+    await context.resume();
+    const samples = new Float32Array(analyser.fftSize);
+    let maxRms = 0;
+    for (let i = 0; i < 18; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 60));
+      analyser.getFloatTimeDomainData(samples);
+      maxRms = Math.max(
+        maxRms,
+        Math.sqrt(samples.reduce((sum, n) => sum + n * n, 0) / samples.length),
+      );
+    }
+    window.__filmAudioCheck = { context, source, analyser };
+    return {
+      maxRms,
+      context: context.state,
+      decodedBytes: video.webkitAudioDecodedByteCount,
+    };
+  });
+  check(
+    "Browser decodes and routes a nonzero soundtrack",
+    signal.context === "running" &&
+      signal.maxRms > 0.005 &&
+      signal.decodedBytes > 0,
+    signal,
+  );
+  await page
+    .getByRole("button", { name: "Sound on: mute film", exact: true })
+    .click();
+  check("Mute control mutes the native soundtrack", (await state()).muted);
+  await page
+    .getByRole("button", { name: "Show captions", exact: true })
+    .click();
+  await page.waitForFunction(
+    () => document.querySelector("video").textTracks[0]?.cues?.length === 7,
+  );
+  check(
+    "All seven English narration cues can be shown",
+    await page
+      .locator("video")
+      .evaluate((v) => v.textTracks[0].mode === "showing"),
+  );
+  await page
+    .getByRole("button", { name: "Hide captions", exact: true })
+    .click();
+  check(
+    "Captions can be hidden",
+    await page
+      .locator("video")
+      .evaluate((v) => v.textTracks[0].mode === "hidden"),
+  );
+
+  // A fresh media element avoids leaving the analyser attached to the player.
+  await page.reload();
+  await ready();
+  await page.getByRole("button", { name: "Pause film", exact: true }).click();
+  await seek(17);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await ready();
+  value = await state();
+  check(
+    "Portrait switch preserves user pause and timestamp",
+    value.paused &&
+      Math.abs(value.time - 17) < 0.1 &&
+      value.width === 1080 &&
+      value.height === 1920,
+    value,
+  );
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await ready();
+  value = await state();
+  check(
+    "Landscape switch preserves user pause and timestamp",
+    value.paused && Math.abs(value.time - 17) < 0.1 && value.width === 1920,
+    value,
+  );
+  await page.getByRole("button", { name: "Play film", exact: true }).click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await ready();
+  await page.waitForFunction(() => !document.querySelector("video").paused);
+  check(
+    "Playing continues through a format switch",
+    (await state()).time >= 17,
+  );
+  await page.getByRole("button", { name: "Pause film", exact: true }).click();
+  await seek(34.7);
+  await page.getByRole("button", { name: "Play film", exact: true }).click();
+  await page.waitForFunction(() => document.querySelector("video").ended);
+  await page.waitForTimeout(250);
+  check(
+    "Ending holds without looping and offers entry",
+    (await state()).time === 35 &&
+      (await page.getByRole("link", { name: "Find what’s next" }).isVisible()),
+  );
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await ready();
+  value = await state();
+  check(
+    "Completed film stays completed across formats",
+    value.paused &&
+      value.time === 35 &&
+      (await page.getByRole("button", { name: "Replay film" }).isVisible()),
+    value,
+  );
+  await page.getByRole("button", { name: "Replay film", exact: true }).click();
+  await page.waitForFunction(
+    () =>
+      !document.querySelector("video").paused &&
+      document.querySelector("video").currentTime < 2,
+  );
+  check("Replay restarts the film", true);
+  // A short viewport allows the following section to move the film entirely
+  // offscreen; a 900px viewport still shows its bottom quarter at max scroll.
+  await page.setViewportSize({ width: 1440, height: 600 });
+  await page.evaluate(() =>
+    window.scrollTo({ top: innerHeight + 100, behavior: "instant" }),
+  );
+  await page.waitForFunction(() => document.querySelector("video").paused);
+  check("Offscreen playback pauses", true);
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await page.waitForFunction(() => !document.querySelector("video").paused);
+  check("Visible playback resumes when user intent was playing", true);
+
+  for (const [width, height] of [
+    [320, 900],
+    [390, 844],
+    [768, 900],
+    [1024, 900],
+    [1440, 768],
+    [700, 390],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await ready();
+    if (!(await state()).paused)
+      await page
+        .getByRole("button", { name: "Pause film", exact: true })
+        .click();
+    await seek(17);
+    const layout = await page.evaluate(() => {
+      const controls = document
+        .querySelector(".film-controls")
+        .getBoundingClientRect();
+      const entry = document
+        .querySelector(".film-entry")
+        .getBoundingClientRect();
+      const stage = document
+        .querySelector(".film-intro")
+        .getBoundingClientRect();
+      return {
+        overflow: document.documentElement.scrollWidth > innerWidth,
+        controls: {
+          x: controls.x,
+          right: controls.right,
+          y: controls.y,
+          bottom: controls.bottom,
+        },
+        entry: {
+          x: entry.x,
+          right: entry.right,
+          y: entry.y,
+          bottom: entry.bottom,
+        },
+        stageHeight: stage.height,
+        fit: getComputedStyle(document.querySelector("video")).objectFit,
+        format: document.querySelector(".film-intro").dataset.format,
+      };
+    });
+    check(
+      `Whole-frame layout and top controls at ${width}x${height}`,
+      !layout.overflow &&
+        layout.fit === "contain" &&
+        layout.controls.x >= 0 &&
+        layout.controls.right <= width &&
+        layout.controls.bottom < height / 2 &&
+        layout.entry.x >= 0 &&
+        layout.entry.right <= width &&
+        layout.entry.bottom < height / 2 &&
+        Math.abs(layout.stageHeight - height) < 2,
+      layout,
+    );
+    await page.screenshot({
+      path: `output/playwright/film-${width}x${height}.png`,
+    });
+  }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await ready();
+  for (const time of [3, 7, 12, 17, 22, 28, 34]) {
+    await seek(time);
+    await page.screenshot({
+      path: `output/playwright/film-encoded-${time}.png`,
+    });
+  }
+  await page
+    .getByRole("link", { name: "Enter Opporbyte", exact: true })
+    .click();
+  await page.waitForURL("**/onboarding");
+  check(
+    "Entry opens the existing frontend preview",
+    (await page.locator(".preview-label").innerText()) ===
+      "FRONTEND PREVIEW · NO ACCOUNT REQUIRED",
+  );
+  await page.getByRole("button", { name: "Design", exact: true }).click();
+  check(
+    "Existing design filter works",
+    (await page.locator("article").count()) === 2,
+  );
+  await page
+    .getByRole("button", { name: "Save Product Designer example", exact: true })
+    .click();
+  check(
+    "Existing save stays in the local preview",
+    (await page
+      .getByRole("button", { name: "Unsave Product Designer example" })
+      .getAttribute("aria-pressed")) === "true",
+  );
+  await page
+    .getByRole("textbox", { name: "Another field or role?" })
+    .fill("architecture");
+  check(
+    "Existing empty state is honest",
+    (await page.locator("article").count()) === 0 &&
+      (await page.locator(".result-note").innerText()).includes(
+        "No fictional examples",
+      ),
+  );
+  await page.reload();
+  check(
+    "Existing preview selections reset on reload",
+    (await page.locator(".result-note").innerText()).includes("0 saved"),
+  );
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(base + "/");
+  await ready();
+  value = await state();
+  await page.waitForTimeout(400);
+  check(
+    "Reduced motion starts paused with immediate product entry",
+    value.paused &&
+      (await state()).time === value.time &&
+      (await page.getByRole("link", { name: "Enter Opporbyte" }).isVisible()),
+    value,
+  );
+  await page.getByRole("button", { name: "Play film", exact: true }).click();
+  await page.waitForFunction(
+    () => document.querySelector("video").currentTime > 0.2,
+  );
+  check("Reduced motion still permits explicit playback", true);
+  await page.screenshot({ path: "output/playwright/film-reduced-motion.png" });
+
+  faultInjection = true;
+  await page.route("**/films/*.mp4", (route) => route.abort("failed"));
+  await page.reload();
+  await page
+    .getByRole("status")
+    .filter({ hasText: "The film couldn’t load" })
+    .waitFor();
+  check(
+    "Media failure leaves the entry usable",
+    await page.getByRole("link", { name: "Enter Opporbyte" }).isVisible(),
+  );
+  await page.screenshot({ path: "output/playwright/film-load-fallback.png" });
+  await page
+    .getByRole("link", { name: "Enter Opporbyte", exact: true })
+    .click();
+  await page.waitForURL("**/onboarding");
+  check("Entry works after a failed movie load", true);
+  await page.unroute("**/films/*.mp4");
+  faultInjection = false;
+  check(
+    "No unexpected browser runtime or resource errors",
+    errors.length === 0,
+    errors,
+  );
+  check(
+    "No external service requests in the frontend",
+    external.length === 0,
+    external,
+  );
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto(base + "/");
+  await ready();
+  return {
+    base,
+    checkedAt: new Date().toISOString(),
+    results,
+    errors,
+    external,
+    audioVerification: signal,
+    perceptualListening: "not claimed",
+  };
+}
+)(page);
+```
+### Page
+- Page URL: http://127.0.0.1:3001/
+- Page Title: Opporbyte — Your job hunt. Finally in one place.
+### Events
+- New console entries: .playwright-cli\console-2026-10-10T11-16-04-998Z.log#L2-L3

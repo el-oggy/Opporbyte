@@ -1,0 +1,5 @@
+# Recreated from the pinned frontend dependencies by prepare-assets.mjs.
+vendor/*.js
+
+# Temporary decode/trim/tempo intermediates; retain original MP3s and final stems.
+assets/voice-*.wav
