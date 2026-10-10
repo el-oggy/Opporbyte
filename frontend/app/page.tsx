@@ -1,13 +1,5 @@
-import { Hero } from "@/components/landing/Hero";
-import { WorkspacePreview } from "@/components/landing/WorkspacePreview";
+import MarketingPage from "@/components/marketing/MarketingPage";
 
 export default function Home() {
-  return (
-    <>
-      <main id="main" tabIndex={-1}>
-        <Hero />
-        <WorkspacePreview />
-      </main>
-    </>
-  );
+  return <MarketingPage />;
 }
