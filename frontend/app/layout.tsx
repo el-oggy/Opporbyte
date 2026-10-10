@@ -7,6 +7,7 @@ import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
 import "./globals.css";
+import "@/components/ui/styles.css";
 
 export const metadata: Metadata = {
   title: "Opporbyte — Your job hunt. Finally in one place.",
