@@ -1267,36 +1267,52 @@ function Finale() {
     const boardWidth = Math.min(465, width);
     const unit = boardWidth / 465;
     const x = (width - boardWidth) / 2;
+    const stage = world.querySelector<HTMLElement>("[data-finale-stage]");
     const board = world.querySelector<HTMLElement>("[data-finale-board]");
+    if (stage) {
+      stage.style.transform = `translate3d(${x}px, ${(45 + (1 - value) * 18) * unit}px, 0) rotateY(${-8 * (1 - value)}deg) scale(${unit})`;
+    }
     if (board) {
-      board.style.width = "465px";
-      board.style.height = "340px";
-      board.style.transform = `translate3d(${x}px, ${(45 + (1 - value) * 24) * unit}px, 0) rotateY(${-8 + value * 4}deg) scale(${unit})`;
       board.style.opacity = String(0.12 + value * 0.88);
     }
+    // Every piece docks in the same plane. The right column shares an edge and
+    // width, and the profile and review card finish on the same baseline.
     const starts = [
-      [270, 15, 18, -28, 0.6],
-      [20, 0, -14, 20, 0.78],
-      [235, 230, 8, -15, 0.9],
-      [15, 315, -6, 0, 1],
+      [285, -130, 18, -28, 0.52, 65],
+      [-20, 166, -14, 20, 0.78, 90],
+      [275, 225, 8, -15, 0.9, 60],
+      [28, 315, -6, 0, 0.85, 35],
     ];
     const ends = [
-      [22, 237, -9, -20, 0.27],
-      [126, 155, 0, -10, 0.67],
-      [268, 177, 0, -10, 0.77],
-      [253, 314, 0, -10, 0.9],
+      [24, 14, 0, 0, 0.08, 0],
+      [28, 122, 0, 0, 0.87, 0],
+      [197, 122, 0, 0, 240 / 210, 0],
+      [197, 279, 0, 0, 0.96, 0],
     ];
+    const windows = [
+      [0.08, 0.62],
+      [0.22, 0.8],
+      [0.14, 0.7],
+      [0.48, 0.96],
+    ];
+    const lifts = [0, 18, 14, 8];
     const pieces = world.querySelectorAll<HTMLElement>("[data-finale-piece]");
     pieces.forEach((piece, index) => {
       const local = Math.min(
         1,
-        Math.max(0, (value - index * 0.04) / (1 - index * 0.04)),
+        Math.max(
+          0,
+          (value - windows[index][0]) / (windows[index][1] - windows[index][0]),
+        ),
       );
-      const t = local * local * (3 - 2 * local);
+      // Zero velocity and acceleration at both ends keep docking gentle when
+      // scrolling forward or reversing through the scene.
+      const t = local * local * local * (local * (local * 6 - 15) + 10);
       const pose = starts[index].map(
         (from, axis) => from + (ends[index][axis] - from) * t,
       );
-      piece.style.transform = `translate3d(${x + pose[0] * unit}px, ${pose[1] * unit}px, 0) rotateZ(${pose[2]}deg) rotateY(${pose[3]}deg) scale(${pose[4] * unit})`;
+      const lift = Math.sin(Math.PI * t) * lifts[index];
+      piece.style.transform = `translate3d(${pose[0]}px, ${pose[1] - lift}px, ${pose[5]}px) rotateZ(${pose[2]}deg) rotateY(${pose[3]}deg) scale(${pose[4]})`;
     });
   }, []);
   useScrollScene(section, render, reduced);
@@ -1313,30 +1329,35 @@ function Finale() {
         aria-hidden="true"
       >
         <div className={styles.finaleOrbit} />
-        <div data-finale-board="true" className={styles.finaleWorkspace}>
-          <span className={styles.finaleWorkspaceBar}>
-            opporbyte / your next chapter
-          </span>
-          <div className={styles.finaleWorkspaceHead}>
-            Everything has a place.
+        <div data-finale-stage="true" className={styles.finaleStage}>
+          <div data-finale-board="true" className={styles.finaleWorkspace}>
+            <span className={styles.finaleWorkspaceBar}>
+              opporbyte / your next chapter
+            </span>
+            <div className={styles.finaleWorkspaceHead}>
+              Everything has a place.
+            </div>
           </div>
-          <div className={styles.finaleWorkspaceLine} />
-          <div className={styles.finaleWorkspaceLine} />
-        </div>
-        <div data-finale-piece="true" className={styles.finaleCore} />
-        <div data-finale-piece="true" className={styles.finalePaper}>
-          <span />
-          <span />
-          <span />
-          <i />
-        </div>
-        <div data-finale-piece="true" className={styles.finaleJob}>
-          <span />
-          <span />
-          <i />
-        </div>
-        <div data-finale-piece="true" className={styles.finaleStatus}>
-          <Check size={17} /> Ready for what’s next
+          <div data-finale-piece="core" className={styles.finaleCore} />
+          <div data-finale-piece="resume" className={styles.finalePaper}>
+            <small className={styles.finalePieceLabel}>Your profile</small>
+            <span />
+            <span />
+            <span />
+            <i />
+            <small className={styles.finalePaperNote}>Ready to tailor</small>
+          </div>
+          <div data-finale-piece="opportunity" className={styles.finaleJob}>
+            <small className={styles.finalePieceLabel}>
+              Your next opportunity
+            </small>
+            <span />
+            <span />
+            <i />
+          </div>
+          <div data-finale-piece="review" className={styles.finaleStatus}>
+            <Check size={17} /> Ready for what’s next
+          </div>
         </div>
       </div>
       <div className={styles.finaleCopy}>

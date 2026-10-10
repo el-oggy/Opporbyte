@@ -1,0 +1,152 @@
+{
+  "localPreview": "http://127.0.0.1:3001/",
+  "source": "frontend/tests/marketing-motion-browser.txt",
+  "browser": "Desktop Chromium with responsive viewport emulation",
+  "viewportWidths": [
+    1440,
+    1280,
+    768,
+    390,
+    320
+  ],
+  "productionBuild": "Passed; TypeScript passed; 27 static pages generated",
+  "frontendLint": "Passed",
+  "frontendUnitTests": 18,
+  "result": {
+    "passed": 66,
+    "checks": [
+      "Hero interpolates abrupt scroll changes across frames",
+      "Hero returns to its exact initial progress",
+      "Endless Tabs has a distinct intermediate arrangement",
+      "Endless Tabs reverses deterministically",
+      "Manual organization and replay remain operable",
+      "User wheel scrolling resumes choreography after manual replay",
+      "Opportunity docks before the profile and review card",
+      "Profile and review card finish in separate later phases",
+      "Finale assembly follows continuous scroll progress",
+      "Finale reverses without threshold flicker",
+      "Closing workspace heading stays unobstructed at 0% progress",
+      "Closing workspace heading stays unobstructed at 25% progress",
+      "Closing workspace heading stays unobstructed at 50% progress",
+      "Closing workspace heading stays unobstructed at 75% progress",
+      "Closing workspace heading stays unobstructed at 100% progress",
+      "Copied/selected text uses a neutral highlight",
+      "Selecting FAQ heading does not change its element background",
+      "Ordinary click clears the text selection",
+      "FAQ opens",
+      "FAQ closes",
+      "FAQ remains keyboard operable",
+      "FAQ controls avoid accidental text highlighting",
+      "Organized cards remain separated at 1440px",
+      "Finale objects leave the workspace heading clear at 1440px",
+      "Profile and opportunity top edges align at 1440px",
+      "Opportunity and review card share an edge and width at 1440px",
+      "Profile and review card share a baseline at 1440px",
+      "Closing scene maintains clear row and column gaps at 1440px",
+      "Closing objects stay within the board and brand header at 1440px",
+      "No landing overflow at 1440px",
+      "Organized cards remain separated at 1280px",
+      "Finale objects leave the workspace heading clear at 1280px",
+      "Profile and opportunity top edges align at 1280px",
+      "Opportunity and review card share an edge and width at 1280px",
+      "Profile and review card share a baseline at 1280px",
+      "Closing scene maintains clear row and column gaps at 1280px",
+      "Closing objects stay within the board and brand header at 1280px",
+      "No landing overflow at 1280px",
+      "Organized cards remain separated at 768px",
+      "Finale objects leave the workspace heading clear at 768px",
+      "Profile and opportunity top edges align at 768px",
+      "Opportunity and review card share an edge and width at 768px",
+      "Profile and review card share a baseline at 768px",
+      "Closing scene maintains clear row and column gaps at 768px",
+      "Closing objects stay within the board and brand header at 768px",
+      "No landing overflow at 768px",
+      "Organized cards remain separated at 390px",
+      "Finale objects leave the workspace heading clear at 390px",
+      "Profile and opportunity top edges align at 390px",
+      "Opportunity and review card share an edge and width at 390px",
+      "Profile and review card share a baseline at 390px",
+      "Closing scene maintains clear row and column gaps at 390px",
+      "Closing objects stay within the board and brand header at 390px",
+      "No landing overflow at 390px",
+      "Organized cards remain separated at 320px",
+      "Finale objects leave the workspace heading clear at 320px",
+      "Profile and opportunity top edges align at 320px",
+      "Opportunity and review card share an edge and width at 320px",
+      "Profile and review card share a baseline at 320px",
+      "Closing scene maintains clear row and column gaps at 320px",
+      "Closing objects stay within the board and brand header at 320px",
+      "No landing overflow at 320px",
+      "Reduced motion keeps a fixed organized finale",
+      "Frozen scenes avoid redundant style writes during scrolling",
+      "Reduced-motion replay changes instantly and remains usable",
+      "No JavaScript runtime errors"
+    ],
+    "errors": []
+  },
+  "captureEvidence": {
+    "captures": [
+      {
+        "width": 1440,
+        "progress": 0,
+        "before": "0.0000",
+        "after": "0.0000"
+      },
+      {
+        "width": 1440,
+        "progress": 0.25,
+        "before": "0.2507",
+        "after": "0.2507"
+      },
+      {
+        "width": 1440,
+        "progress": 0.5,
+        "before": "0.5007",
+        "after": "0.5007"
+      },
+      {
+        "width": 1440,
+        "progress": 0.75,
+        "before": "0.7507",
+        "after": "0.7507"
+      },
+      {
+        "width": 1440,
+        "progress": 1,
+        "before": "1.0000",
+        "after": "1.0000"
+      },
+      {
+        "width": 1280,
+        "progress": 1,
+        "before": "1.0000",
+        "after": "1.0000"
+      },
+      {
+        "width": 1024,
+        "progress": 1,
+        "before": "1.0000",
+        "after": "1.0000"
+      },
+      {
+        "width": 768,
+        "progress": 1,
+        "before": "1.0000",
+        "after": "1.0000"
+      },
+      {
+        "width": 390,
+        "progress": 1,
+        "before": "1.0000",
+        "after": "1.0000"
+      },
+      {
+        "width": 320,
+        "progress": 1,
+        "before": "1.0000",
+        "after": "1.0000"
+      }
+    ],
+    "origin": "http://127.0.0.1:3001"
+  }
+}

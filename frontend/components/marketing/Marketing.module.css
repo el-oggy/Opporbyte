@@ -697,39 +697,31 @@
 }
 .finaleWorkspace {
   position: absolute;
-  right: 20px;
-  top: 150px;
   width: 465px;
-  height: 340px;
+  height: 360px;
   border: 1px solid #b9f0ec30;
   border-radius: 20px;
   background: #323a32;
   box-shadow:
     12px 14px 0 #121b1380,
     0 35px 80px #0004;
-  transform: rotateY(-10deg) rotateZ(2deg);
-  opacity: 0;
+  opacity: 0.12;
 }
 .finaleWorkspaceBar {
-  display: block;
-  padding: 17px 25px;
+  display: flex;
+  align-items: center;
+  height: 54px;
+  padding: 0 28px 0 58px;
   border-bottom: 1px solid #fffdf815;
   font-size: 10px;
   color: #d3dfd2;
 }
 .finaleWorkspaceHead {
-  padding: 22px 25px;
+  padding: 20px 28px 0;
   font:
     500 23px "Space Grotesk",
     sans-serif;
   letter-spacing: -0.03em;
-}
-.finaleWorkspaceLine {
-  height: 4px;
-  width: 110px;
-  background: #fffdf81a;
-  margin: 0 25px 12px;
-  border-radius: 3px;
 }
 .stepVisual > .demoLabel {
   margin-bottom: 22px;
@@ -1442,13 +1434,10 @@
 }
 .finaleCore {
   position: absolute;
-  right: 90px;
-  top: 130px;
   width: 250px;
   height: 310px;
   border: 70px solid var(--orange);
   border-radius: 50%;
-  transform: rotateY(-28deg) rotateZ(18deg);
   box-shadow:
     inset 16px 10px 20px #60270785,
     -15px 0 0 #b44b22,
@@ -1456,27 +1445,39 @@
 }
 .finalePaper {
   position: absolute;
-  right: 310px;
-  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   background: var(--white);
   width: 170px;
   height: 240px;
-  padding: 35px 22px;
+  padding: 22px 18px;
   border-radius: 9px;
   box-shadow:
     8px 10px 0 #b4ae9e,
     0 20px 65px #0004;
-  transform: rotateZ(-14deg) rotateY(20deg);
 }
 .finalePaper > span,
 .finaleJob > span {
   display: block;
   height: 5px;
   background: #20242020;
-  margin: 13px 0;
   border-radius: 5px;
+  flex-shrink: 0;
 }
-.finalePaper > span:first-child {
+.finalePieceLabel {
+  display: block;
+  font-size: 9px;
+  line-height: 1.4;
+  color: #5e655c;
+}
+.finalePaperNote {
+  margin-top: auto;
+  font-size: 9px;
+  line-height: 1.4;
+  color: #5e655c;
+}
+.finalePaper > span:first-of-type {
   height: 9px;
   width: 70%;
   background: #202420;
@@ -1485,23 +1486,24 @@
   display: block;
   background: var(--cyan);
   height: 20px;
-  margin-top: 25px;
+  margin-top: 14px;
+  flex-shrink: 0;
 }
 .finaleJob {
   position: absolute;
-  right: 20px;
-  top: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: 210px;
   height: 120px;
   background: var(--cream);
   border-radius: 13px;
-  padding: 24px;
+  padding: 18px;
   box-shadow:
     7px 8px 0 #958977,
     0 20px 40px #0003;
-  transform: rotateY(-15deg) rotateZ(8deg);
 }
-.finaleJob > span:first-child {
+.finaleJob > span:first-of-type {
   width: 65%;
   background: #202420;
   height: 8px;
@@ -1512,21 +1514,22 @@
   height: 13px;
   width: 35px;
   border-radius: 3px;
-  margin-top: 15px;
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 .finaleStatus {
   position: absolute;
-  right: 265px;
-  top: 420px;
+  width: 250px;
+  height: 54px;
   display: flex;
   gap: 10px;
   align-items: center;
+  justify-content: center;
   background: var(--cyan);
   color: var(--ink);
   padding: 14px 19px;
   font-size: 10px;
   border-radius: 8px;
-  transform: rotate(-6deg);
 }
 .faq {
   display: grid;
@@ -1696,21 +1699,6 @@
   }
   .documents article {
     padding: 22px 17px;
-  }
-  .finaleCore {
-    right: 65px;
-    width: 210px;
-    height: 265px;
-    border-width: 57px;
-  }
-  .finalePaper {
-    right: 235px;
-  }
-  .finaleStatus {
-    right: 210px;
-  }
-  .finaleJob {
-    right: 15px;
   }
   .footerBottom nav {
     gap: 15px;
@@ -1924,21 +1912,6 @@
   .finaleWorld {
     inset: 80px -80px 0 35%;
     opacity: 0.5;
-  }
-  .finalePaper {
-    right: 240px;
-    width: 145px;
-    height: 190px;
-  }
-  .finaleCore {
-    top: 70px;
-    right: 90px;
-  }
-  .finaleJob {
-    top: 350px;
-  }
-  .finaleStatus {
-    top: 370px;
   }
   .faq {
     grid-template-columns: 1fr;
@@ -2293,22 +2266,6 @@
     transform: scale(0.67);
     transform-origin: top center;
   }
-  .finaleCore {
-    right: 80px;
-    top: 60px;
-  }
-  .finalePaper {
-    right: 260px;
-    top: 20px;
-  }
-  .finaleJob {
-    right: 40px;
-    top: 260px;
-  }
-  .finaleStatus {
-    right: 250px;
-    top: 280px;
-  }
   .finaleOrbit {
     width: 450px;
     height: 450px;
@@ -2489,6 +2446,7 @@
 
 /* Scroll scenes write only transforms/opacity; their layout stays stable. */
 .tabWorld [data-search-card],
+.finaleStage,
 .finaleWorld [data-finale-piece],
 .finaleWorld [data-finale-board] {
   top: 0;
@@ -2497,12 +2455,18 @@
   transform-origin: top left;
   transition: none;
 }
+.finaleStage {
+  position: absolute;
+  width: 465px;
+  height: 360px;
+  transform-style: preserve-3d;
+}
 .finaleWorld {
   inset: auto;
   top: 205px;
   right: 5%;
   width: min(465px, 38%);
-  height: 410px;
+  height: 430px;
   transform: none;
   opacity: 1;
   pointer-events: none;
@@ -2512,7 +2476,6 @@
   white-space: nowrap;
   font-size: 23px;
   line-height: 1.2;
-  padding: 14px 25px 8px;
 }
 .section[data-reveal-ready] h2 {
   transition:
@@ -2537,21 +2500,12 @@
     inset: auto;
     width: min(465px, 100%);
     height: auto;
-    aspect-ratio: 465 / 410;
+    aspect-ratio: 465 / 430;
     margin: 0 auto 35px;
     transform: none;
   }
   .finaleCopy {
     padding-top: 0;
-  }
-  .finaleWorld .finaleCore {
-    width: 250px;
-    height: 310px;
-    border-width: 70px;
-  }
-  .finaleWorld .finalePaper {
-    width: 170px;
-    height: 240px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

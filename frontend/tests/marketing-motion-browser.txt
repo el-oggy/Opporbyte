@@ -25,11 +25,19 @@ async (page) => {
  const replay=page.locator('#endless-tabs button');await replay.scrollIntoViewIfNeeded();await page.waitForTimeout(600);const manualTarget=await page.locator('[data-search-world]').evaluate(e=>Number(e.dataset.sceneProgress)>=.5?0:1);await replay.click();await page.waitForFunction(target=>document.querySelector('[data-search-world]').dataset.sceneProgress===target.toFixed(4),manualTarget);await replay.click();await page.waitForFunction(target=>document.querySelector('[data-search-world]').dataset.sceneProgress===target.toFixed(4),1-manualTarget);checks.push('Manual organization and replay remain operable');
  await replay.click();await page.waitForTimeout(650);const beforeWheel=await page.locator('[data-search-world]').evaluate(e=>e.dataset.sceneProgress);await page.mouse.wheel(0,80);await page.waitForFunction(value=>document.querySelector('[data-search-world]').dataset.sceneProgress!==value,beforeWheel);checks.push('User wheel scrolling resumes choreography after manual replay');
  await scrollScene('[data-finale]',0);const finaleStart=await page.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform);
- await scrollScene('[data-finale]',.5);const finaleMiddle=await page.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform);
- await scrollScene('[data-finale]',1);const finaleEnd=await page.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform);
+  await scrollScene('[data-finale]',.5);const finaleMiddle=await page.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform);
+  await scrollScene('[data-finale]',.75);const opportunityDocked=await page.locator('[data-finale-piece="opportunity"]').evaluate(e=>e.style.transform);const profileMoving=await page.locator('[data-finale-piece="resume"]').evaluate(e=>e.style.transform);const reviewMoving=await page.locator('[data-finale-piece="review"]').evaluate(e=>e.style.transform);
+  await scrollScene('[data-finale]',1);const finaleEnd=await page.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform);
+  verify(opportunityDocked===await page.locator('[data-finale-piece="opportunity"]').evaluate(e=>e.style.transform),'Opportunity docks before the profile and review card');
+  verify(profileMoving!==await page.locator('[data-finale-piece="resume"]').evaluate(e=>e.style.transform)&&reviewMoving!==await page.locator('[data-finale-piece="review"]').evaluate(e=>e.style.transform),'Profile and review card finish in separate later phases');
  verify(finaleStart!==finaleMiddle&&finaleMiddle!==finaleEnd,'Finale assembly follows continuous scroll progress');
  await page.screenshot({path:'output/playwright/motion-finale-desktop.png',caret:'initial'});
  await scrollScene('[data-finale]',0);verify(await page.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform)===finaleStart,'Finale reverses without threshold flicker');
+ for(const progress of [0,.25,.5,.75,1]) {
+  await scrollScene('[data-finale]',progress);
+  const readable=await page.locator('[data-finale-world]').evaluate(e=>{const title=e.querySelector('[data-finale-board] > div').getBoundingClientRect();return [...e.querySelectorAll('[data-finale-piece]')].every(piece=>{const b=piece.getBoundingClientRect();return b.bottom<title.top||b.top>title.bottom||b.right<title.left||b.left>title.right;});});
+  verify(readable,`Closing workspace heading stays unobstructed at ${progress*100}% progress`);
+ }
  await page.locator('#faq-title').scrollIntoViewIfNeeded();await page.locator('#faq-title').dblclick();await page.keyboard.press('Control+c');
  verify(await page.locator('#faq-title').evaluate(e=>getComputedStyle(e,'::selection').backgroundColor)==='rgb(216, 213, 204)','Copied/selected text uses a neutral highlight');
  verify(await page.locator('#faq-title').evaluate(e=>getComputedStyle(e).backgroundColor)==='rgba(0, 0, 0, 0)','Selecting FAQ heading does not change its element background');
@@ -42,8 +50,18 @@ async (page) => {
   const cardSpacing=await page.locator('[data-search-world]').evaluate(e=>{const boxes=[...e.querySelectorAll('[data-search-card]')].map(p=>p.getBoundingClientRect());return Math.max(boxes[0].bottom,boxes[1].bottom)<boxes[2].top;});
   verify(cardSpacing,`Organized cards remain separated at ${width}px`);
   await scrollScene('[data-finale]',1);
-  const clear=await page.locator('[data-finale-world]').evaluate(e=>{const heading=e.querySelector('[data-finale-board] > div').getBoundingClientRect();return [...e.querySelectorAll('[data-finale-piece]')].every(p=>p.getBoundingClientRect().top>heading.bottom);});
+  const clear=await page.locator('[data-finale-world]').evaluate(e=>{const heading=e.querySelector('[data-finale-board] > div').getBoundingClientRect();return [...e.querySelectorAll('[data-finale-piece]:not([data-finale-piece="core"])')].every(p=>p.getBoundingClientRect().top>heading.bottom);});
   verify(clear,`Finale objects leave the workspace heading clear at ${width}px`);
+  const aligned=await page.locator('[data-finale-world]').evaluate(e=>{
+   const rect=selector=>e.querySelector(selector).getBoundingClientRect();
+   const profile=rect('[data-finale-piece="resume"]'),job=rect('[data-finale-piece="opportunity"]'),review=rect('[data-finale-piece="review"]'),core=rect('[data-finale-piece="core"]'),board=rect('[data-finale-board]'),bar=rect('[data-finale-board] > span');
+   return {tops:Math.abs(profile.top-job.top)<1,edges:Math.abs(job.left-review.left)<1&&Math.abs(job.width-review.width)<1,baseline:Math.abs(profile.bottom-review.bottom)<1,gap:job.bottom+5<review.top&&profile.right+5<job.left,contained:[profile,job,review,core].every(p=>p.left>=board.left&&p.right<=board.right&&p.top>=board.top&&p.bottom<=board.bottom)&&core.bottom<bar.bottom};
+  });
+  verify(aligned.tops,`Profile and opportunity top edges align at ${width}px`);
+  verify(aligned.edges,`Opportunity and review card share an edge and width at ${width}px`);
+  verify(aligned.baseline,`Profile and review card share a baseline at ${width}px`);
+  verify(aligned.gap,`Closing scene maintains clear row and column gaps at ${width}px`);
+  verify(aligned.contained,`Closing objects stay within the board and brand header at ${width}px`);
   verify(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`No landing overflow at ${width}px`);
   if(width===390||width===320) await page.screenshot({path:`output/playwright/motion-finale-${width}.png`,caret:'initial'});
  }

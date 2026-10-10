@@ -74,3 +74,19 @@ instructions.
 - [Neutral FAQ text selection](motion-faq-selection.png)
 - [Focused QA results](MOTION_QA.json)
 - [Changes and verification](../FRONTEND_MOTION_REFINEMENT.md)
+
+## Closing scene alignment after screenshot review
+
+The closing cards now dock in one shared frame. The O settles into the header,
+the profile and opportunity align at the top, and the review card completes the
+right column on the profile's baseline. The title stays clear through the
+assembly. These captures show the final production preview.
+
+- [Aligned desktop composition](finale-aligned-desktop.png)
+- [Aligned 390px composition](finale-aligned-390.png)
+- [Aligned 320px composition](finale-aligned-320.png)
+- [Assembly at 25 percent](finale-assembly-25.png)
+- [Assembly at 50 percent](finale-assembly-50.png)
+- [Assembly at 75 percent](finale-assembly-75.png)
+- [Focused production QA](FINALE_QA.json)
+- [Implementation and verification](../FINALE_REFINEMENT.md)
