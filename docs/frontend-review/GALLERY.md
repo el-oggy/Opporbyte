@@ -64,3 +64,13 @@ exports, application staging and approval, analytics and logout.
 See [the full handoff](../FRONTEND_REDESIGN_HANDOFF.md) for completed routes,
 specialist contributions, test evidence, current product limits and run
 instructions.
+
+## Motion refinement after review
+
+- [Updated desktop finale](motion-finale-1440-full.png)
+- [Updated 390px finale](motion-finale-390-full.png)
+- [Updated 320px finale](motion-finale-320-full.png)
+- [Intermediate Endless Tabs arrangement](motion-tabs-halfway.png)
+- [Neutral FAQ text selection](motion-faq-selection.png)
+- [Focused QA results](MOTION_QA.json)
+- [Changes and verification](../FRONTEND_MOTION_REFINEMENT.md)

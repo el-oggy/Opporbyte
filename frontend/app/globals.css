@@ -71,7 +71,7 @@ canvas {
   max-width: 100%;
 }
 ::selection {
-  background: var(--cyan);
+  background: #d8d5cc;
   color: var(--ink);
 }
 :focus-visible {

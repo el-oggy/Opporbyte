@@ -353,10 +353,6 @@
   border-radius: 14px;
   border: 1px solid #20242022;
   box-shadow: 0 25px 38px #51361a17;
-  transition:
-    transform 1s cubic-bezier(0.2, 0.7, 0.2, 1),
-    left 1s,
-    top 1s;
 }
 .browserChrome {
   display: flex;
@@ -414,21 +410,6 @@
   transform: rotate(-6deg) rotateY(-15deg);
   z-index: 3;
 }
-.organized .browserOne {
-  left: 0;
-  top: 25px;
-  transform: rotate(-1deg) scale(0.91);
-}
-.organized .browserTwo {
-  left: 245px;
-  top: 25px;
-  transform: rotate(1deg) scale(0.91);
-}
-.organized .browserThree {
-  left: 122px;
-  top: 190px;
-  transform: rotate(0) scale(0.91);
-}
 .miniLine,
 .miniLineShort {
   height: 5px;
@@ -461,15 +442,11 @@
   gap: 10px;
   font-size: 11px;
   opacity: 0;
-  transition: opacity 0.4s;
 }
 .organizedTitle .logoMark {
   width: 14px;
   height: 17px;
   border-width: 4px;
-}
-.organized .organizedTitle {
-  opacity: 1;
 }
 .previewCorner {
   position: absolute;
@@ -732,9 +709,6 @@
     0 35px 80px #0004;
   transform: rotateY(-10deg) rotateZ(2deg);
   opacity: 0;
-  transition:
-    opacity 0.9s,
-    transform 0.9s;
 }
 .finaleWorkspaceBar {
   display: block;
@@ -756,39 +730,6 @@
   background: #fffdf81a;
   margin: 0 25px 12px;
   border-radius: 3px;
-}
-.finaleCore,
-.finalePaper,
-.finaleJob,
-.finaleStatus {
-  transition:
-    top 1.2s cubic-bezier(0.2, 0.7, 0.2, 1),
-    right 1.2s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.finaleAssembled .finaleWorkspace {
-  opacity: 1;
-  transform: rotateY(-10deg) rotateZ(0);
-}
-.finaleAssembled .finaleCore {
-  right: 310px;
-  top: 280px;
-  transform: rotateY(-20deg) rotateZ(-9deg) scale(0.3);
-}
-.finaleAssembled .finalePaper {
-  right: 215px;
-  top: 210px;
-  transform: rotateY(-10deg) rotateZ(0) scale(0.67);
-}
-.finaleAssembled .finaleJob {
-  right: 23px;
-  top: 280px;
-  transform: rotateY(-10deg) rotateZ(0) scale(0.8);
-}
-.finaleAssembled .finaleStatus {
-  right: 50px;
-  top: 420px;
-  transform: rotateY(-10deg) rotateZ(0);
 }
 .stepVisual > .demoLabel {
   margin-bottom: 22px;
@@ -1623,6 +1564,8 @@
   padding: 22px 0;
   list-style: none;
   line-height: 1.6;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .faqList summary::-webkit-details-marker {
   display: none;
@@ -1719,12 +1662,6 @@
   }
   .hero .textLink {
     font-size: 11px;
-  }
-  .organized .browserTwo {
-    left: 190px;
-  }
-  .organized .browserThree {
-    left: 95px;
   }
   .miniBrowser {
     width: 230px;
@@ -1878,12 +1815,6 @@
     transform-origin: center right;
     width: 380px;
     margin-left: -80px;
-  }
-  .organized .browserTwo {
-    left: 190px;
-  }
-  .organized .browserThree {
-    left: 95px;
   }
   .careerLayout {
     grid-template-columns: 0.8fr 1.2fr;
@@ -2553,5 +2484,80 @@
   }
   .primary:hover {
     transform: none;
+  }
+}
+
+/* Scroll scenes write only transforms/opacity; their layout stays stable. */
+.tabWorld [data-search-card],
+.finaleWorld [data-finale-piece],
+.finaleWorld [data-finale-board] {
+  top: 0;
+  left: 0;
+  right: auto;
+  transform-origin: top left;
+  transition: none;
+}
+.finaleWorld {
+  inset: auto;
+  top: 205px;
+  right: 5%;
+  width: min(465px, 38%);
+  height: 410px;
+  transform: none;
+  opacity: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.finaleWorkspaceHead {
+  white-space: nowrap;
+  font-size: 23px;
+  line-height: 1.2;
+  padding: 14px 25px 8px;
+}
+.section[data-reveal-ready] h2 {
+  transition:
+    opacity 650ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 650ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.section[data-revealed="false"] h2 {
+  opacity: 0.65;
+  transform: translateY(16px);
+}
+.section[data-revealed="true"] h2 {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (max-width: 900px) {
+  .finale {
+    padding-top: 155px;
+    min-height: 0;
+  }
+  .finaleWorld {
+    position: relative;
+    inset: auto;
+    width: min(465px, 100%);
+    height: auto;
+    aspect-ratio: 465 / 410;
+    margin: 0 auto 35px;
+    transform: none;
+  }
+  .finaleCopy {
+    padding-top: 0;
+  }
+  .finaleWorld .finaleCore {
+    width: 250px;
+    height: 310px;
+    border-width: 70px;
+  }
+  .finaleWorld .finalePaper {
+    width: 170px;
+    height: 240px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section[data-reveal-ready] h2 {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

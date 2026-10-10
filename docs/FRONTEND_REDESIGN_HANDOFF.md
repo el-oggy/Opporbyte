@@ -62,8 +62,9 @@ build passed. Existing backend regressions: **27 passed**, using an isolated
 in-memory database and test-only owner values. One dependency deprecation warning
 was reported; no backend source change was needed.
 
-Current frontend regressions: **15 passed**, covering reversible poses, mobile
-independence, cookie requests, API failures and safe sign-in destinations.
+Current frontend regressions: **18 passed**, covering reversible poses, mobile
+independence, cookie requests, API failures, safe sign-in destinations and
+frame-rate-independent scroll damping.
 Final ESLint and TypeScript checks passed without errors or warnings. The
 optimized production build passed, generating 27 pages plus dynamic job routes.
 Desktop captures inspected for all ten onboarding/demo routes and all eight
@@ -89,6 +90,11 @@ Screenshot evidence is saved under `docs/frontend-review/`; open
 preview returned HTTP 200, all seven legacy routes returned the expected HTTP
 307 redirects, and the ten onboarding/demo production captures reported zero
 JavaScript runtime errors or private API requests.
+
+The subsequent motion refinement also passed **34 focused production-browser
+checks** and repeated all eight scene checks. See
+`docs/FRONTEND_MOTION_REFINEMENT.md` for the selection fix, continuous reversible
+card choreography, corrected closing composition, replay behavior and evidence.
 
 ## Product limits
 

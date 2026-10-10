@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -27,6 +27,7 @@ import Hero3D from "../hero3d/Hero3D";
 import { Brand, Button, ButtonLink } from "../ui";
 import { useMediaQuery } from "../landing/useMediaQuery";
 import styles from "./Marketing.module.css";
+import { useScrollScene } from "./useScrollScene";
 
 const careers = {
   Engineering: {
@@ -158,6 +159,7 @@ function SectionIntro({
 }
 
 export default function MarketingPage() {
+  const page = useRef<HTMLDivElement>(null);
   const hero = useRef<HTMLElement>(null);
   const heroStage = useRef<HTMLDivElement>(null);
   const progress = useRef(0);
@@ -165,40 +167,60 @@ export default function MarketingPage() {
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
   const pinned = !mobile && !reduced;
   const [menuOpen, setMenuOpen] = useState(false);
+  const measureHero = useCallback(
+    (node: HTMLElement) => {
+      if (!pinned) return 0;
+      const bounds = node.getBoundingClientRect();
+      const interval = Math.max(
+        1,
+        bounds.height - (heroStage.current?.offsetHeight ?? window.innerHeight),
+      );
+      return -bounds.top / interval;
+    },
+    [pinned],
+  );
+  const renderHero = useCallback(
+    (value: number) => {
+      progress.current = pinned ? value : 0;
+      hero.current?.setAttribute("data-scene-progress", value.toFixed(4));
+      heroStage.current?.setAttribute(
+        "data-hero-progress",
+        progress.current.toFixed(3),
+      );
+    },
+    [pinned],
+  );
+  useScrollScene(hero, renderHero, reduced, null, measureHero);
+
   useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const bounds = hero.current?.getBoundingClientRect();
-        if (bounds) {
-          const interval = pinned
-            ? Math.max(
-                1,
-                bounds.height -
-                  (heroStage.current?.offsetHeight ?? window.innerHeight),
-              )
-            : bounds.height * 0.85;
-          progress.current = Math.max(0, Math.min(1, -bounds.top / interval));
-          heroStage.current?.setAttribute(
-            "data-hero-progress",
-            progress.current.toFixed(3),
-          );
+    const sections = page.current?.querySelectorAll<HTMLElement>(
+      `.${styles.section}`,
+    );
+    if (!sections) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.setAttribute("data-revealed", "true");
+            observer.unobserve(entry.target);
+          }
         }
-      });
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, [pinned]);
+      },
+      { rootMargin: "0px 0px -40px 0px", threshold: 0.08 },
+    );
+    for (const section of sections) {
+      section.dataset.revealReady = "true";
+      section.dataset.revealed = String(
+        reduced ||
+          section.getBoundingClientRect().top < window.innerHeight - 40,
+      );
+      if (section.dataset.revealed !== "true") observer.observe(section);
+    }
+    return () => observer.disconnect();
+  }, [reduced]);
 
   return (
-    <div className={styles.page}>
+    <div ref={page} className={styles.page}>
       <a className={styles.skip} href="#main-content">
         Skip to content
       </a>
@@ -368,18 +390,101 @@ export default function MarketingPage() {
 
 function EndlessTabs() {
   const area = useRef<HTMLDivElement>(null);
-  const [organized, setOrganized] = useState(false);
-  useEffect(() => {
-    const node = area.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setOrganized(true);
-      },
-      { threshold: 0.35 },
+  const label = useRef<HTMLSpanElement>(null);
+  const button = useRef<HTMLButtonElement>(null);
+  const progress = useRef(0);
+  const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const [manualTarget, setManualTarget] = useState<number | null>(null);
+  const render = useCallback((value: number) => {
+    const world = area.current;
+    if (!world) return;
+    progress.current = value;
+    world.dataset.sceneProgress = value.toFixed(4);
+    const cards = Array.from(
+      world.querySelectorAll<HTMLElement>("[data-search-card]"),
     );
-    observer.observe(node);
-    return () => observer.disconnect();
+    const width = world.clientWidth;
+    const height = world.clientHeight;
+    const cardWidth = cards[0]?.offsetWidth ?? 265;
+    const cardHeight = Math.max(...cards.map((card) => card.offsetHeight), 1);
+    const scale = Math.min(
+      0.88,
+      (width - 20) / (cardWidth * 2 + 16),
+      (height - 62) / (cardHeight * 2),
+    );
+    const gap = 16;
+    const starts = [
+      [width * 0.04, 0, -12, -12],
+      [width * 0.43, height * 0.24, 9, -18],
+      [width * 0.13, height * 0.5, -6, -15],
+    ];
+    const ends = [
+      [(width - cardWidth * scale * 2 - gap) / 2, 25, -1, -5],
+      [(width + gap) / 2, 25, 1, -5],
+      [(width - cardWidth * scale) / 2, 25 + cardHeight * scale + 20, 0, -5],
+    ];
+    cards.forEach((card, index) => {
+      const local = Math.min(
+        1,
+        Math.max(0, (value - index * 0.055) / (1 - index * 0.055)),
+      );
+      const t = local * local * (3 - 2 * local);
+      const pose = starts[index].map(
+        (from, axis) => from + (ends[index][axis] - from) * t,
+      );
+      card.style.transform = `translate3d(${pose[0]}px, ${pose[1]}px, 0) rotateZ(${pose[2]}deg) rotateY(${pose[3]}deg) scale(${1 + (scale - 1) * t})`;
+    });
+    const title = world.querySelector<HTMLElement>("[data-organized-title]");
+    if (title) {
+      title.style.opacity = String(Math.max(0, (value - 0.65) / 0.35));
+      title.style.transform = `translateY(${(1 - value) * 8}px)`;
+    }
+    const organized = value >= 0.5;
+    world.setAttribute(
+      "aria-label",
+      organized
+        ? "Job search organized into one workspace"
+        : "Scattered job-search tasks",
+    );
+    button.current?.setAttribute("aria-pressed", String(organized));
+    const text = organized
+      ? "See the scattered search"
+      : "Bring it all together";
+    if (label.current && label.current.textContent !== text)
+      label.current.textContent = text;
+  }, []);
+  useScrollScene(area, render, reduced, manualTarget);
+  useEffect(() => {
+    const resume = () => setManualTarget(null);
+    const key = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (
+        target?.closest(
+          "input, textarea, select, button, a, summary, [contenteditable]",
+        )
+      )
+        return;
+      if (
+        [
+          "ArrowUp",
+          "ArrowDown",
+          "PageUp",
+          "PageDown",
+          "Home",
+          "End",
+          " ",
+        ].includes(event.key)
+      )
+        resume();
+    };
+    window.addEventListener("wheel", resume, { passive: true });
+    window.addEventListener("touchmove", resume, { passive: true });
+    window.addEventListener("keydown", key);
+    return () => {
+      window.removeEventListener("wheel", resume);
+      window.removeEventListener("touchmove", resume);
+      window.removeEventListener("keydown", key);
+    };
   }, []);
   return (
     <section
@@ -398,24 +503,26 @@ function EndlessTabs() {
           to follow up. Give them a place to come together.
         </p>
         <button
+          ref={button}
           type="button"
           className={styles.textButton}
-          onClick={() => setOrganized(!organized)}
+          aria-pressed="false"
+          onClick={() => setManualTarget(progress.current >= 0.5 ? 0 : 1)}
         >
-          {organized ? "See the scattered search" : "Bring it all together"}
+          <span ref={label}>Bring it all together</span>
           <ArrowRight size={18} />
         </button>
       </div>
       <div
         ref={area}
-        className={`${styles.tabWorld} ${organized ? styles.organized : ""}`}
-        aria-label={
-          organized
-            ? "Job search organized into one workspace"
-            : "Scattered job-search tasks"
-        }
+        className={styles.tabWorld}
+        aria-label="Scattered job-search tasks"
+        data-search-world="true"
       >
-        <div className={`${styles.miniBrowser} ${styles.browserOne}`}>
+        <div
+          data-search-card="true"
+          className={`${styles.miniBrowser} ${styles.browserOne}`}
+        >
           <div className={styles.browserChrome}>
             <i />
             <i />
@@ -430,7 +537,10 @@ function EndlessTabs() {
             <div className={styles.miniLineShort} />
           </div>
         </div>
-        <div className={`${styles.miniBrowser} ${styles.browserTwo}`}>
+        <div
+          data-search-card="true"
+          className={`${styles.miniBrowser} ${styles.browserTwo}`}
+        >
           <div className={styles.browserChrome}>
             <i />
             <i />
@@ -445,7 +555,10 @@ function EndlessTabs() {
             <div className={styles.miniLineShort} />
           </div>
         </div>
-        <div className={`${styles.miniBrowser} ${styles.browserThree}`}>
+        <div
+          data-search-card="true"
+          className={`${styles.miniBrowser} ${styles.browserThree}`}
+        >
           <div className={styles.browserChrome}>
             <i />
             <i />
@@ -463,7 +576,7 @@ function EndlessTabs() {
             </div>
           </div>
         </div>
-        <div className={styles.organizedTitle}>
+        <div data-organized-title="true" className={styles.organizedTitle}>
           <span className={styles.logoMark} /> One workspace. A little breathing
           room.
         </div>
@@ -1144,26 +1257,63 @@ function ControlDemo() {
 
 function Finale() {
   const section = useRef<HTMLElement>(null);
-  const [assembled, setAssembled] = useState(false);
-  useEffect(() => {
+  const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const render = useCallback((value: number) => {
     const node = section.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setAssembled(entry.isIntersecting),
-      { threshold: 0.25 },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
+    const world = node?.querySelector<HTMLElement>("[data-finale-world]");
+    if (!node || !world) return;
+    node.dataset.sceneProgress = value.toFixed(4);
+    const width = world.clientWidth;
+    const boardWidth = Math.min(465, width);
+    const unit = boardWidth / 465;
+    const x = (width - boardWidth) / 2;
+    const board = world.querySelector<HTMLElement>("[data-finale-board]");
+    if (board) {
+      board.style.width = "465px";
+      board.style.height = "340px";
+      board.style.transform = `translate3d(${x}px, ${(45 + (1 - value) * 24) * unit}px, 0) rotateY(${-8 + value * 4}deg) scale(${unit})`;
+      board.style.opacity = String(0.12 + value * 0.88);
+    }
+    const starts = [
+      [270, 15, 18, -28, 0.6],
+      [20, 0, -14, 20, 0.78],
+      [235, 230, 8, -15, 0.9],
+      [15, 315, -6, 0, 1],
+    ];
+    const ends = [
+      [22, 237, -9, -20, 0.27],
+      [126, 155, 0, -10, 0.67],
+      [268, 177, 0, -10, 0.77],
+      [253, 314, 0, -10, 0.9],
+    ];
+    const pieces = world.querySelectorAll<HTMLElement>("[data-finale-piece]");
+    pieces.forEach((piece, index) => {
+      const local = Math.min(
+        1,
+        Math.max(0, (value - index * 0.04) / (1 - index * 0.04)),
+      );
+      const t = local * local * (3 - 2 * local);
+      const pose = starts[index].map(
+        (from, axis) => from + (ends[index][axis] - from) * t,
+      );
+      piece.style.transform = `translate3d(${x + pose[0] * unit}px, ${pose[1] * unit}px, 0) rotateZ(${pose[2]}deg) rotateY(${pose[3]}deg) scale(${pose[4] * unit})`;
+    });
   }, []);
+  useScrollScene(section, render, reduced);
   return (
     <section
       ref={section}
-      className={`${styles.finale} ${assembled ? styles.finaleAssembled : ""}`}
+      className={styles.finale}
+      data-finale="true"
       aria-labelledby="finale-title"
     >
-      <div className={styles.finaleWorld} aria-hidden="true">
+      <div
+        data-finale-world="true"
+        className={styles.finaleWorld}
+        aria-hidden="true"
+      >
         <div className={styles.finaleOrbit} />
-        <div className={styles.finaleWorkspace}>
+        <div data-finale-board="true" className={styles.finaleWorkspace}>
           <span className={styles.finaleWorkspaceBar}>
             opporbyte / your next chapter
           </span>
@@ -1173,19 +1323,19 @@ function Finale() {
           <div className={styles.finaleWorkspaceLine} />
           <div className={styles.finaleWorkspaceLine} />
         </div>
-        <div className={styles.finaleCore} />
-        <div className={styles.finalePaper}>
+        <div data-finale-piece="true" className={styles.finaleCore} />
+        <div data-finale-piece="true" className={styles.finalePaper}>
           <span />
           <span />
           <span />
           <i />
         </div>
-        <div className={styles.finaleJob}>
+        <div data-finale-piece="true" className={styles.finaleJob}>
           <span />
           <span />
           <i />
         </div>
-        <div className={styles.finaleStatus}>
+        <div data-finale-piece="true" className={styles.finaleStatus}>
           <Check size={17} /> Ready for what’s next
         </div>
       </div>
