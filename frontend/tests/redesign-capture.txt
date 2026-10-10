@@ -1,0 +1,7 @@
+async (page) => {
+  await page.setViewportSize({width:1440,height:960});
+  await page.goto('http://127.0.0.1:3001/');
+  await page.locator('[data-hero3d][data-renderer="webgl"]').waitFor({timeout:30000});
+  await page.screenshot({path:'output/playwright/redesign-hero-desktop.png'});
+  return await page.evaluate(() => ({renderer:document.querySelector('[data-hero3d]').dataset, width:innerWidth, scrollWidth:document.documentElement.scrollWidth, heading:document.querySelector('h1').textContent}));
+}
