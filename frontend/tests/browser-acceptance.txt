@@ -1,0 +1,164 @@
+async (page) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  const results = [];
+  const errors = [];
+  const external = [];
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+  page.on('request', request => {
+    const url = request.url();
+    if (url.startsWith('http') && !url.startsWith('http://127.0.0.1:3000')) external.push(url);
+  });
+  const check = (name, passed, detail = '') => {
+    results.push({ name, passed, detail });
+    if (!passed) throw new Error(name + ': ' + detail);
+  };
+  // GPU antialiasing may vary by one color level at a single edge pixel.
+  // Compare decoded pixels with a one-level tolerance, rather than PNG bytes.
+  const frameDifference = async (before, after) => page.evaluate(async ({ a, b }) => {
+    const load = async data => {
+      const image = new Image();
+      image.src = 'data:image/png;base64,' + data;
+      await image.decode();
+      const canvas = document.createElement('canvas');
+      canvas.width = image.width; canvas.height = image.height;
+      const context = canvas.getContext('2d');
+      context.drawImage(image, 0, 0);
+      return context.getImageData(0, 0, canvas.width, canvas.height).data;
+    };
+    const [first, second] = await Promise.all([load(a), load(b)]);
+    if (first.length !== second.length) return -1;
+    let changed = 0;
+    for (let i = 0; i < first.length; i += 4)
+      if (Math.max(...[0, 1, 2].map(channel => Math.abs(first[i + channel] - second[i + channel]))) > 1) changed++;
+    return changed;
+  }, { a: before.toString('base64'), b: after.toString('base64') });
+  await page.goto('http://127.0.0.1:3000/onboarding');
+  await page.getByRole('button', { name: 'Design', exact: true }).click();
+  check('Design examples filter', await page.locator('article').count() === 2);
+  await page.getByRole('button', { name: 'Save Product Designer example', exact: true }).click();
+  check('Save example stays local', await page.getByRole('button', { name: 'Unsave Product Designer example' }).getAttribute('aria-pressed') === 'true');
+  await page.getByRole('textbox', { name: 'Another field or role?' }).fill('architecture');
+  check('Unrepresented field has honest empty state', await page.locator('article').count() === 0 && (await page.locator('.result-note').innerText()).includes('No fictional examples'));
+  await page.reload();
+  check('Selections reset on reload', (await page.locator('.result-note').innerText()).includes('0 saved'));
+  for (const route of ['/', '/onboarding']) {
+    await page.goto('http://127.0.0.1:3000' + route);
+    for (const width of [320, 390, 768, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
+      check(`No horizontal overflow ${route} at ${width}px`, !overflow);
+      if (route === '/') {
+        await page.waitForFunction(() => document.querySelectorAll('.pin-spacer').length === (innerWidth >= 1024 ? 1 : 0));
+        if (width >= 1024) {
+          // ScrollTrigger refreshes a pinned element asynchronously after resize.
+          await page.waitForFunction(() => Math.abs(document.querySelector('.scene-host').getBoundingClientRect().width - innerWidth) < 2);
+          const scene = await page.locator('.scene-host').boundingBox();
+          check(`Scene spans the desktop hero at ${width}px`, Math.abs(scene.width - width) < 2 && Math.abs(scene.x) < 2, JSON.stringify(scene));
+        }
+        if (width <= 390) {
+          const actions = await page.locator('.hero-actions').boundingBox();
+          const copy = await page.locator('.hero-copy').boundingBox();
+          check(`Mobile copy and actions precede the scene at ${width}px`, copy.y >= 0 && actions.y + actions.height < 900);
+        }
+      }
+    }
+  }
+  await page.goto('http://127.0.0.1:3000/');
+  await page.waitForFunction(() => document.querySelector('.scene-host')?.dataset.renderer === 'webgl');
+  check('Real WebGL renderer on desktop', true);
+  await page.setViewportSize({ width: 1440, height: 768 });
+  await page.waitForFunction(() => document.querySelector('.scene-host').getBoundingClientRect().height < 700);
+  const laptopActions = await page.locator('.hero-actions').boundingBox();
+  check('Short laptop keeps the actions within the initial viewport', laptopActions.y + laptopActions.height < 768);
+  check('Short laptop uses a tighter hero composition', (await page.locator('.scene-host').boundingBox()).height < 700);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.waitForFunction(() => document.querySelector('.scene-host').getBoundingClientRect().height > 800);
+  check('Desktop has a short pinned sequence', await page.locator('.pin-spacer').count() === 1);
+  await page.evaluate(() => window.scrollTo({ top: 790, behavior: 'instant' }));
+  await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '2');
+  check('Scroll reaches organization stage', true);
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '0');
+  check('Reverse scroll returns discovery stage', true);
+  await page.evaluate(() => window.scrollTo({ top: 485, behavior: 'instant' }));
+  await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '1');
+  await page.setViewportSize({ width: 768, height: 900 });
+  await page.waitForFunction(() => document.querySelectorAll('.pin-spacer').length === 0);
+  const copyReset = await page.locator('.hero-copy').evaluate(element => {
+    const transform = getComputedStyle(element).transform;
+    return transform === 'none' || new DOMMatrixReadOnly(transform).isIdentity;
+  });
+  check('Resizing during the story restores the compact copy and scene', copyReset && await page.locator('.hero').getAttribute('data-stage') === '0');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.waitForFunction(() => document.querySelectorAll('.pin-spacer').length === 1);
+  await page.evaluate(() => window.scrollTo({ top: 485, behavior: 'instant' }));
+  await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '1');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.waitForFunction(() => document.querySelectorAll('.pin-spacer').length === 0);
+  check('Enabling reduced motion during the story removes the pin and resets the caption', await page.locator('.hero').getAttribute('data-stage') === '0');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await page.waitForFunction(() => document.querySelector('.scene-stages')?.dataset.stage === '0');
+  await page.getByRole('link', { name: 'See how it works', exact: true }).click();
+  await page.waitForFunction(() => location.hash === '#how-it-works');
+  check('Secondary CTA targets next section', true);
+  await page.goto('http://127.0.0.1:3000/');
+  await page.setViewportSize({ width: 390, height: 844 });
+  check('Mobile is not pinned', await page.locator('.pin-spacer').count() === 0);
+  await page.getByRole('button', { name: 'Open navigation', exact: true }).click();
+  check('Menu moves focus to first link', await page.getByRole('link', { name: 'How It Works', exact: true }).evaluate(element => element === document.activeElement));
+  await page.keyboard.press('Escape');
+  check('Escape restores focus', await page.getByRole('button', { name: 'Open navigation', exact: true }).evaluate(element => element === document.activeElement));
+  await page.getByRole('link', { name: 'Find my next role', exact: true }).click();
+  await page.waitForURL('**/onboarding');
+  check('Primary CTA reaches frontend preview', await page.locator('.preview-label').innerText() === 'FRONTEND PREVIEW · NO ACCOUNT REQUIRED');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('http://127.0.0.1:3000/');
+  await page.waitForFunction(() => document.querySelector('.scene-host')?.dataset.renderer === 'webgl');
+  check('Reduced motion removes pinning', await page.locator('.pin-spacer').count() === 0);
+  // Finish initial GPU readback before comparing the long-lived frozen pose.
+  // Startup differed by one antialiased edge pixel in the production renderer.
+  await page.locator('.scene-host').screenshot();
+  await page.waitForTimeout(200);
+  const frozenA = await page.locator('.scene-host').screenshot({ path: 'output/playwright/reduced-before.png' });
+  await page.waitForTimeout(700);
+  const frozenB = await page.locator('.scene-host').screenshot({ path: 'output/playwright/reduced-after.png' });
+  const frozenDifference = await frameDifference(frozenA, frozenB);
+  check('Reduced motion scene remains static', frozenDifference === 0, frozenDifference + ' changed pixels beyond one color level');
+  await page.getByRole('button', { name: /^(Turn the view|Original view)$/ }).focus();
+  await page.keyboard.press('Space');
+  check('Perspective control works with the keyboard', await page.getByRole('button', { name: /^(Turn the view|Original view)$/ }).getAttribute('aria-pressed') === 'true');
+  const inspected = await page.locator('.scene-host').screenshot();
+  check('Reduced-motion perspective changes the rendered scene', await frameDifference(frozenB, inspected) > 0);
+  await page.waitForTimeout(700);
+  const inspectedAgain = await page.locator('.scene-host').screenshot();
+  const inspectedDifference = await frameDifference(inspected, inspectedAgain);
+  check('Inspected reduced-motion pose stays frozen', inspectedDifference === 0, inspectedDifference + ' changed pixels beyond one color level');
+  await page.getByRole('button', { name: /^(Turn the view|Original view)$/ }).click();
+  check('Perspective can return to the original view', await page.getByRole('button', { name: /^(Turn the view|Original view)$/ }).getAttribute('aria-pressed') === 'false');
+  await page.screenshot({ path: 'output/playwright/reduced-motion.png' });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.evaluate(() => {
+    const gl = document.querySelector('.webgl-scene canvas').getContext('webgl2');
+    gl.getExtension('WEBGL_lose_context').loseContext();
+  });
+  await page.waitForFunction(() => document.querySelector('.scene-host')?.dataset.capability === 'fallback');
+  check('Context loss restores static visual', await page.locator('.static-scene').isVisible());
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+      if (type === 'webgl' || type === 'webgl2' || type === 'experimental-webgl') return null;
+      return original.call(this, type, ...args);
+    };
+  });
+  await page.goto('http://127.0.0.1:3000/');
+  await page.waitForFunction(() => document.querySelector('.scene-host')?.dataset.capability === 'fallback');
+  check('Unavailable WebGL keeps static scene', await page.locator('.static-scene').isVisible());
+  check('Fallback keeps primary CTA', await page.getByRole('link', { name: 'Find my next role' }).isVisible());
+  await page.screenshot({ path: 'output/playwright/fallback.png' });
+  check('No browser errors', errors.length === 0, errors.join('; '));
+  check('No backend or external API requests', external.length === 0, external.join('; '));
+  return { checks: results.length, results, errors, external };
+}

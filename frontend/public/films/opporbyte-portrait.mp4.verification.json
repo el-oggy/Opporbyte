@@ -1,0 +1,26 @@
+{
+  "file": "opporbyte-portrait.mp4",
+  "bytes": 4055892,
+  "sha256": "beb1959977bbd2b886e56752858bb174477d98cf9cba97f8d7d00bcfebfeec55",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "frames": 1050,
+  "duration": 35,
+  "audio": "AAC, 48 kHz, stereo",
+  "fullDecode": "passed",
+  "fastStart": true,
+  "measuredAudio": {
+    "input_i": "-17.29",
+    "input_tp": "-1.37",
+    "input_lra": "7.40",
+    "input_thresh": "-27.89",
+    "output_i": "-16.65",
+    "output_tp": "-1.50",
+    "output_lra": "4.60",
+    "output_thresh": "-27.05",
+    "normalization_type": "dynamic",
+    "target_offset": "0.65"
+  },
+  "passed": true
+}

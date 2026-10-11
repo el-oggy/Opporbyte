@@ -1,0 +1,11 @@
+{
+  "format": "vertical",
+  "fps": 30,
+  "frames": 1050,
+  "duration": 35,
+  "width": 1080,
+  "height": 1920,
+  "audio": "mix-normalized.wav",
+  "decode": "passed",
+  "browserErrors": []
+}

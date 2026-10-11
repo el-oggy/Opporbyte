@@ -1,0 +1,25 @@
+async (page) => {
+ const checks=[];const verify=(ok,label)=>{if(!ok)throw new Error(label);checks.push(label);};
+ await page.setViewportSize({width:1440,height:960});await page.goto('http://127.0.0.1:3001/');await page.locator('[data-hero3d][data-renderer="webgl"]').waitFor();await page.waitForLoadState('networkidle');
+ await page.screenshot({path:'output/playwright/redesign-hero-desktop.png',caret:'initial'});
+ const interval=await page.evaluate(()=>{const stage=document.querySelector('[data-hero-progress]');return stage.parentElement.offsetHeight-stage.offsetHeight;});
+ await page.evaluate(value=>scrollTo({top:value,behavior:'instant'}),interval);await page.waitForFunction(()=>Number(document.querySelector('[data-hero-progress]').dataset.heroProgress)>.99);
+ verify(await page.locator('[data-hero-progress]').evaluate(e=>Math.abs(e.getBoundingClientRect().top)<2),'Short sticky stage keeps organized scene visible');
+ await page.screenshot({path:'output/playwright/redesign-hero-organized.png',caret:'initial'});
+ await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));await page.waitForFunction(()=>document.querySelector('[data-hero-progress]').dataset.heroProgress==='0.000');checks.push('Live scroll progress reverses to zero');
+ await page.mouse.move(850,200);const before=await page.locator('[data-hero3d] canvas').screenshot();await page.mouse.move(1350,700);await page.waitForTimeout(300);const after=await page.locator('[data-hero3d] canvas').screenshot();verify(!before.equals(after),'Pointer changes rendered perspective');
+ await page.locator('#careers').scrollIntoViewIfNeeded();await page.waitForFunction(()=>document.querySelector('[data-hero3d]').dataset.renderLoop==='paused');checks.push('Offscreen scene pauses');
+ await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+ await page.locator('[data-hero3d] canvas').evaluate(canvas=>canvas.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
+ await page.locator('[data-hero3d][data-capability="fallback"]').waitFor();verify(await page.getByRole('link',{name:'Find my next role',exact:true}).isVisible(),'Context loss retains usable DOM CTA and fallback');
+ const browser=page.context().browser();const reduced=await browser.newContext({viewport:{width:1440,height:960},reducedMotion:'reduce'});const rp=await reduced.newPage();
+ await rp.goto('http://127.0.0.1:3001/');await rp.locator('[data-hero3d][data-motion="frozen"][data-renderer="webgl"]').waitFor();await rp.waitForLoadState('networkidle');
+ verify(await rp.locator('[data-hero-progress]').evaluate(e=>e.offsetHeight===e.parentElement.offsetHeight),'Reduced motion removes desktop pin');
+ const r1=await rp.locator('[data-hero3d] canvas').screenshot();await rp.waitForTimeout(250);const r2=await rp.locator('[data-hero3d] canvas').screenshot();verify(r1.equals(r2),'Reduced-motion WebGL frames remain identical');
+ await rp.screenshot({path:'output/playwright/redesign-reduced-motion.png',caret:'initial'});await reduced.close();
+ const fallback=await browser.newContext({viewport:{width:390,height:844}});await fallback.addInitScript(()=>{const original=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){return /webgl/.test(type)?null:original.call(this,type,...args);};});const fp=await fallback.newPage();
+ await fp.goto('http://127.0.0.1:3001/');await fp.locator('[data-hero3d][data-capability="fallback"]').waitFor();verify(await fp.getByRole('link',{name:'Find my next role',exact:true}).isVisible(),'WebGL startup failure uses lightweight mobile fallback');
+ await fp.screenshot({path:'output/playwright/redesign-webgl-fallback.png',caret:'initial'});await fallback.close();
+ await page.setViewportSize({width:390,height:844});await page.goto('http://127.0.0.1:3001/');await page.locator('[data-hero3d][data-renderer="webgl"]').waitFor();await page.waitForLoadState('networkidle');await page.screenshot({path:'output/playwright/redesign-mobile-hero.png',caret:'initial'});
+ return {passed:checks.length,checks};
+}

@@ -21,6 +21,12 @@ downloads/
 eggs/
 .eggs/
 lib/
+!frontend/lib/
+!frontend/lib/**
+frontend/*.tsbuildinfo
+output/playwright/
+output/skill-validation/
+.playwright-cli/
 lib64/
 parts/
 sdist/

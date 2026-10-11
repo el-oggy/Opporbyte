@@ -1,0 +1,356 @@
+{
+  "base": "http://127.0.0.1:3001",
+  "checkedAt": "2026-10-10T11:26:02.439Z",
+  "results": [
+    {
+      "name": "Encoded landscape autoplays muted",
+      "passed": true,
+      "detail": {
+        "time": 0.252931,
+        "duration": 35,
+        "paused": false,
+        "muted": true,
+        "width": 1920,
+        "height": 1080,
+        "volume": 0.9,
+        "src": "http://127.0.0.1:3001/films/opporbyte-landscape.mp4",
+        "ended": false,
+        "audioBytes": 16720
+      }
+    },
+    {
+      "name": "Film opens at the top of the first viewport",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Slide transport and chapter strip removed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "User pause holds the decoded film",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "First sound activation restarts with audible volume",
+      "passed": true,
+      "detail": {
+        "time": 0.265776,
+        "duration": 35,
+        "paused": false,
+        "muted": false,
+        "width": 1920,
+        "height": 1080,
+        "volume": 0.9,
+        "src": "http://127.0.0.1:3001/films/opporbyte-landscape.mp4",
+        "ended": false,
+        "audioBytes": 268379
+      }
+    },
+    {
+      "name": "Browser decodes and routes a nonzero soundtrack",
+      "passed": true,
+      "detail": {
+        "maxRms": 0.20428736717024454,
+        "context": "running",
+        "decodedBytes": 304108
+      }
+    },
+    {
+      "name": "Mute control mutes the native soundtrack",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "All seven English narration cues can be shown",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Captions can be hidden",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Portrait switch preserves user pause and timestamp",
+      "passed": true,
+      "detail": {
+        "time": 17,
+        "duration": 35,
+        "paused": true,
+        "muted": true,
+        "width": 1080,
+        "height": 1920,
+        "volume": 0.9,
+        "src": "http://127.0.0.1:3001/films/opporbyte-portrait.mp4",
+        "ended": false,
+        "audioBytes": 21107
+      }
+    },
+    {
+      "name": "Landscape switch preserves user pause and timestamp",
+      "passed": true,
+      "detail": {
+        "time": 17,
+        "duration": 35,
+        "paused": true,
+        "muted": true,
+        "width": 1920,
+        "height": 1080,
+        "volume": 0.9,
+        "src": "http://127.0.0.1:3001/films/opporbyte-landscape.mp4",
+        "ended": false,
+        "audioBytes": 21107
+      }
+    },
+    {
+      "name": "Playing continues through a format switch",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ending holds without looping and offers entry",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Completed film stays completed across formats",
+      "passed": true,
+      "detail": {
+        "time": 35,
+        "duration": 35,
+        "paused": true,
+        "muted": true,
+        "width": 1920,
+        "height": 1080,
+        "volume": 0.9,
+        "src": "http://127.0.0.1:3001/films/opporbyte-landscape.mp4",
+        "ended": true,
+        "audioBytes": 54151
+      }
+    },
+    {
+      "name": "Replay restarts the film",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Offscreen playback pauses",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Visible playback resumes when user intent was playing",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Whole-frame layout and top controls at 320x900",
+      "passed": true,
+      "detail": {
+        "overflow": false,
+        "controls": {
+          "x": 105.203125,
+          "right": 307,
+          "y": 74,
+          "bottom": 118
+        },
+        "entry": {
+          "x": 189.140625,
+          "right": 307,
+          "y": 16,
+          "bottom": 62
+        },
+        "stageHeight": 900,
+        "fit": "contain",
+        "format": "portrait"
+      }
+    },
+    {
+      "name": "Whole-frame layout and top controls at 390x844",
+      "passed": true,
+      "detail": {
+        "overflow": false,
+        "controls": {
+          "x": 170.203125,
+          "right": 372,
+          "y": 74,
+          "bottom": 118
+        },
+        "entry": {
+          "x": 242.15625,
+          "right": 372,
+          "y": 16,
+          "bottom": 62
+        },
+        "stageHeight": 844,
+        "fit": "contain",
+        "format": "portrait"
+      }
+    },
+    {
+      "name": "Whole-frame layout and top controls at 768x900",
+      "passed": true,
+      "detail": {
+        "overflow": false,
+        "controls": {
+          "x": 336.140625,
+          "right": 539.9375,
+          "y": 26,
+          "bottom": 70
+        },
+        "entry": {
+          "x": 563.9375,
+          "right": 735.75,
+          "y": 22,
+          "bottom": 74
+        },
+        "stageHeight": 900,
+        "fit": "contain",
+        "format": "portrait"
+      }
+    },
+    {
+      "name": "Whole-frame layout and top controls at 1024x900",
+      "passed": true,
+      "detail": {
+        "overflow": false,
+        "controls": {
+          "x": 581.390625,
+          "right": 785.1875,
+          "y": 26,
+          "bottom": 70
+        },
+        "entry": {
+          "x": 809.1875,
+          "right": 981,
+          "y": 22,
+          "bottom": 74
+        },
+        "stageHeight": 900,
+        "fit": "contain",
+        "format": "landscape"
+      }
+    },
+    {
+      "name": "Whole-frame layout and top controls at 1440x768",
+      "passed": true,
+      "detail": {
+        "overflow": false,
+        "controls": {
+          "x": 979.921875,
+          "right": 1183.71875,
+          "y": 26,
+          "bottom": 70
+        },
+        "entry": {
+          "x": 1207.71875,
+          "right": 1379.53125,
+          "y": 22,
+          "bottom": 74
+        },
+        "stageHeight": 768,
+        "fit": "contain",
+        "format": "landscape"
+      }
+    },
+    {
+      "name": "Whole-frame layout and top controls at 700x390",
+      "passed": true,
+      "detail": {
+        "overflow": false,
+        "controls": {
+          "x": 342.359375,
+          "right": 544.15625,
+          "y": 11,
+          "bottom": 55
+        },
+        "entry": {
+          "x": 552.15625,
+          "right": 682,
+          "y": 10,
+          "bottom": 56
+        },
+        "stageHeight": 390,
+        "fit": "contain",
+        "format": "landscape"
+      }
+    },
+    {
+      "name": "Entry opens the existing frontend preview",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Existing design filter works",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Existing save stays in the local preview",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Existing empty state is honest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Existing preview selections reset on reload",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Reduced motion starts paused with immediate product entry",
+      "passed": true,
+      "detail": {
+        "time": 0,
+        "duration": 35,
+        "paused": true,
+        "muted": true,
+        "width": 1920,
+        "height": 1080,
+        "volume": 0.9,
+        "src": "http://127.0.0.1:3001/films/opporbyte-landscape.mp4",
+        "ended": false,
+        "audioBytes": 7328
+      }
+    },
+    {
+      "name": "Reduced motion still permits explicit playback",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Media failure leaves the entry usable",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Entry works after a failed movie load",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No unexpected browser runtime or resource errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "No external service requests in the frontend",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "external": [],
+  "audioVerification": {
+    "maxRms": 0.20428736717024454,
+    "context": "running",
+    "decodedBytes": 304108
+  },
+  "perceptualListening": "not claimed"
+}

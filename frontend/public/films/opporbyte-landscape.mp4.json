@@ -1,0 +1,11 @@
+{
+  "format": "landscape",
+  "fps": 30,
+  "frames": 1050,
+  "duration": 35,
+  "width": 1920,
+  "height": 1080,
+  "audio": "mix-normalized.wav",
+  "decode": "passed",
+  "browserErrors": []
+}

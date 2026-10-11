@@ -1,0 +1,65 @@
+{
+  "requestedCommand": "npx skills use \"https://github.com/vercel-labs/skills\" --skill \"find-skills\"",
+  "scope": "global Codex instructions; preserve existing skills; no plugin hooks or service setup",
+  "sources": [
+    { "repo": "vercel-labs/skills", "skills": ["find-skills"] },
+    {
+      "repo": "DietrichGebert/ponytail",
+      "skills": [
+        "ponytail",
+        "ponytail-review",
+        "ponytail-audit",
+        "ponytail-help",
+        "ponytail-debt",
+        "ponytail-gain"
+      ]
+    },
+    {
+      "repo": "cloudai-x/threejs-skills",
+      "skills": [
+        "threejs-fundamentals",
+        "threejs-geometry",
+        "threejs-materials",
+        "threejs-lighting",
+        "threejs-textures",
+        "threejs-animation",
+        "threejs-loaders",
+        "threejs-shaders",
+        "threejs-postprocessing",
+        "threejs-interaction"
+      ]
+    },
+    {
+      "repo": "emilkowalski/skills",
+      "skills": [
+        "emil-design-eng",
+        "animation-vocabulary",
+        "review-animations",
+        "improve-animations",
+        "find-animation-opportunities"
+      ]
+    },
+    {
+      "repo": "leonxlnx/taste-skill",
+      "skills": ["design-taste-frontend", "redesign-existing-projects"]
+    },
+    { "repo": "remotion-dev/skills", "skills": ["remotion-best-practices"] },
+    {
+      "repo": "heygen-com/hyperframes",
+      "skills": [
+        "hyperframes",
+        "hyperframes-cli",
+        "hyperframes-core",
+        "hyperframes-animation",
+        "hyperframes-creative",
+        "hyperframes-keyframes",
+        "hyperframes-registry",
+        "hyperframes-audio",
+        "media-use",
+        "motion-graphics",
+        "general-video",
+        "product-launch-video"
+      ]
+    }
+  ]
+}

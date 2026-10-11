@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Opporbyte — editable product film</title>
+<link rel="icon" href="data:," />
+<style>
+@font-face{font-family:Space Grotesk;src:url(assets/space-grotesk.woff2)}
+@font-face{font-family:Inter;src:url(assets/inter.woff2)}
+*{box-sizing:border-box}body{margin:0;background:#202420;color:#fffdf8;font-family:Inter,sans-serif;display:grid;place-items:center;min-height:100vh}
+canvas{display:block;max-width:100vw;max-height:100vh;width:auto;height:auto}
+.controls{position:fixed;top:16px;right:16px;display:flex;gap:10px;background:#fffdf8;padding:12px;color:#202420;border-radius:8px}
+.controls button{font:inherit;padding:8px;border:0;background:#f4e7d2;border-radius:5px;cursor:pointer}
+.controls input{width:200px}body.export .controls{display:none}
+</style>
+</head>
+<body>
+<canvas id="film"></canvas>
+<div class="controls"><button id="play">Play</button><input id="seek" type="range" min="0" max="35" step=".01" aria-label="Preview time" /><span id="time">0:00</span></div>
+<script type="module" src="film.mjs"></script>
+</body>
+</html>

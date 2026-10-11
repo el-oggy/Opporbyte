@@ -1,0 +1,15 @@
+async (page) => {
+  const results=[]; const failures=[];
+  for(const width of [1280,768,390,320]) {
+    const height=width<640?844:960;
+    await page.setViewportSize({width,height});
+    for(const path of ['/','/get-started','/login','/preview','/preview/discover','/preview/jobs/job-1','/preview/profiles','/preview/resumes','/preview/applications','/preview/analytics','/preview/settings']) {
+      await page.goto('http://127.0.0.1:3001'+path); await page.locator('main h1').waitFor(); await page.waitForLoadState('networkidle');
+      const info=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,heading:document.querySelector('h1').textContent}));
+      results.push({width,path,...info}); if(info.overflow) failures.push({width,path});
+      if(width===390&&['/','/get-started','/preview','/preview/discover','/preview/resumes','/preview/applications'].includes(path)) await page.screenshot({path:'output/playwright/redesign-mobile-'+(path==='/'?'hero':path.slice(1).replaceAll('/','-'))+'.png',caret:'initial'});
+      if(width===320&&path==='/') await page.screenshot({path:'output/playwright/redesign-hero-320.png',caret:'initial'});
+    }
+  }
+  return {checked:results.length,failures,results};
+}

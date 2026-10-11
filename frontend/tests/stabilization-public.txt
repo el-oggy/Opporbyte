@@ -1,0 +1,43 @@
+async (page) => {
+  const origin = new URL(page.url()).origin;
+  const checks = [], errors = [], api = []; const verify = (ok,label) => {if(!ok)throw new Error(label);checks.push(label);};
+  const error = e => errors.push(e.message); const request = r => {if(r.url().includes('/api/v1/'))api.push(r.url());};
+  page.on('pageerror',error); page.on('request',request);
+  await page.setViewportSize({width:1440,height:960}); await page.goto(origin + '/');
+  await page.getByRole('link',{name:'See how it works',exact:true}).click(); await page.waitForURL('**/#how-it-works');
+  verify(await page.locator('#how-it-works').isVisible(),'See how it works reaches its real section');
+  for (const name of ['Engineering','Software','Design','Healthcare','Finance','Marketing','Education','Research','Other / custom']) {
+    const button = page.locator('#careers').getByRole('button',{name,exact:true}); await button.click();
+    verify(await button.getAttribute('aria-pressed')==='true','Career category: ' + name);
+  }
+  const modes = page.getByRole('group',{name:'Preview work preference'});
+  for (const name of ['Remote','Hybrid','On-site']) {await modes.getByRole('button',{name,exact:true}).click();verify(await modes.getByRole('button',{name,exact:true}).getAttribute('aria-pressed')==='true','Work preference: ' + name);}
+  for (const name of ['01 Discover','02 Match','03 Tailor','04 Review & Track']) {
+    const tab = page.getByRole('tablist',{name:'How Opporbyte works'}).getByRole('tab',{name,exact:true});
+    await tab.click(); verify(await page.getByRole('tabpanel',{name,exact:true}).isVisible(),'Process preview: '+name);
+  }
+  await page.getByRole('tab',{name:'01 Discover',exact:true}).click();
+  await page.getByRole('button',{name:'Save in preview',exact:true}).click();
+  verify(await page.getByRole('button',{name:'Saved in preview',exact:true}).getAttribute('aria-pressed')==='true','Process save has a visible local result');
+  for (const name of ['Find Jobs','Smart Matching','Resume Studio','Application Queue']) {
+    const tab = page.getByRole('tablist',{name:'Workspace preview'}).getByRole('tab',{name,exact:true}); await tab.click();
+    verify(await page.getByRole('tabpanel',{name,exact:true}).isVisible(),'Workspace showcase: '+name);
+  }
+  await page.getByRole('tab',{name:'Find Jobs',exact:true}).click();
+  await page.locator('#workspace').getByRole('button',{name:'Save',exact:true}).click();
+  verify(await page.locator('#workspace').getByRole('button',{name:'Saved',exact:true}).getAttribute('aria-pressed')==='true','Showcase save is a local demonstration');
+  await page.locator('#resumes').getByRole('button',{name:'Hide the changes',exact:true}).click();
+  verify(await page.locator('#resumes').getByRole('button',{name:'Highlight the changes',exact:true}).getAttribute('aria-pressed')==='false','Resume comparison can hide highlights');
+  await page.locator('#resumes').getByRole('button',{name:'Highlight the changes',exact:true}).click();
+  verify(await page.locator('#resumes').getByRole('button',{name:'Hide the changes',exact:true}).getAttribute('aria-pressed')==='true','Resume comparison can restore highlights');
+  for (const summary of await page.locator('#faq summary').all()) {await summary.click();verify(await summary.evaluate(e=>e.parentElement.open),'FAQ: '+await summary.innerText());await summary.click();}
+  for (const [name,path] of [['Find my next role','/get-started'],['Start my job search','/get-started'],['Take a closer look','/preview'],['Build your preferences','/get-started'],['Start exploring','/get-started']]) {
+    verify(await page.getByRole('link',{name,exact:true}).getAttribute('href')===path,'CTA destination: '+name);
+  }
+  await page.getByRole('link',{name:'Take a closer look',exact:true}).click(); await page.waitForURL('**/preview');
+  await page.getByRole('heading',{name:/Welcome, Alex/}).waitFor();
+  verify((await page.locator('main').innerText()).includes('Welcome, Alex.'),'Workspace CTA opens its usable demonstration');
+  page.off('pageerror',error); page.off('request',request);
+  verify(api.length===0,'Public interactions make zero private API requests');verify(errors.length===0,'Public controls have no runtime errors');
+  return {passed:checks.length,checks,errors,api};
+}

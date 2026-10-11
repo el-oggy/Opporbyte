@@ -1,66 +1,137 @@
 @import "tailwindcss";
-
-@layer base {
-  :root {
-    --background: #f8fafc;
-    --foreground: #0f172a;
-    --card: #ffffff;
-    --card-foreground: #0f172a;
-    --border: #e2e8f0;
-    --input: #cbd5e1;
-    --ring: #6366f1;
-    --muted: #f1f5f9;
-    --muted-foreground: #64748b;
-  }
-
-  .dark {
-    --background: #090d16;
-    --foreground: #f8fafc;
-    --card: #0f172a;
-    --card-foreground: #f8fafc;
-    --border: #1e293b;
-    --input: #334155;
-    --ring: #818cf8;
-    --muted: #1e293b;
-    --muted-foreground: #94a3b8;
-  }
+:root {
+  --cream: #f4e7d2;
+  --ink: #202420;
+  --orange: #ff6b2b;
+  --orange-text: #a53d13;
+  --cyan: #b9f0ec;
+  --white: #fffdf8;
+  --muted: #64675e;
+  --line: #20242024;
+  --radius-control: 10px;
+  --radius-card: 20px;
+  --shadow: 0 12px 40px #2024200a;
 }
-
+@theme inline {
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-orange: var(--orange);
+  --color-cyan: var(--cyan);
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 32px;
+}
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  min-height: 100vh;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
-
-/* Glassmorphism helpers */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
 }
-
-.glass-panel-light {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin-top: 0;
 }
-
-/* Subtle scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
-::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 9999px;
+button {
+  cursor: pointer;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+a {
+  color: inherit;
+  text-decoration: none;
+}
+img,
+svg,
+canvas {
+  max-width: 100%;
+}
+::selection {
+  background: #d8d5cc;
+  color: var(--ink);
+}
+:focus-visible {
+  outline: 3px solid #9c3c14;
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+main:focus {
+  outline: none;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--white);
+  padding: 12px 18px;
+  border-radius: 8px;
+  transform: translateY(-160%);
+}
+.skip-link:focus {
+  transform: none;
+}
+.session-state {
+  min-height: 100dvh;
+  display: grid;
+  place-content: center;
+  gap: 24px;
+  padding: 32px;
+}
+.session-state > div {
+  max-width: 540px;
+}
+.session-state h1 {
+  font-size: 38px;
+  letter-spacing: -0.04em;
+}
+.session-state p {
+  line-height: 1.7;
+  color: var(--muted);
+}
+.session-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

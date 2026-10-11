@@ -1,0 +1,57 @@
+async (page) => {
+  const origin = new URL(page.url()).origin;
+  const health = await page.request.get(origin + '/api/v1/health');
+  if ((await health.json()).environment !== 'frontend-browser-qa') throw new Error('Use the isolated QA backend');
+  const results = [], errors = [], failedAssets = [], publicRequests = [];
+  const error = e => errors.push(e.message);
+  const asset = r => { if (r.status() >= 400 && /\.(woff2?|png|svg|jpg|webp|js|css)(\?|$)/.test(r.url())) failedAssets.push({url:r.url(), status:r.status()}); };
+  const publicRequest = r => { if (r.url().includes('/api/v1/')) publicRequests.push(r.url()); };
+  page.on('pageerror', error); page.on('response', asset); page.on('request', publicRequest);
+  const widths = [1440,1280,768,390,320];
+  const inspect = async (path, width) => {
+    await page.goto(origin + path); await page.locator('main h1').waitFor();
+    await page.waitForLoadState('networkidle'); await page.evaluate(() => document.fonts.ready);
+    const info = await page.evaluate(() => {
+      const heading = document.querySelector('main h1'), bounds = heading.getBoundingClientRect();
+      return {overflow:document.documentElement.scrollWidth > innerWidth + 1, h1:document.querySelectorAll('h1').length,
+        heading:heading.textContent, headingFits:bounds.left >= -1 && bounds.right <= innerWidth + 1};
+    });
+    results.push({width,path,...info});
+    if (width === 1440 || (width === 390 && ['/','/get-started','/app/discover','/app/resumes','/app/applications'].includes(path))) {
+      await page.screenshot({path:'output/playwright/stabilization-' + width + '-' + (path === '/' ? 'landing' : path.slice(1).replaceAll('/','-')) + '.png',caret:'initial'});
+    }
+  };
+  for (const width of widths) {
+    await page.setViewportSize({width,height:width < 900 ? 844 : 960});
+    for (const path of ['/','/get-started','/login','/preview','/preview/discover','/preview/jobs/job-1','/preview/profiles','/preview/resumes','/preview/applications','/preview/analytics','/preview/settings']) await inspect(path,width);
+  }
+  page.off('request', publicRequest);
+  await page.goto(origin + '/'); await page.setViewportSize({width:1440,height:960});
+  for (const id of ['endless-tabs','careers','how-it-works','workspace','resumes','control','finale-title','faq']) {
+    await page.locator('#'+id).scrollIntoViewIfNeeded(); await page.waitForTimeout(500);
+    await page.screenshot({path:'output/playwright/stabilization-section-'+id+'.png'});
+  }
+  await page.goto(origin + '/login');
+  await page.getByLabel('Email address',{exact:true}).fill('frontend-fixture@example.com');
+  await page.getByLabel('Password',{exact:true}).fill('isolated-test-owner-password');
+  await page.getByRole('button',{name:'Sign in to workspace',exact:true}).click(); await page.waitForURL('**/app');
+  for (const width of widths) {
+    await page.setViewportSize({width,height:width < 900 ? 844 : 960});
+    for (const path of ['/app','/app/discover','/app/jobs/qa-job-1','/app/profiles','/app/resumes','/app/applications','/app/analytics','/app/settings']) await inspect(path,width);
+  }
+  await page.setViewportSize({width:320,height:844}); await page.goto(origin + '/app/resumes');
+  await page.getByRole('button',{name:'Review version',exact:true}).first().click();
+  const drawer = page.getByRole('dialog'); await drawer.waitFor();
+  const drawerInfo = await drawer.evaluate(e => ({overflow:e.scrollWidth > e.clientWidth + 1, scrollable:e.scrollHeight > e.clientHeight, width:e.getBoundingClientRect().width}));
+  await drawer.getByRole('button',{name:'HTML',exact:true}).scrollIntoViewIfNeeded();
+  await drawer.evaluate(e => {e.scrollTop=e.scrollHeight;});
+  const backgroundScroll = await page.evaluate(() => scrollY);
+  const bounds = await drawer.boundingBox(); await page.mouse.move(bounds.x + bounds.width/2,750);
+  await page.mouse.wheel(0,700); await page.waitForTimeout(150);
+  drawerInfo.backgroundStayedStill = backgroundScroll === await page.evaluate(() => scrollY);
+  await page.screenshot({path:'output/playwright/stabilization-drawer-320.png'});
+  await page.keyboard.press('Escape');
+  page.off('pageerror',error); page.off('response',asset);
+  const failures = results.filter(r => r.overflow || !r.headingFits || r.h1 !== 1);
+  return {checked:results.length,failures,errors,failedAssets,publicRequests,drawer:drawerInfo,results};
+}

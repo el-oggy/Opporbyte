@@ -1,0 +1,217 @@
+{
+  "checks": 42,
+  "results": [
+    {
+      "name": "Design examples filter",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Save example stays local",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Unrepresented field has honest empty state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Selections reset on reload",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow / at 320px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile copy and actions precede the scene at 320px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow / at 390px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile copy and actions precede the scene at 390px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow / at 768px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow / at 1024px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Scene spans the desktop hero at 1024px",
+      "passed": true,
+      "detail": "{\"x\":0,\"y\":96,\"width\":1024,\"height\":804}"
+    },
+    {
+      "name": "No horizontal overflow / at 1440px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Scene spans the desktop hero at 1440px",
+      "passed": true,
+      "detail": "{\"x\":0,\"y\":96,\"width\":1440,\"height\":804}"
+    },
+    {
+      "name": "No horizontal overflow /onboarding at 320px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow /onboarding at 390px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow /onboarding at 768px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow /onboarding at 1024px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No horizontal overflow /onboarding at 1440px",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Real WebGL renderer on desktop",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Short laptop keeps the actions within the initial viewport",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Short laptop uses a tighter hero composition",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Desktop has a short pinned sequence",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Scroll reaches organization stage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Reverse scroll returns discovery stage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Resizing during the story restores the compact copy and scene",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Enabling reduced motion during the story removes the pin and resets the caption",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Secondary CTA targets next section",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile is not pinned",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Menu moves focus to first link",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape restores focus",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Primary CTA reaches frontend preview",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Reduced motion removes pinning",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Reduced motion scene remains static",
+      "passed": true,
+      "detail": "0 changed pixels beyond one color level"
+    },
+    {
+      "name": "Perspective control works with the keyboard",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Reduced-motion perspective changes the rendered scene",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Inspected reduced-motion pose stays frozen",
+      "passed": true,
+      "detail": "0 changed pixels beyond one color level"
+    },
+    {
+      "name": "Perspective can return to the original view",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Context loss restores static visual",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Unavailable WebGL keeps static scene",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Fallback keeps primary CTA",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No browser errors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No backend or external API requests",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "errors": [],
+  "external": []
+}

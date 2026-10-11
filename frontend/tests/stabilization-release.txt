@@ -1,0 +1,44 @@
+async (page) => {
+  const origin = new URL(page.url()).origin;
+  const results = [], wizard = [], redirects = [], errors = [], api = [];
+  const failure = e => errors.push(e.message); const request = r => {if(r.url().includes('/api/v1/'))api.push(r.url());};
+  page.on('pageerror',failure); page.on('request',request);
+  const inspect = async () => page.evaluate(() => {
+    const heading = document.querySelector('main h1').getBoundingClientRect();
+    return {overflow:document.documentElement.scrollWidth > innerWidth + 1,headingFits:heading.left >= -1 && heading.right <= innerWidth + 1};
+  });
+  for (const width of [1440,1280,768,390,320]) {
+    await page.setViewportSize({width,height:width < 900 ? 844 : 960});
+    for (const path of ['/','/get-started','/login','/preview','/preview/discover','/preview/jobs/job-1','/preview/profiles','/preview/resumes','/preview/applications','/preview/analytics','/preview/settings']) {
+      await page.goto(origin + path); await page.locator('main h1').waitFor(); await page.waitForLoadState('networkidle');
+      results.push({width,path,...await inspect()});
+    }
+    await page.goto(origin + '/get-started');
+    wizard.push({width,step:1,...await inspect()});
+    await page.getByLabel('Target job titles',{exact:true}).fill('Clinical researcher'); await page.getByLabel('Target job titles',{exact:true}).press('Enter');
+    await page.getByRole('button',{name:'Continue',exact:true}).click(); await page.getByRole('heading',{name:'Preferences',exact:true}).waitFor();
+    wizard.push({width,step:2,...await inspect()});
+    await page.getByRole('button',{name:'Continue',exact:true}).click(); await page.getByRole('heading',{name:'Candidate profile',exact:true}).waitFor();
+    await page.getByRole('button',{name:'Enter manually',exact:true}).click();
+    await page.getByLabel('Your name (optional)',{exact:true}).fill('Fictional QA candidate');
+    wizard.push({width,step:3,...await inspect()});
+    await page.getByRole('button',{name:'Review my choices',exact:true}).click(); await page.getByRole('heading',{name:'Review & continue',exact:true}).waitFor();
+    wizard.push({width,step:4,...await inspect()});
+    if (width === 390) await page.screenshot({path:'output/playwright/stabilization-production-onboarding-mobile.png'});
+    await page.getByRole('button',{name:'Back',exact:true}).click(); await page.getByRole('heading',{name:'Candidate profile',exact:true}).waitFor();
+    if (await page.getByLabel('Your name (optional)',{exact:true}).inputValue() !== 'Fictional QA candidate') throw new Error('Back lost the candidate draft');
+  }
+  for (const [path,target] of [['/onboarding','/get-started'],['/discover','/app/discover'],['/profiles','/app/profiles'],['/resumes','/app/resumes'],['/applications','/app/applications'],['/analytics','/app/analytics'],['/settings','/app/settings']]) {
+    const response = await page.request.get(origin + path,{maxRedirects:0});
+    redirects.push({path,status:response.status(),location:response.headers().location,expected:target});
+  }
+  await page.setViewportSize({width:1440,height:960}); await page.goto(origin + '/');
+  await page.locator('[data-hero3d][data-renderer="webgl"]').waitFor(); await page.waitForLoadState('networkidle');
+  await page.getByRole('button',{name:'Pause motion',exact:true}).click();
+  await page.screenshot({path:'output/playwright/stabilization-production-hero.png'});
+  await page.getByRole('button',{name:'Resume motion',exact:true}).click();
+  page.off('pageerror',failure); page.off('request',request);
+  const failures = [...results,...wizard].filter(r => r.overflow || !r.headingFits);
+  const redirectFailures = redirects.filter(r => r.status !== 307 || r.location !== r.expected);
+  return {checked:results.length,wizardChecked:wizard.length,backChecks:5,failures,redirectFailures,redirects,errors,api,results,wizard};
+}

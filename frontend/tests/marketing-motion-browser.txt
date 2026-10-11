@@ -1,0 +1,76 @@
+async (page) => {
+ const origin = new URL(page.url()).origin;
+ const checks=[];const verify=(ok,label)=>{if(!ok)throw new Error(label);checks.push(label);};
+ const errors=[];page.on('pageerror',error=>errors.push(error.message));
+ const scrollScene = async (selector,progress) => {
+  const top=await page.locator(selector).evaluate(e=>e.getBoundingClientRect().top+scrollY);
+  const viewport=page.viewportSize().height;
+  await page.evaluate(y=>scrollTo({top:y,behavior:'instant'}),top-viewport*(.88-.7*progress)+(progress===1?2:progress===0?-2:0));
+  await page.waitForFunction(({selector,progress})=>progress===0||progress===1?document.querySelector(selector).dataset.sceneProgress===progress.toFixed(4):Math.abs(Number(document.querySelector(selector).dataset.sceneProgress)-progress)<.002,{selector,progress});
+ };
+ try {
+ await page.setViewportSize({width:1440,height:960});await page.goto(origin+'/');await page.waitForLoadState('networkidle');await page.locator('[data-hero3d][data-renderer="webgl"]').waitFor();
+ const interval=await page.locator('[data-hero-stage]').evaluate(e=>e.parentElement.offsetHeight-e.offsetHeight);
+ const firstFrame=await page.evaluate(async y=>{scrollTo({top:y,behavior:'instant'});await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));return Number(document.querySelector('[data-hero-stage]').dataset.heroProgress);},interval);
+ verify(firstFrame>0&&firstFrame<1,'Hero interpolates abrupt scroll changes across frames');
+ await page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.heroProgress==='1.000');
+ await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));await page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.heroProgress==='0.000');checks.push('Hero returns to its exact initial progress');
+ await scrollScene('[data-search-world]',0);const scatter=await page.locator('[data-search-card]').first().evaluate(e=>e.style.transform);
+ await scrollScene('[data-search-world]',.5);const halfway=await page.locator('[data-search-card]').first().evaluate(e=>e.style.transform);
+ await page.screenshot({path:'output/playwright/motion-tabs-halfway.png',caret:'initial'});
+ await scrollScene('[data-search-world]',1);const organized=await page.locator('[data-search-card]').first().evaluate(e=>e.style.transform);
+ verify(scatter!==halfway&&halfway!==organized,'Endless Tabs has a distinct intermediate arrangement');
+ await page.screenshot({path:'output/playwright/motion-tabs-desktop.png',caret:'initial'});
+ await scrollScene('[data-search-world]',0);verify(await page.locator('[data-search-card]').first().evaluate(e=>e.style.transform)===scatter,'Endless Tabs reverses deterministically');
+ const replay=page.locator('#endless-tabs button');await replay.scrollIntoViewIfNeeded();await page.waitForTimeout(600);const manualTarget=await page.locator('[data-search-world]').evaluate(e=>Number(e.dataset.sceneProgress)>=.5?0:1);await replay.click();await page.waitForFunction(target=>document.querySelector('[data-search-world]').dataset.sceneProgress===target.toFixed(4),manualTarget);await replay.click();await page.waitForFunction(target=>document.querySelector('[data-search-world]').dataset.sceneProgress===target.toFixed(4),1-manualTarget);checks.push('Manual organization and replay remain operable');
+ await replay.click();await page.waitForTimeout(650);const beforeWheel=await page.locator('[data-search-world]').evaluate(e=>e.dataset.sceneProgress);await page.mouse.wheel(0,80);await page.waitForFunction(value=>document.querySelector('[data-search-world]').dataset.sceneProgress!==value,beforeWheel);checks.push('User wheel scrolling resumes choreography after manual replay');
+ await scrollScene('[data-finale]',0);const finaleStart=await page.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform);
+  await scrollScene('[data-finale]',.5);const finaleMiddle=await page.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform);
+  await scrollScene('[data-finale]',.75);const opportunityDocked=await page.locator('[data-finale-piece="opportunity"]').evaluate(e=>e.style.transform);const profileMoving=await page.locator('[data-finale-piece="resume"]').evaluate(e=>e.style.transform);const reviewMoving=await page.locator('[data-finale-piece="review"]').evaluate(e=>e.style.transform);
+  await scrollScene('[data-finale]',1);const finaleEnd=await page.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform);
+  verify(opportunityDocked===await page.locator('[data-finale-piece="opportunity"]').evaluate(e=>e.style.transform),'Opportunity docks before the profile and review card');
+  verify(profileMoving!==await page.locator('[data-finale-piece="resume"]').evaluate(e=>e.style.transform)&&reviewMoving!==await page.locator('[data-finale-piece="review"]').evaluate(e=>e.style.transform),'Profile and review card finish in separate later phases');
+ verify(finaleStart!==finaleMiddle&&finaleMiddle!==finaleEnd,'Finale assembly follows continuous scroll progress');
+ await page.screenshot({path:'output/playwright/motion-finale-desktop.png',caret:'initial'});
+ await scrollScene('[data-finale]',0);verify(await page.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform)===finaleStart,'Finale reverses without threshold flicker');
+ for(const progress of [0,.25,.5,.75,1]) {
+  await scrollScene('[data-finale]',progress);
+  const readable=await page.locator('[data-finale-world]').evaluate(e=>{const title=e.querySelector('[data-finale-board] > div').getBoundingClientRect();return [...e.querySelectorAll('[data-finale-piece]')].every(piece=>{const b=piece.getBoundingClientRect();return b.bottom<title.top||b.top>title.bottom||b.right<title.left||b.left>title.right;});});
+  verify(readable,`Closing workspace heading stays unobstructed at ${progress*100}% progress`);
+ }
+ await page.locator('#faq-title').scrollIntoViewIfNeeded();await page.locator('#faq-title').dblclick();await page.keyboard.press('Control+c');
+ verify(await page.locator('#faq-title').evaluate(e=>getComputedStyle(e,'::selection').backgroundColor)==='rgb(216, 213, 204)','Copied/selected text uses a neutral highlight');
+ verify(await page.locator('#faq-title').evaluate(e=>getComputedStyle(e).backgroundColor)==='rgba(0, 0, 0, 0)','Selecting FAQ heading does not change its element background');
+ await page.locator('#faq > div').first().locator('p').first().click();verify(await page.evaluate(()=>getSelection().toString())==='','Ordinary click clears the text selection');
+ const summary=page.locator('#faq summary').first();await summary.click();verify(await summary.evaluate(e=>e.parentElement.open),'FAQ opens');await summary.click();verify(!(await summary.evaluate(e=>e.parentElement.open)),'FAQ closes');
+ await summary.focus();await page.keyboard.press('Enter');verify(await summary.evaluate(e=>e.parentElement.open),'FAQ remains keyboard operable');await page.keyboard.press('Enter');verify(await summary.evaluate(e=>getComputedStyle(e).userSelect)==='none','FAQ controls avoid accidental text highlighting');
+ for(const width of [1440,1280,768,390,320]) {
+  await page.setViewportSize({width,height:width<901?844:960});await page.goto(origin+'/');await page.waitForLoadState('networkidle');
+  await scrollScene('[data-search-world]',1);
+  const cardSpacing=await page.locator('[data-search-world]').evaluate(e=>{const boxes=[...e.querySelectorAll('[data-search-card]')].map(p=>p.getBoundingClientRect());return Math.max(boxes[0].bottom,boxes[1].bottom)<boxes[2].top;});
+  verify(cardSpacing,`Organized cards remain separated at ${width}px`);
+  await scrollScene('[data-finale]',1);
+  const clear=await page.locator('[data-finale-world]').evaluate(e=>{const heading=e.querySelector('[data-finale-board] > div').getBoundingClientRect();return [...e.querySelectorAll('[data-finale-piece]:not([data-finale-piece="core"])')].every(p=>p.getBoundingClientRect().top>heading.bottom);});
+  verify(clear,`Finale objects leave the workspace heading clear at ${width}px`);
+  const aligned=await page.locator('[data-finale-world]').evaluate(e=>{
+   const rect=selector=>e.querySelector(selector).getBoundingClientRect();
+   const profile=rect('[data-finale-piece="resume"]'),job=rect('[data-finale-piece="opportunity"]'),review=rect('[data-finale-piece="review"]'),core=rect('[data-finale-piece="core"]'),board=rect('[data-finale-board]'),bar=rect('[data-finale-board] > span');
+   return {tops:Math.abs(profile.top-job.top)<1,edges:Math.abs(job.left-review.left)<1&&Math.abs(job.width-review.width)<1,baseline:Math.abs(profile.bottom-review.bottom)<1,gap:job.bottom+5<review.top&&profile.right+5<job.left,contained:[profile,job,review,core].every(p=>p.left>=board.left&&p.right<=board.right&&p.top>=board.top&&p.bottom<=board.bottom)&&core.bottom<bar.bottom};
+  });
+  verify(aligned.tops,`Profile and opportunity top edges align at ${width}px`);
+  verify(aligned.edges,`Opportunity and review card share an edge and width at ${width}px`);
+  verify(aligned.baseline,`Profile and review card share a baseline at ${width}px`);
+  verify(aligned.gap,`Closing scene maintains clear row and column gaps at ${width}px`);
+  verify(aligned.contained,`Closing objects stay within the board and brand header at ${width}px`);
+  verify(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`No landing overflow at ${width}px`);
+  if(width===390||width===320) await page.screenshot({path:`output/playwright/motion-finale-${width}.png`,caret:'initial'});
+ }
+ const reduced=await page.context().browser().newContext({viewport:{width:1440,height:960},reducedMotion:'reduce'});const rp=await reduced.newPage();await rp.goto(origin+'/');await rp.waitForLoadState('networkidle');
+ await rp.waitForFunction(()=>document.querySelector('[data-search-world]').dataset.sceneProgress==='1.0000'&&document.querySelector('[data-finale]').dataset.sceneProgress==='1.0000');
+ const frozen=await rp.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform);await rp.evaluate(()=>{window.motionQaWrites=0;window.motionQaObserver=new MutationObserver(entries=>window.motionQaWrites+=entries.length);document.querySelectorAll('[data-finale-piece],[data-search-card]').forEach(e=>window.motionQaObserver.observe(e,{attributes:true,attributeFilter:['style']}));});await rp.locator('[data-finale]').scrollIntoViewIfNeeded();await rp.waitForTimeout(150);verify(await rp.locator('[data-finale-piece]').first().evaluate(e=>e.style.transform)===frozen,'Reduced motion keeps a fixed organized finale');verify(await rp.evaluate(()=>{window.motionQaObserver.disconnect();return window.motionQaWrites===0;}),'Frozen scenes avoid redundant style writes during scrolling');
+ await rp.locator('#endless-tabs button').click();await rp.waitForFunction(()=>document.querySelector('[data-search-world]').dataset.sceneProgress==='0.0000');checks.push('Reduced-motion replay changes instantly and remains usable');
+ await reduced.close();verify(errors.length===0,'No JavaScript runtime errors');
+ await page.setViewportSize({width:1440,height:960});await page.goto(origin+'/');
+ return {passed:checks.length,checks,errors};
+ } catch(error) {throw new Error(`${checks.length} checks passed; last: ${checks.at(-1)}; ${error.message}`);}
+}

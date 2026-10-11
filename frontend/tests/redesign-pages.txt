@@ -1,0 +1,21 @@
+async (page) => {
+  const results = []; const api = []; const errors = [];
+  const request = r => { if (r.url().includes('/api/v1/')) api.push(r.url()); };
+  const failure = e => errors.push(e.message);
+  page.on('request',request); page.on('pageerror',failure);
+  await page.setViewportSize({width:1440,height:960});
+  const routes = ['get-started','login','preview','preview/discover','preview/jobs/job-1','preview/profiles','preview/resumes','preview/applications','preview/analytics','preview/settings'];
+  for (const route of routes) {
+    await page.goto('http://127.0.0.1:3001/'+route);
+    await page.locator('main h1').waitFor(); await page.waitForLoadState('networkidle'); await page.evaluate(()=>document.fonts.ready);
+    await page.screenshot({path:'output/playwright/redesign-'+route.replaceAll('/','-')+'.png',caret:'initial'});
+    results.push(await page.evaluate(()=>({path:location.pathname,heading:document.querySelector('h1').textContent,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,h1:document.querySelectorAll('h1').length})));
+  }
+  await page.goto('http://127.0.0.1:3001/');
+  for (const id of ['endless-tabs','careers','how-it-works','workspace','resumes','control','finale-title','faq']) {
+    await page.locator('#'+id).scrollIntoViewIfNeeded();
+    await page.screenshot({path:'output/playwright/redesign-section-'+id+'.png'});
+  }
+  page.off('request',request); page.off('pageerror',failure);
+  return {results,publicApiRequests:api,errors};
+}

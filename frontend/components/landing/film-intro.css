@@ -1,0 +1,180 @@
+.film-intro {
+  position: relative;
+  height: 100svh;
+  min-height: 360px;
+  background: var(--cream);
+  overflow: hidden;
+  isolation: isolate;
+}
+.intro-film {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.film-header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 3;
+  background: linear-gradient(var(--cream) 0%, #f4e7d2f5 72%, #f4e7d200 100%);
+  padding-bottom: 25px;
+}
+.film-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px max(28px, 4.2vw);
+}
+.film-nav .brand {
+  margin-right: auto;
+}
+.film-controls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.film-controls button {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid #20242025;
+  border-radius: 7px;
+  background: #fffdf894;
+  color: var(--ink);
+  padding: 11px;
+  font-size: 11px;
+}
+.film-controls button:hover {
+  background: var(--white);
+}
+.film-controls button[aria-pressed="true"] {
+  border-color: #20242069;
+}
+.film-entry {
+  min-height: 46px;
+  gap: 16px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+.film-end {
+  position: absolute;
+  z-index: 2;
+  left: 54%;
+  top: 66%;
+}
+.film-end .button {
+  font-size: 13px;
+  padding: 18px 24px;
+}
+.film-error {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 8%;
+  transform: translateX(-50%);
+  width: min(480px, calc(100% - 40px));
+  padding: 20px;
+  background: var(--white);
+  border-radius: 10px;
+  font-size: 13px;
+  text-align: center;
+}
+.film-error button {
+  margin-top: 12px;
+  background: var(--cream);
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.intro-film::cue {
+  background: #202420dc;
+  color: #fffdf8;
+  font:
+    400 16px Inter,
+    sans-serif;
+}
+@media (max-width: 760px) {
+  .film-intro {
+    min-height: 360px;
+  }
+  .film-nav {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px 8px;
+    padding: 16px 18px 8px;
+  }
+  .film-nav .brand {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 24px;
+    gap: 8px;
+    letter-spacing: -1.3px;
+  }
+  .film-nav .brand-symbol {
+    width: 23px;
+    height: 28px;
+    border-width: 6px;
+  }
+  .film-entry {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    padding: 13px 12px;
+    gap: 8px;
+    font-size: 10px;
+  }
+  .film-controls {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: end;
+    gap: 6px;
+  }
+  .film-controls button {
+    background: #fffdf8bb;
+  }
+  .film-end {
+    left: 50%;
+    top: 79%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .intro-film::cue {
+    font-size: 12px;
+  }
+}
+@media (max-width: 360px) {
+  .film-nav {
+    padding-inline: 13px;
+  }
+  .film-nav .brand {
+    font-size: 21px;
+  }
+  .film-entry {
+    padding-inline: 10px;
+    font-size: 9px;
+  }
+}
+@media (max-height: 500px) and (min-aspect-ratio: 1/1) and (max-width: 760px) {
+  .film-nav {
+    display: flex;
+    gap: 8px;
+    padding-block: 10px;
+  }
+  .film-nav .brand {
+    margin-right: auto;
+  }
+  .film-nav .brand > span:last-child {
+    display: none;
+  }
+  .film-entry {
+    margin-left: 0;
+  }
+  .film-header {
+    padding-bottom: 12px;
+  }
+}
