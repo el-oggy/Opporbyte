@@ -42,7 +42,7 @@ class HeuristicMatchingEngine(AIMatchingEngine):
         work_pref = [w.lower() for w in profile_data.get("work_preference", ["remote", "hybrid"])]
         job_mode = job_data.get("work_mode", "on-site").lower()
 
-        if job_mode not in work_pref and "remote" not in work_pref:
+        if job_mode not in work_pref:
             requires_review = True
             review_reasons.append(
                 f"Work mode '{job_mode}' is not in your preferred modalities ({', '.join(work_pref)})."
@@ -53,6 +53,10 @@ class HeuristicMatchingEngine(AIMatchingEngine):
             requires_human_review=requires_review,
             review_reasons=review_reasons,
         )
+
+    def evaluate_eligibility(self, job_data, profile_data):
+        """Public gate shared by sync and ranking; unknown constraints require review."""
+        return self._evaluate_eligibility(job_data, profile_data)
 
     async def evaluate_job_match(
         self,

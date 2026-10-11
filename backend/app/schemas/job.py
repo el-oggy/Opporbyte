@@ -1,7 +1,7 @@
 """Pydantic schemas for Discovered Jobs and AI Match evaluations."""
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -23,8 +23,9 @@ class JobResponse(BaseModel):
 
 
 class JobDiscoveryRequest(BaseModel):
-    provider: str = Field("greenhouse", description="ATS provider name: greenhouse, ashby, lever")
-    board_token: str = Field(..., description="Target company board slug (e.g. cloudflare, stripe, datadog)")
+    provider: Literal["greenhouse", "ashby", "lever"] = "greenhouse"
+    board_token: str = Field(pattern=r"^[A-Za-z0-9_-]{1,64}$")
+    profile_type: Literal["software", "semiconductor"] = "software"
     limit: int = Field(30, ge=1, le=100)
 
 

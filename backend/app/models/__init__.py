@@ -7,6 +7,7 @@ from app.models.job import JobSource, Job, JobMatch
 from app.models.resume import ResumeVersion
 from app.models.application import Application
 from app.models.task import TaskRun
+from app.models.automation import SyncSource, SyncRun
 
 __all__ = [
     "User",
@@ -19,4 +20,6 @@ __all__ = [
     "ResumeVersion",
     "Application",
     "TaskRun",
+    "SyncSource",
+    "SyncRun",
 ]

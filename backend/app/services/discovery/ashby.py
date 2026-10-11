@@ -1,84 +1,34 @@
-"""Ashby Public Postings API Adapter."""
-
-import logging
-from typing import List, Optional
-import httpx
-
+"""Ashby public Postings API adapter with per-record validation."""
 from app.services.discovery.html_utils import clean_html_to_text
+from app.services.discovery.public_api import fetch_json, normalize_batch
 from app.services.interfaces.job_discovery import DiscoveredJobPayload, JobDiscoveryProvider
-
-logger = logging.getLogger("opporbyte.discovery.ashby")
 
 
 class AshbyDiscoveryProvider(JobDiscoveryProvider):
     @property
-    def provider_name(self) -> str:
+    def provider_name(self):
         return "ashby"
 
-    def _determine_work_mode(self, title: str, location: str, description: str) -> str:
-        combined = f"{title} {location} {description[:300]}".lower()
-        if "remote" in combined:
-            return "remote"
-        if "hybrid" in combined:
-            return "hybrid"
-        return "on-site"
+    def _normalize(self, item, board_token):
+        title = item.get("title", "").strip()
+        location = item.get("location") or "Unknown Location"
+        description = clean_html_to_text(item.get("descriptionHtml") or "")
+        text = f"{title} {location} {description[:300]}".lower()
+        mode = "remote" if item.get("isRemote") or "remote" in text else "hybrid" if "hybrid" in text else "on-site"
+        job_id = item.get("id")
+        return DiscoveredJobPayload(
+            source_name=self.provider_name, external_id=job_id, title=title,
+            company=board_token.capitalize(), location=location, work_mode=mode,
+            employment_type=item.get("employmentType") or "Full-time",
+            description=description or f"{title} at {board_token}",
+            url=item.get("jobUrl") or f"https://jobs.ashbyhq.com/{board_token}/{job_id}",
+            posted_at=item.get("publishedAt"), raw_metadata={"raw_ashby_id": job_id, "board_token": board_token},
+        )
 
-    async def fetch_recent_postings(
-        self,
-        board_token: str,
-        limit: int = 50,
-    ) -> List[DiscoveredJobPayload]:
-        url = f"https://api.ashbyhq.com/posting-api/job-board/{board_token}"
-        postings: List[DiscoveredJobPayload] = []
+    async def fetch_recent_postings(self, board_token, limit=50):
+        data = await fetch_json(f"https://api.ashbyhq.com/posting-api/job-board/{board_token}")
+        return normalize_batch(data.get("jobs") if isinstance(data, dict) else None, limit,
+                               lambda item: self._normalize(item, board_token))
 
-        try:
-            async with httpx.AsyncClient(timeout=10.0) as client:
-                response = await client.get(url)
-                if response.status_code != 200:
-                    logger.warning(f"Ashby board '{board_token}' returned {response.status_code}")
-                    return []
-
-                data = response.json()
-                raw_jobs = data.get("jobs", [])
-
-                for item in raw_jobs[:limit]:
-                    job_id = str(item.get("id", ""))
-                    title = item.get("title", "").strip()
-                    loc_name = item.get("location", "Unknown Location") or "Unknown Location"
-                    content_html = item.get("descriptionHtml", "")
-                    clean_desc = clean_html_to_text(content_html)
-                    job_url = item.get("jobUrl", f"https://jobs.ashbyhq.com/{board_token}/{job_id}")
-
-                    work_mode = self._determine_work_mode(title, loc_name, clean_desc)
-
-                    payload = DiscoveredJobPayload(
-                        source_name=self.provider_name,
-                        external_id=job_id,
-                        title=title,
-                        company=board_token.capitalize(),
-                        location=loc_name,
-                        work_mode=work_mode,
-                        employment_type=item.get("employmentType", "Full-time") or "Full-time",
-                        description=clean_desc if clean_desc else f"{title} at {board_token}",
-                        url=job_url,
-                        posted_at=item.get("publishedAt"),
-                        raw_metadata={"raw_ashby_id": job_id, "board_token": board_token},
-                    )
-                    postings.append(payload)
-
-        except Exception as exc:
-            logger.error(f"Error fetching Ashby postings for '{board_token}': {exc}")
-
-        return postings
-
-    async def get_posting_details(
-        self,
-        board_token: str,
-        job_id: str,
-    ) -> Optional[DiscoveredJobPayload]:
-        # Ashby returns full detail in the main list; filter from list or return payload
-        jobs = await self.fetch_recent_postings(board_token, limit=100)
-        for j in jobs:
-            if j.external_id == job_id:
-                return j
-        return None
+    async def get_posting_details(self, board_token, job_id):
+        return next((job for job in await self.fetch_recent_postings(board_token, 100) if job.external_id == job_id), None)

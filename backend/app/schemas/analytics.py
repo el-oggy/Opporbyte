@@ -1,8 +1,8 @@
 """Schemas for Analytics and Telemetry reporting."""
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
 
 
 class TaskRunResponse(BaseModel):
@@ -16,6 +16,12 @@ class TaskRunResponse(BaseModel):
     error_message: Optional[str] = None
     started_at: datetime
     completed_at: Optional[datetime] = None
+
+    @field_validator("started_at", "completed_at")
+    @classmethod
+    def explicit_utc(cls, value):
+        # SQLite drops timezone metadata; persisted task timestamps are UTC.
+        return value.replace(tzinfo=timezone.utc) if value and value.tzinfo is None else value
 
 
 class AnalyticsSummaryResponse(BaseModel):

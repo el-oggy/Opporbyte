@@ -1,0 +1,10 @@
+{
+  "passed": 4,
+  "checks": [
+    "Loaded, settled Discover layout at 320px",
+    "Loaded, settled Discover layout at 390px",
+    "Loaded, settled Discover layout at 1024px",
+    "Loaded, settled Discover layout at 1440px"
+  ],
+  "externalSourcesContacted": 0
+}

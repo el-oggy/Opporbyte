@@ -1,0 +1,26 @@
+async (page) => {
+  const origin = new URL(page.url()).origin;
+  if ((await (await page.request.get(origin + '/api/v1/health')).json()).environment !== 'frontend-browser-qa') throw new Error('Refusing fixture capture outside QA');
+  const sources = await (await page.request.get(origin + '/api/v1/automation/sources')).json();
+  const source = sources.find(s => s.board_token === 'fixture-board' && s.provider === 'greenhouse');
+  if (!source) throw new Error('Run the source workflow first');
+  if (source.next_request_at) await page.waitForTimeout(Math.max(0, Date.parse(source.next_request_at) - Date.now()) + 100);
+  const response = await page.request.post(origin + '/api/v1/automation/syncs', { data: {
+    source_id: source.source_id, profile_type: 'software', limit: 25, idempotency_key: 'fixture-capture-' + Date.now()
+  } });
+  const task = await response.json();
+  if (task.status !== 'partial' || task.result.eligible_count !== 1) throw new Error('Expected ranked fixture result');
+  await page.goto(origin + '/app/discover');
+  await page.getByRole('link', { name: 'Fixture Discovery Engineer', exact: true }).waitFor();
+  await page.getByLabel('Configured source', { exact: true }).locator('option').filter({ hasText: 'fixture-board' }).waitFor({ state: 'attached' });
+  const checks = [];
+  for (const width of [320, 390, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 960 });
+    if (width < 1000) await page.waitForFunction(() => document.querySelector('#workspace-navigation').getBoundingClientRect().right <= 1);
+    if (!(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1))) throw new Error('Overflow at ' + width);
+    const filename = width === 1440 ? 'discover-desktop.png' : 'discover-' + width + '.png';
+    await page.screenshot({ path: 'output/playwright/phase5/' + filename, fullPage: true });
+    checks.push('Loaded, settled Discover layout at ' + width + 'px');
+  }
+  return { passed: checks.length, checks, externalSourcesContacted: 0 };
+}

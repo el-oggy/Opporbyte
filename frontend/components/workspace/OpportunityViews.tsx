@@ -13,7 +13,6 @@ import {
   Button,
   ButtonLink,
   Card,
-  Drawer,
   EmptyState,
   Field,
   PageHeading,
@@ -33,6 +32,7 @@ import {
 import type { Application, Job, JobMatch, ResumeVersion, User } from "./types";
 import type { ViewProps } from "./WorkspacePage";
 import styles from "./Workspace.module.css";
+import SourceSyncPanel from "./SourceSyncPanel";
 async function stageJob(job: Job, profile: string, demo: boolean) {
   if (demo) {
     if (demoState.applications.some((a) => a.job_id === job.id))
@@ -238,22 +238,25 @@ export function Discover({ demo, profile, base }: ViewProps) {
   const [work, setWork] = useState("");
   const [layout, setLayout] = useState("cards");
   const [boardOpen, setBoardOpen] = useState(false);
-  const [provider, setProvider] = useState("greenhouse");
-  const [board, setBoard] = useState("");
-  const [limit, setLimit] = useState(25);
   const [saved, setSaved] = useState<string[]>(
     demo ? demoState.applications.map((a) => a.job_id) : [],
   );
   const action = useAction();
   const resource = useResource(async () => {
-    if (demo) return { jobs: demoJobs, matches: demoMatches };
-    const [jobs, matches] = await Promise.all([
-      request<Job[]>("/jobs?limit=200"),
+    if (demo)
+      return {
+        jobs: demoJobs,
+        matches: demoMatches,
+        applications: demoState.applications,
+      };
+    const [jobs, matches, applications] = await Promise.all([
+      request<Job[]>(`/jobs${query({ limit: 200, profile_type: profile })}`),
       request<JobMatch[]>(
         `/matches${query({ profile_type: profile, min_score: 0 })}`,
       ),
+      request<Application[]>("/applications"),
     ]);
-    return { jobs, matches };
+    return { jobs, matches, applications };
   }, [demo, profile]);
   const jobs =
     resource.data?.jobs.filter(
@@ -321,6 +324,13 @@ export function Discover({ demo, profile, base }: ViewProps) {
           </select>
         </Field>
       </Card>
+      <SourceSyncPanel
+        demo={demo}
+        profile={profile}
+        open={boardOpen}
+        onClose={() => setBoardOpen(false)}
+        onComplete={resource.refresh}
+      />
       <ActionNotice {...action} />
       <LoadState
         loading={resource.loading}
@@ -363,7 +373,10 @@ export function Discover({ demo, profile, base }: ViewProps) {
                 match={resource.data?.matches.find((m) => m.job_id === job.id)}
                 base={base}
                 onSave={save}
-                saved={saved.includes(job.id)}
+                saved={
+                  saved.includes(job.id) ||
+                  resource.data?.applications.some((a) => a.job_id === job.id)
+                }
               />
             ))}
           </div>
@@ -393,100 +406,6 @@ export function Discover({ demo, profile, base }: ViewProps) {
           </p>
         </>
       )}
-      <Drawer
-        open={boardOpen}
-        onClose={() => setBoardOpen(false)}
-        title="Connect a supported job board"
-      >
-        <p>
-          Read public openings from a specific employer’s Greenhouse, Ashby or
-          Lever board.
-        </p>
-        <form
-          className={styles.form}
-          onSubmit={(e) => {
-            e.preventDefault();
-            action.run(async () => {
-              if (demo) {
-                action.setMessage(
-                  "Preview only. No employer board was contacted.",
-                );
-                return;
-              }
-              const result = await request<{ message: string }>(
-                "/jobs/discover",
-                json("POST", { provider, board_token: board.trim(), limit }),
-              );
-              action.setMessage(result.message);
-              resource.refresh();
-            });
-          }}
-        >
-          <Field label="Provider" htmlFor="board-provider">
-            <select
-              id="board-provider"
-              value={provider}
-              onChange={(e) => setProvider(e.target.value)}
-            >
-              {["greenhouse", "ashby", "lever"].map((p) => (
-                <option key={p} value={p}>
-                  {p}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field
-            label="Employer board slug"
-            htmlFor="board-slug"
-            hint="Use the employer’s public board identifier, not a full URL."
-          >
-            <input
-              id="board-slug"
-              required
-              pattern="[A-Za-z0-9_-]+"
-              value={board}
-              onChange={(e) => setBoard(e.target.value)}
-              placeholder="company-slug"
-            />
-          </Field>
-          <Field label="Maximum openings" htmlFor="board-limit">
-            <input
-              id="board-limit"
-              type="number"
-              min="1"
-              max="100"
-              value={limit}
-              onChange={(e) => setLimit(Number(e.target.value))}
-            />
-          </Field>
-          <Button type="submit" disabled={action.busy}>
-            {action.busy
-              ? "Reading openings…"
-              : demo
-                ? "Try preview"
-                : "Discover openings"}
-          </Button>
-          <ActionNotice {...action} />
-        </form>
-        {!demo && (
-          <Button
-            variant="ghost"
-            disabled={action.busy}
-            onClick={() =>
-              action.run(async () => {
-                const result = await request<{ message: string }>(
-                  "/jobs/seed",
-                  json("POST", {}),
-                );
-                action.setMessage(result.message);
-                resource.refresh();
-              })
-            }
-          >
-            Load curated baseline jobs
-          </Button>
-        )}
-      </Drawer>
     </>
   );
 }
