@@ -2,7 +2,7 @@
 
 from typing import Dict, List, Optional
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import func, select
+from sqlalchemy import func, select, or_
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user, get_db
@@ -11,6 +11,7 @@ from app.models.job import Job, JobMatch, JobSource
 from app.models.profile import CareerProfile
 from app.models.resume import ResumeVersion
 from app.models.task import TaskRun
+from app.models.automation import SyncRun
 from app.models.user import User
 from app.schemas.analytics import AnalyticsSummaryResponse, TaskRunResponse
 from app.services.applications.application_service import application_service
@@ -79,7 +80,7 @@ def get_analytics_summary(
 
     # 5. Recent task runs
     recent_tasks = db.scalars(
-        select(TaskRun).order_by(TaskRun.started_at.desc()).limit(10)
+        select(TaskRun).outerjoin(SyncRun, SyncRun.task_id == TaskRun.id).where(or_(SyncRun.user_id == current_user.id, (SyncRun.task_id.is_(None)) & current_user.is_superuser)).order_by(TaskRun.started_at.desc()).limit(10)
     ).all()
 
     return AnalyticsSummaryResponse(
@@ -105,6 +106,6 @@ def get_task_runs(
 ):
     """List recent background task executions for telemetry and auditing."""
     tasks = db.scalars(
-        select(TaskRun).order_by(TaskRun.started_at.desc()).limit(20)
+        select(TaskRun).outerjoin(SyncRun, SyncRun.task_id == TaskRun.id).where(or_(SyncRun.user_id == current_user.id, (SyncRun.task_id.is_(None)) & current_user.is_superuser)).order_by(TaskRun.started_at.desc()).limit(20)
     ).all()
     return [TaskRunResponse.model_validate(t) for t in tasks]

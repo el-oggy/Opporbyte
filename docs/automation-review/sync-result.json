@@ -1,0 +1,33 @@
+{
+  "passed": 26,
+  "checks": [
+    "Existing software profile selected",
+    "Unconfigured source cannot sync",
+    "Board input rejects full URLs before submission",
+    "Configured public source produces persisted partial status",
+    "Duplicate source records produce one canonical job",
+    "Malformed record isolated and eligible job ranked",
+    "Connection drawer returns keyboard focus",
+    "Partial failure explained in persistent history",
+    "Existing Discover card displays matching evidence score",
+    "Saved role remains in review queue after reload",
+    "Sync and save do not submit an application",
+    "Identical request key returns original persisted task",
+    "Fresh sync safely reuses canonical job",
+    "Transient source failure stops after bounded retries",
+    "Source failure shown without a false success message",
+    "Running sync cooperatively cancels before persistence",
+    "Cancellation remains visible in sync history",
+    "Existing profile preference API controls exclusions",
+    "Excluded employer is filtered before ranking",
+    "Excluded employer absent from profile Discover results",
+    "Discover sync has no overflow at 320px",
+    "Discover sync has no overflow at 390px",
+    "Discover sync has no overflow at 1024px",
+    "Synced opportunity uses existing job review screen",
+    "Preview connection makes no API request or external sync",
+    "No JavaScript page errors during sync workflow"
+  ],
+  "externalSourcesContacted": 0,
+  "fixtureTaskId": "df542b0c-75e9-4bbf-8e12-dfd572742fe4"
+}

@@ -22,6 +22,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--database", type=Path, required=True)
     parser.add_argument("--port", type=int, default=8011)
+    parser.add_argument("--mock-sources", action="store_true", help="Enable deterministic Phase 5 public API fixtures only")
     args = parser.parse_args()
     database = args.database.resolve()
     if not database.is_relative_to(QA_OUTPUT.resolve()) or database.suffix != ".db":
@@ -46,6 +47,30 @@ def main():
     from app.main import app
     from app.models.job import Job, JobMatch
     from app.models.profile import CareerProfile
+
+    if args.mock_sources:
+        import asyncio
+        from app.services.discovery import greenhouse, ashby, lever
+        from app.services.discovery.public_api import ProviderFailure
+
+        async def fixture_fetch(url):
+            if "fixture-failure" in url:
+                raise ProviderFailure("http_503", True)
+            if "fixture-slow" in url:
+                await asyncio.sleep(5)
+            elif "fixture-board" not in url:
+                raise ProviderFailure("fixture_source_not_configured")
+            common = {"id": "fixture-discovery-1", "title": "Fixture Discovery Engineer", "location": "Remote"}
+            if "greenhouse" in url:
+                item = {**common, "location": {"name": "Remote"}, "content": "<p>Fictional source fixture. React TypeScript frontend engineer.</p>", "absolute_url": "https://example.com/fixture/discovery"}
+                return {"jobs": [item, item, {"title": ""}]}
+            if "ashby" in url:
+                item = {**common, "descriptionHtml": "<p>Fictional source fixture. React TypeScript.</p>"}
+                return {"jobs": [item, item, {"title": ""}]}
+            item = {**common, "text": common["title"], "categories": {"location": "Remote"}, "descriptionPlain": "Fictional source fixture. React TypeScript."}
+            return [item, item, {"text": ""}]
+
+        greenhouse.fetch_json = ashby.fetch_json = lever.fetch_json = fixture_fetch
 
     with SessionLocal() as db:
         owner = init_db(db)
