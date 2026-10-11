@@ -22,6 +22,8 @@ import {
   ChevronRight,
   Layers,
   LockKeyhole,
+  Pause,
+  Play,
 } from "lucide-react";
 import Hero3D from "../hero3d/Hero3D";
 import { Brand, Button, ButtonLink } from "../ui";
@@ -167,6 +169,19 @@ export default function MarketingPage() {
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
   const pinned = !mobile && !reduced;
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const [motionPaused, setMotionPaused] = useState(false);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const keyboard = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", keyboard);
+    return () => document.removeEventListener("keydown", keyboard);
+  }, [menuOpen]);
   const measureHero = useCallback(
     (node: HTMLElement) => {
       if (!pinned) return 0;
@@ -244,6 +259,7 @@ export default function MarketingPage() {
               Get started <ArrowUpRight size={16} />
             </ButtonLink>
             <button
+              ref={menuButton}
               type="button"
               className={styles.menuButton}
               aria-expanded={menuOpen}
@@ -274,7 +290,7 @@ export default function MarketingPage() {
           </nav>
         )}
       </header>
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <section
           ref={hero}
           className={`${styles.hero} ${pinned ? styles.heroPinned : ""}`}
@@ -285,7 +301,7 @@ export default function MarketingPage() {
             className={styles.heroStage}
             data-hero-stage="true"
           >
-            <Hero3D progress={progress} reduced={reduced} mobile={mobile} />
+            <Hero3D progress={progress} reduced={reduced} mobile={mobile} paused={motionPaused} />
             <div className={styles.heroCopy}>
               <p className={styles.eyebrow}>YOUR AI-POWERED CAREER WORKSPACE</p>
               <h1 id="hero-title">
@@ -316,7 +332,18 @@ export default function MarketingPage() {
                 <ArrowDown size={16} />
                 Scroll to bring it together
               </a>
-              <span>One place for what comes next.</span>
+              {!reduced && (
+                <button
+                  type="button"
+                  className={styles.motionToggle}
+                  aria-controls="hero-artwork"
+                  aria-pressed={motionPaused}
+                  onClick={() => setMotionPaused(!motionPaused)}
+                >
+                  {motionPaused ? <Play size={14} /> : <Pause size={14} />}
+                  {motionPaused ? "Resume motion" : "Pause motion"}
+                </button>
+              )}
             </div>
           </div>
         </section>

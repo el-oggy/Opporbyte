@@ -21,6 +21,7 @@ export interface Hero3DProps {
   progress: RefObject<number>;
   reduced: boolean;
   mobile: boolean;
+  paused?: boolean;
 }
 class SceneBoundary extends Component<
   { children: ReactNode; onFailure: () => void },
@@ -122,15 +123,16 @@ export default function Hero3D(props: Hero3DProps) {
   return (
     <div
       ref={host}
+      id="hero-artwork"
       className={styles.host}
       data-hero3d="true"
       data-capability={mode}
       data-renderer={ready ? "webgl" : "static"}
-      data-motion={props.reduced ? "frozen" : "interactive"}
+      data-motion={props.reduced ? "frozen" : props.paused ? "paused" : "interactive"}
       data-render-loop={
         props.reduced
           ? "demand"
-          : intersecting && tabVisible
+          : intersecting && tabVisible && !props.paused
             ? "always"
             : "paused"
       }
@@ -142,7 +144,7 @@ export default function Hero3D(props: Hero3DProps) {
           <SceneBoundary onFailure={onFailure}>
             <OpportunityWorld
               {...props}
-              visible={intersecting && tabVisible}
+              visible={intersecting && tabVisible && (!props.paused || !ready)}
               pointer={pointer}
               onReady={onReady}
               onFailure={onFailure}

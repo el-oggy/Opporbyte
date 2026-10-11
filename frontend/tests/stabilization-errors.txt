@@ -1,0 +1,53 @@
+async (page) => {
+  const origin = new URL(page.url()).origin;
+  const health = await page.request.get(origin + '/api/v1/health');
+  if ((await health.json()).environment !== 'frontend-browser-qa') throw new Error('Use the isolated QA backend');
+  const checks = [], runtimeErrors = []; const verify = (ok,label) => { if(!ok)throw new Error(label); checks.push(label); };
+  const error = e => runtimeErrors.push(e.message); page.on('pageerror',error);
+  await page.setViewportSize({width:1440,height:960}); await page.goto(origin + '/');
+  await page.getByRole('link',{name:'Skip to content',exact:true}).focus(); await page.keyboard.press('Enter');
+  verify(await page.locator('#main-content').evaluate(e => e === document.activeElement),'Landing skip link moves keyboard focus to main content');
+  const contrast = await page.evaluate(() => {
+    const rgb = color => color.match(/[\d.]+/g).slice(0,3).map(Number);
+    const luminance = color => rgb(color).map(v => {v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
+    const ratio = (a,b) => {const x=luminance(a),y=luminance(b); return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
+    const style = getComputedStyle(document.documentElement);
+    const background = getComputedStyle(document.body).backgroundColor;
+    const ink = getComputedStyle(document.querySelector('h1')).color;
+    const cta = getComputedStyle(document.querySelector('main .ui-button-primary'));
+    const muted = getComputedStyle(document.querySelector('[data-hero-stage] p:last-child')).color;
+    return {inkOnCream:ratio(ink,background),cta:ratio(cta.color,cta.backgroundColor),mutedOnCream:ratio(muted,background),palette:style.getPropertyValue('--cream').trim()};
+  });
+  verify(contrast.inkOnCream >= 4.5 && contrast.cta >= 4.5 && contrast.mutedOnCream >= 4.5,'Main copy, CTA, and muted note meet 4.5:1 measured contrast');
+  await page.goto(origin + '/app/profiles');
+  if (new URL(page.url()).pathname === '/login') {
+    await page.getByLabel('Email address',{exact:true}).fill('frontend-fixture@example.com');
+    await page.getByLabel('Password',{exact:true}).fill('isolated-test-owner-password');
+    await page.getByRole('button',{name:'Sign in to workspace',exact:true}).click(); await page.waitForURL('**/app/profiles');
+  }
+  await page.getByLabel('Profile name',{exact:true}).waitFor();
+  const profileUrl = '**/api/v1/profiles/software';
+  await page.route(profileUrl,route => route.request().method() === 'PUT' ? route.fulfill({status:500,contentType:'application/json',body:'{"detail":"QA simulated failure"}'}) : route.continue());
+  await page.getByLabel('Profile name',{exact:true}).fill('QA unsaved draft');
+  await page.getByRole('button',{name:'Save preferences',exact:true}).click();
+  await page.getByRole('alert').filter({hasText:'QA simulated failure'}).waitFor();
+  verify(await page.getByLabel('Profile name',{exact:true}).inputValue()==='QA unsaved draft','Failed save retains the editable draft');
+  verify(await page.getByRole('status').count()===0,'Failed save does not claim success');
+  await page.unroute(profileUrl); await page.reload(); await page.getByLabel('Profile name',{exact:true}).waitFor();
+  verify(await page.getByLabel('Profile name',{exact:true}).inputValue()!=='QA unsaved draft','Failed save leaves persisted profile unchanged');
+  await page.route(profileUrl,route => route.fulfill({status:503,contentType:'application/json',body:'{}'}));
+  await page.reload(); await page.getByRole('alert').filter({hasText:'couldn’t load'}).waitFor();
+  checks.push('Failed data load displays a useful error and retry');
+  await page.unroute(profileUrl); await page.getByRole('button',{name:'Try again',exact:true}).click();
+  await page.getByLabel('Profile name',{exact:true}).waitFor(); checks.push('Retry restores real backend data');
+  await page.getByRole('link',{name:'Skip to workspace',exact:true}).focus(); await page.keyboard.press('Enter');
+  verify(await page.locator('#workspace-main').evaluate(e => e === document.activeElement),'Workspace skip link focuses its main content');
+  await page.route('**/api/v1/auth/me',route => route.fulfill({status:503,contentType:'application/json',body:'{}'}));
+  await page.reload(); await page.getByRole('heading',{name:"Let's reconnect your workspace.",exact:true}).waitFor();
+  verify(await page.getByRole('link',{name:'Explore the demo',exact:true}).isVisible(),'Unavailable authentication shows recovery and public demo');
+  await page.unroute('**/api/v1/auth/me'); await page.getByRole('button',{name:'Try again',exact:true}).click();
+  await page.getByLabel('Profile name',{exact:true}).waitFor(); checks.push('Session recovery restores authenticated workspace');
+  page.off('pageerror',error);
+  verify(runtimeErrors.length===0,'Recovery paths have no JavaScript runtime errors');
+  return {passed:checks.length,checks,contrast,runtimeErrors};
+}

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -16,8 +16,10 @@ import {
   LogOut,
 } from "lucide-react";
 import { Brand, Button } from "@/components/ui";
+import { useMediaQuery } from "@/components/landing/useMediaQuery";
 import { logout } from "./api";
 import { useWorkspacePreferences } from "./preferences";
+import { useCareerProfile } from "./CareerProfileContext";
 import { Dashboard, Discover, JobDetail } from "./OpportunityViews";
 import Profiles from "./Profiles";
 import Resumes from "./Resumes";
@@ -82,11 +84,50 @@ export default function WorkspacePage({
   const preferences = useWorkspacePreferences();
   const demo = mode === "demo";
   const base = demo ? "/preview" : "/app";
-  const [profile, setProfile] = useState<ProfileType>("software");
+  const { profile, setProfile } = useCareerProfile();
   const [open, setOpen] = useState(false);
+  const mobile = useMediaQuery("(max-width: 768px)");
+  const navigationOpen = mobile && open;
+  const sidebar = useRef<HTMLElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const [signingOut, setSigningOut] = useState(false);
   const [logoutError, setLogoutError] = useState("");
   const props = { demo, profile, base };
+  useEffect(() => {
+    if (!navigationOpen) return;
+    const panel = sidebar.current;
+    const trigger = menuButton.current;
+    if (!panel) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusable = () => Array.from(panel.querySelectorAll<HTMLElement>(
+      'a[href], button:not(:disabled), select:not(:disabled), [tabindex="0"]',
+    )).filter((element) => element.getClientRects().length > 0);
+    focusable()[0]?.focus();
+    const keyboard = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+      } else if (event.key === "Tab") {
+        const items = focusable();
+        const first = items[0];
+        const last = items.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+    panel.addEventListener("keydown", keyboard);
+    return () => {
+      panel.removeEventListener("keydown", keyboard);
+      document.body.style.overflow = previousOverflow;
+      if (trigger?.isConnected) trigger.focus();
+    };
+  }, [navigationOpen]);
   return (
     <div
       className={styles.workspace}
@@ -97,8 +138,13 @@ export default function WorkspacePage({
         Skip to workspace
       </a>
       <aside
-        className={`${styles.sidebar} ${open ? styles.sidebarOpen : ""}`}
+        ref={sidebar}
+        id="workspace-navigation"
+        className={`${styles.sidebar} ${navigationOpen ? styles.sidebarOpen : ""}`}
         aria-label="Workspace navigation"
+        role={navigationOpen ? "dialog" : undefined}
+        aria-modal={navigationOpen ? true : undefined}
+        inert={mobile && !navigationOpen}
       >
         <div className={styles.brandRow}>
           <Brand />
@@ -167,22 +213,25 @@ export default function WorkspacePage({
           {logoutError && <p role="alert">{logoutError}</p>}
         </div>
       </aside>
-      {open && (
+      {navigationOpen && (
         <button
           type="button"
           className={styles.navBackdrop}
           aria-label="Close navigation"
+          tabIndex={-1}
           onClick={() => setOpen(false)}
         />
       )}
-      <div className={styles.mainColumn}>
+      <div className={styles.mainColumn} inert={navigationOpen}>
         <header className={styles.topbar}>
           <div className={styles.breadcrumb}>
             <Button
+              ref={menuButton}
               variant="ghost"
               className={styles.menuToggle}
               aria-label="Open workspace navigation"
-              aria-expanded={open}
+              aria-expanded={navigationOpen}
+              aria-controls="workspace-navigation"
               onClick={() => setOpen(true)}
             >
               <Menu size={20} />
@@ -225,6 +274,7 @@ export default function WorkspacePage({
         )}
         <main
           id="workspace-main"
+          tabIndex={-1}
           className={styles.main}
           key={`${section}-${profile}`}
         >
